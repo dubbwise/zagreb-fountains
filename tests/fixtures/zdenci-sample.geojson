@@ -1,0 +1,89 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [15.9648762099405, 45.8127489060025] },
+      "properties": {
+        "objectid": 1,
+        "globalid": "8596b290-ea0d-4caa-8890-047804249320",
+        "lokacija": "Britanski trg",
+        "napomena_teren": "sjeverno od javnog WC-a",
+        "status_odrz": "u funkciji",
+        "odrzava_ki": "Gradski ured za mjesnu samoupravu, promet, komunalne poslove, civilnu zaštitu i sigurnost",
+        "tip_zdenca": "Viktorija zdenac",
+        "aktivan_da_ne": "DA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [15.9075755741544, 45.7241629467747] },
+      "properties": {
+        "objectid": 2,
+        "globalid": "a3c6b83f-56ab-4f27-94d7-00846fc73ed2",
+        "lokacija": "Brezovička cesta 100",
+        "napomena_teren": "uz poštu, preko puta autobusne stanice",
+        "status_odrz": "nije u funkciji",
+        "odrzava_ki": "Gradski ured za mjesnu samoupravu, promet, komunalne poslove, civilnu zaštitu i sigurnost",
+        "tip_zdenca": "Viktorija zdenac",
+        "aktivan_da_ne": "DA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [16.0207448524108, 45.8408410019109] },
+      "properties": {
+        "objectid": 3,
+        "globalid": "3c30aa94-0f69-4509-9a8d-c26c71107a14",
+        "lokacija": "Čret, Melinišće",
+        "napomena_teren": null,
+        "status_odrz": null,
+        "odrzava_ki": "Gradski ured za mjesnu samoupravu, promet, komunalne poslove, civilnu zaštitu i sigurnost",
+        "tip_zdenca": "Viktorija zdenac",
+        "aktivan_da_ne": "DA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [15.9628974617954, 45.7749505418414] },
+      "properties": {
+        "objectid": 4,
+        "globalid": "3be68cf0-1f79-4c8d-ac2b-285a8da09842",
+        "lokacija": "Školsko igralište OŠ Trnsko",
+        "napomena_teren": "(potreban popravak!, curi) sjeveroistocno od igralista ",
+        "status_odrz": "treba teren",
+        "odrzava_ki": "Gradski ured za mjesnu samoupravu, promet, komunalne poslove, civilnu zaštitu i sigurnost",
+        "tip_zdenca": "Viktorija zdenac",
+        "aktivan_da_ne": "DA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [15.9894089129953, 45.8331599667715] },
+      "properties": {
+        "objectid": 5,
+        "globalid": "723802ff-5fce-40c0-889d-fabbd29f4f79",
+        "lokacija": "Groblje Mirogoj - jug",
+        "napomena_teren": "izvorno SKI lokacija",
+        "status_odrz": "u funkciji",
+        "odrzava_ki": "Gradska groblja Zagreb",
+        "tip_zdenca": "Viktorija zdenac",
+        "aktivan_da_ne": "DA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [15.9970064797527, 45.8118112909066] },
+      "properties": {
+        "objectid": 6,
+        "globalid": "94ad52d5-a065-4d7d-999d-5e6be333fb9d",
+        "lokacija": "Park Bartula Kašića - uz ogradu dječjeg parka",
+        "napomena_teren": "",
+        "status_odrz": "u funkciji",
+        "odrzava_ki": "Gradski ured za mjesnu samoupravu, promet, komunalne poslove, civilnu zaštitu i sigurnost",
+        "tip_zdenca": "Viktorija zdenac",
+        "aktivan_da_ne": "DA"
+      }
+    }
+  ]
+}
