@@ -61,6 +61,7 @@ function handleLocation(event: LocationEvent): void {
     return;
   }
   locationFailed = false;
+  const wasNearZagreb = position !== null && isNearZagreb(position);
   position = { lat: event.lat, lon: event.lon, accuracyM: event.accuracyM };
   map.setUserPosition(position);
 
@@ -68,6 +69,7 @@ function handleLocation(event: LocationEvent): void {
     nearest = null;
     computedAt = null;
     hasFitted = false; // re-frame the map when the user comes back into range
+    if (wasNearZagreb) tapped = null;
     update();
     return;
   }
