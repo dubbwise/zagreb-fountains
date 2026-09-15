@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Find the nearest public drinking fountain in Zagreb." />
+    <meta name="theme-color" content="#0369a1" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>"
+    />
+    <title>Zagreb Fountains</title>
+  </head>
+  <body class="h-dvh overflow-hidden bg-slate-100 text-slate-900 antialiased">
+    <div id="map" class="absolute inset-0"></div>
+    <section
+      id="card"
+      class="absolute inset-x-0 bottom-0 z-[1000] px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
+      aria-live="polite"
+    ></section>
+    <div id="fatal" class="absolute inset-0 z-[2000] hidden" role="alert"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
