@@ -27,6 +27,8 @@ let nearest: NearestResult | null = null;
 let tapped: Fountain | null = null;
 let hasFitted = false;
 let stopWatching: () => void = () => {};
+/** Whether the last card render used the "approx." (low-accuracy) prefix. */
+let renderedApprox = false;
 
 function cardState(shown: Fountain | null): CardState {
   const near = position !== null && isNearZagreb(position);
@@ -49,6 +51,7 @@ function update(): void {
   const shown = tapped ?? nearest?.fountain ?? null;
   map.highlight(shown?.id ?? null);
   renderCard(cardElement, cardState(shown), { onRetry: startLocation });
+  renderedApprox = position !== null && position.accuracyM > LOW_ACCURACY_M;
 }
 
 function handleLocation(event: LocationEvent): void {
@@ -61,7 +64,9 @@ function handleLocation(event: LocationEvent): void {
     return;
   }
   locationFailed = false;
-  const wasNearZagreb = position !== null && isNearZagreb(position);
+  // "No previous fix" counts as in range, so a tap made before the first fix
+  // doesn't survive a first fix that lands outside Zagreb.
+  const wasNearZagreb = position === null || isNearZagreb(position);
   position = { lat: event.lat, lon: event.lon, accuracyM: event.accuracyM };
   map.setUserPosition(position);
 
@@ -73,13 +78,20 @@ function handleLocation(event: LocationEvent): void {
     update();
     return;
   }
-  if (computedAt && haversineMeters(computedAt, position) < RECOMPUTE_DISTANCE_M) return;
+  if (computedAt && haversineMeters(computedAt, position) < RECOMPUTE_DISTANCE_M) {
+    // Still too close to recompute the nearest fountain, but a coarse first
+    // fix followed by a precise one at the same spot should still drop
+    // (or add) the "approx." prefix on the card.
+    if ((position.accuracyM > LOW_ACCURACY_M) !== renderedApprox) update();
+    return;
+  }
 
   computedAt = { lat: position.lat, lon: position.lon };
   nearest = findNearest(position, fountains);
   if (nearest && !hasFitted) {
     map.fitTo([position, nearest.fountain]);
     hasFitted = true;
+    tapped = null; // follow the map framing instead of a stale tapped fountain
   }
   update();
 }

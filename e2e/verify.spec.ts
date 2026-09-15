@@ -53,7 +53,32 @@ test.describe("with location permission denied", () => {
     await openApp(page);
     const card = page.locator("#card");
     await expect(card).toContainText("Enable location to find the nearest fountain", { timeout: 20_000 });
-    await expect(card.getByRole("button", { name: "Retry" })).toBeVisible();
+    const retryButton = card.getByRole("button", { name: "Retry" });
+    await expect(retryButton).toBeVisible();
     await page.screenshot({ path: `${SCREENSHOTS}/4-denied.png` });
+
+    // Clicking Retry restarts the watch without crashing: the card falls back
+    // to the same "enable location" state instead of erroring out.
+    await retryButton.click();
+    await expect(card).toContainText("Enable location to find the nearest fountain", { timeout: 20_000 });
+  });
+});
+
+test.describe("clears approx. when GPS accuracy improves", () => {
+  test.use({ geolocation: { latitude: 45.8131, longitude: 15.9772, accuracy: 1500 }, permissions: ["geolocation"] });
+
+  test("drops the approx. prefix once a precise fix arrives", async ({ page, context }) => {
+    await openApp(page);
+    const card = page.locator("#card");
+    await expect(card).toContainText("approx.");
+
+    // Chromium may not deliver a fresh watchPosition fix on an accuracy-only
+    // change with no movement, so nudge latitude by ~5 m alongside it. That's
+    // still under RECOMPUTE_DISTANCE_M (25 m), so this exercises FIX 8's
+    // "recompute skipped, but re-render on an accuracy-class change" path
+    // rather than a full nearest recompute.
+    await context.setGeolocation({ latitude: 45.81315, longitude: 15.9772, accuracy: 15 });
+
+    await expect(card).not.toContainText("approx.", { timeout: 15_000 });
   });
 });
