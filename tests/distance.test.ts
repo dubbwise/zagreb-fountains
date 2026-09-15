@@ -57,6 +57,16 @@ describe("findNearest", () => {
     expect(result?.fountain.id).toBe("u");
   });
 
+  it("keeps a working fountain when an unverified one is 149 m closer (inside threshold)", () => {
+    const result = findNearest(DEFAULT_CENTER, [fountain("w", 349), fountain("u", 200, "unverified")]);
+    expect(result?.fountain.id).toBe("w");
+  });
+
+  it("picks an unverified fountain when it is 151 m closer (outside threshold)", () => {
+    const result = findNearest(DEFAULT_CENTER, [fountain("w", 351), fountain("u", 200, "unverified")]);
+    expect(result?.fountain.id).toBe("u");
+  });
+
   it("falls back to an unverified fountain when none are working", () => {
     expect(findNearest(DEFAULT_CENTER, [fountain("u", 500, "unverified")])?.fountain.id).toBe("u");
   });
@@ -94,5 +104,13 @@ describe("isNearZagreb", () => {
   it("rejects points beyond 30 km", () => {
     expect(isNearZagreb(north(31_100))).toBe(false);
     expect(isNearZagreb({ lat: 43.5081, lon: 16.4402 })).toBe(false);
+  });
+
+  it("accepts points just inside the 30 km radius boundary", () => {
+    expect(isNearZagreb(north(29_999))).toBe(true);
+  });
+
+  it("rejects points just outside the 30 km radius boundary", () => {
+    expect(isNearZagreb(north(30_001))).toBe(false);
   });
 });
