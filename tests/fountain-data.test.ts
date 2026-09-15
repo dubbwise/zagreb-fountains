@@ -83,6 +83,27 @@ describe("normalizeFeatures", () => {
     ]);
   });
 
+  it("has no unrecognized status values in the fixture", () => {
+    expect(normalizeFeatures(zdenci()).unrecognizedStatuses).toEqual([]);
+  });
+
+  it("surfaces an unrecognized status value and still treats it as unverified", () => {
+    const collection = zdenci();
+    // features[2] is the null-status feature ("Čret, Melinišće").
+    collection.features[2]!.properties!.status_odrz = "Nije u funkciji";
+    const result = normalizeFeatures(collection);
+    expect(result.unrecognizedStatuses).toEqual(["Nije u funkciji"]);
+    const changed = result.fountains.find((fountain) => fountain.id === "3c30aa94-0f69-4509-9a8d-c26c71107a14");
+    expect(changed?.status).toBe("unverified");
+  });
+
+  it("rejects a duplicate globalid", () => {
+    const collection = zdenci();
+    // features[2] ("Čret, Melinišće") reuses features[0]'s ("Britanski trg") globalid.
+    collection.features[2]!.properties!.globalid = collection.features[0]!.properties!.globalid;
+    expect(() => normalizeFeatures(collection)).toThrow(/duplicate globalid/);
+  });
+
   it("rejects input that is not a feature collection", () => {
     expect(() => normalizeFeatures({})).toThrow(DataValidationError);
   });

@@ -31,7 +31,7 @@ async function readPreviousSnapshot(): Promise<Snapshot | null> {
 async function main(): Promise<void> {
   const resource = selectGeoJsonResource(await getJson(PACKAGE_SHOW_URL));
   console.log(`Downloading ${resource.url}`);
-  const { fountains, excluded } = normalizeFeatures(await getJson(resource.url));
+  const { fountains, excluded, unrecognizedStatuses } = normalizeFeatures(await getJson(resource.url));
 
   const unverified = fountains.filter((fountain) => fountain.status === "unverified").length;
   const cemetery = fountains.filter((fountain) => fountain.cemetery).length;
@@ -40,16 +40,21 @@ async function main(): Promise<void> {
   for (const exclusion of excluded) {
     console.log(`  - ${exclusion.id} ${exclusion.location}: ${exclusion.reason}`);
   }
+  if (unrecognizedStatuses.length > 0) {
+    console.log(`Warning: unrecognized status_odrz values: ${unrecognizedStatuses.join(", ")}`);
+  }
 
   const previous = await readPreviousSnapshot();
-  assertCountPlausible(fountains.length, previous?.count ?? null);
+  const previousCount = previous ? previous.fountains?.length ?? previous.count : null;
+  assertCountPlausible(fountains.length, previousCount);
   if (previous && sameFountains(previous.fountains, fountains)) {
     console.log("No changes to fountains; snapshot left untouched.");
     return;
   }
 
   await mkdir(dirname(OUTPUT_PATH), { recursive: true });
-  const snapshot = buildSnapshot(fountains, resource.last_modified, new Date());
+  const sourceModified = typeof resource.last_modified === "string" ? resource.last_modified : null;
+  const snapshot = buildSnapshot(fountains, sourceModified, new Date());
   await writeFile(OUTPUT_PATH, `${JSON.stringify(snapshot, null, 2)}\n`);
   console.log(`Wrote ${OUTPUT_PATH}`);
 }

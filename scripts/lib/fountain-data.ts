@@ -4,6 +4,7 @@ export const ZAGREB_BBOX = { minLat: 45.6, maxLat: 46.0, minLon: 15.7, maxLon: 1
 
 const STATUS_WORKING = "u funkciji";
 const STATUS_NOT_WORKING = "nije u funkciji";
+const STATUS_NEEDS_SURVEY = "treba teren";
 const CEMETERY_MAINTAINER = "Gradska groblja";
 const MIN_COUNT_RATIO = 0.5;
 
@@ -78,17 +79,23 @@ export function selectGeoJsonResource(packageShow: unknown): CkanResource {
   return resource;
 }
 
-export function normalizeFeatures(input: unknown): { fountains: Fountain[]; excluded: Exclusion[] } {
+export function normalizeFeatures(
+  input: unknown,
+): { fountains: Fountain[]; excluded: Exclusion[]; unrecognizedStatuses: string[] } {
   if (!isRecord(input) || !Array.isArray(input.features)) {
     throw new DataValidationError("Expected a GeoJSON FeatureCollection with a features array");
   }
   const fountains: Fountain[] = [];
   const excluded: Exclusion[] = [];
+  const seenIds = new Set<string>();
+  const unrecognizedStatuses = new Set<string>();
 
   (input.features as ZdenacFeature[]).forEach((feature, index) => {
     const props: ZdenacProperties = feature.properties ?? {};
     const id = clean(props.globalid);
     if (!id) throw new DataValidationError(`Feature at index ${index} is missing globalid`);
+    if (seenIds.has(id)) throw new DataValidationError(`Feature ${id} has a duplicate globalid`);
+    seenIds.add(id);
     const location = clean(props.lokacija);
     if (!location) throw new DataValidationError(`Feature ${id} is missing lokacija`);
 
@@ -106,6 +113,9 @@ export function normalizeFeatures(input: unknown): { fountains: Fountain[]; excl
       excluded.push({ id, location, reason: `not working (${STATUS_NOT_WORKING})` });
       return;
     }
+    if (status !== undefined && status !== STATUS_WORKING && status !== STATUS_NEEDS_SURVEY) {
+      unrecognizedStatuses.add(status);
+    }
     const hint = clean(props.napomena_teren);
     const type = clean(props.tip_zdenca);
     fountains.push({
@@ -121,7 +131,7 @@ export function normalizeFeatures(input: unknown): { fountains: Fountain[]; excl
   });
 
   fountains.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
-  return { fountains, excluded };
+  return { fountains, excluded, unrecognizedStatuses: [...unrecognizedStatuses].sort() };
 }
 
 export function assertCountPlausible(nextCount: number, previousCount: number | null): void {
