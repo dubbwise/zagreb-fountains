@@ -14,7 +14,7 @@ const OUTPUT_PATH = "public/data/fountains.json";
 const REQUEST_HEADERS = { "User-Agent": "zagreb-fountains-data-refresh/1.0", Accept: "application/json" };
 
 async function getJson(url: string): Promise<unknown> {
-  const response = await fetch(url, { headers: REQUEST_HEADERS });
+  const response = await fetch(url, { headers: REQUEST_HEADERS, signal: AbortSignal.timeout(60_000) });
   if (!response.ok) throw new Error(`GET ${url} failed: HTTP ${response.status}`);
   return response.json();
 }

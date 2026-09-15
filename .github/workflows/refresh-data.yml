@@ -16,6 +16,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -26,6 +27,7 @@ jobs:
       - run: npm run fetch-data
       - run: npm run typecheck
       - run: npm test
+      - run: npm run build
 
       - name: Commit snapshot if fountains changed
         id: commit
