@@ -1,1 +1,46 @@
 @import "tailwindcss";
+
+/* "You are here" marker: a solid dot with a white ring, plus a halo that pulses
+   so it never reads as just another fountain circle. Two spans rather than a
+   pseudo-element, so paint order puts the halo behind the dot without relying
+   on z-index inside Leaflet's transformed marker pane. */
+.user-dot {
+  position: relative;
+}
+
+.user-dot__halo {
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  background: rgb(37 99 235 / 40%);
+  animation: user-dot-pulse 2s ease-out infinite;
+}
+
+.user-dot__core {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 3px solid #ffffff;
+  border-radius: 9999px;
+  background: #2563eb;
+  box-shadow: 0 1px 4px rgb(15 23 42 / 45%);
+}
+
+@keyframes user-dot-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  to {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .user-dot__halo {
+    animation: none;
+    transform: scale(1.6);
+    opacity: 0.25;
+  }
+}

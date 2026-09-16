@@ -28,6 +28,14 @@ const FOUNTAIN_RADIUS = 9;
 const HIGHLIGHT_RADIUS = 13;
 const HIGHLIGHT_STYLE: L.PathOptions = { color: "#f59e0b", weight: 4 };
 
+/** Styled in style.css: a white-ringed dot with a pulsing halo. */
+const USER_ICON = L.divIcon({
+  className: "user-dot",
+  html: '<span class="user-dot__halo"></span><span class="user-dot__core"></span>',
+  iconSize: [16, 16],
+  iconAnchor: [8, 8],
+});
+
 function fountainStyle(fountain: Fountain): L.PathOptions {
   return {
     color: "#ffffff",
@@ -55,7 +63,7 @@ export function createFountainMap(container: HTMLElement): FountainMap {
   const markers = new Map<string, { marker: L.CircleMarker; fountain: Fountain }>();
   let highlightedId: string | null = null;
   let onTap: (fountain: Fountain) => void = () => {};
-  let userMarker: L.CircleMarker | null = null;
+  let userMarker: L.Marker | null = null;
   let accuracyCircle: L.Circle | null = null;
 
   function highlight(id: string | null): void {
@@ -103,16 +111,10 @@ export function createFountainMap(container: HTMLElement): FountainMap {
     if (userMarker) {
       userMarker.setLatLng(latLng);
     } else {
-      userMarker = L.circleMarker(latLng, {
-        radius: 8,
-        color: "#ffffff",
-        weight: 3,
-        fillColor: "#2563eb",
-        fillOpacity: 1,
-        interactive: false,
-      }).addTo(map);
+      // A marker rather than a circle: it lives in the marker pane, which sits
+      // above the fountain circles, and it carries the pulsing CSS dot.
+      userMarker = L.marker(latLng, { icon: USER_ICON, interactive: false, keyboard: false }).addTo(map);
     }
-    userMarker.bringToFront();
   }
 
   function fitTo(points: readonly LatLon[]): void {
