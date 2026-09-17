@@ -30,7 +30,7 @@ An ⓘ ("About this map" / "O ovoj karti") button on the map reopens the intro l
 
 **Language** choices are English or Hrvatski (Croatian). The setting is stored under `zf.lang`; an absent key defaults to the browser's language. The app detects `navigator.language` starting with `hr` as Croatian, otherwise English. All user-visible text lives in `src/i18n/en.ts` and `src/i18n/hr.ts`, both typed by one `Strings` interface, so adding a language means creating a new file in `src/i18n/` with the same structure.
 
-**Attribution** is compacted to the ⓘ button's popup on the intro screen, which lists OpenStreetMap, CARTO (when dark tiles are in use), Leaflet, and the City of Zagreb data credit. The button itself is always visible on the map to ensure attribution remains accessible.
+**Attribution** lives on the intro screen rather than in a bar on the map. The credits section lists Leaflet, OpenStreetMap contributors, CARTO for the dark basemap, and the City of Zagreb as the data source, with a link to the dataset. The ⓘ control stays visible on the map at all times so those credits are always one tap away, which is what OpenStreetMap's and CARTO's terms require.
 
 ## Scripts
 
