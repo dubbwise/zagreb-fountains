@@ -12,7 +12,7 @@
   position: absolute;
   inset: -6px;
   border-radius: 9999px;
-  background: rgb(37 99 235 / 40%);
+  background: rgba(235, 116, 37, 0.4);
   animation: user-dot-pulse 2s ease-out infinite;
 }
 
@@ -22,7 +22,7 @@
   box-sizing: border-box;
   border: 3px solid #ffffff;
   border-radius: 9999px;
-  background: #2563eb;
+  background: #e6870b;
   box-shadow: 0 1px 4px rgb(15 23 42 / 45%);
 }
 
@@ -42,5 +42,42 @@
     animation: none;
     transform: scale(1.6);
     opacity: 0.25;
+  }
+}
+
+/* Leaflet ships light-only chrome: without this the attribution bar and zoom
+   buttons stay white on the dark basemap, and the container flashes light grey
+   while tiles load. */
+@media (prefers-color-scheme: dark) {
+  /* leaflet.css is bundled after this file, so these selectors are deliberately
+     one step more specific than Leaflet's own — otherwise source order wins and
+     the chrome stays white on the dark basemap. */
+  .leaflet-container.leaflet-container {
+    background: #0f172a;
+  }
+
+  /* Leaflet's own `.leaflet-container .leaflet-control-attribution` sets the
+     white background later in the bundle, so match its specificity and add one
+     more class — otherwise only the text colour lands and the bar goes
+     light-grey-on-white. */
+  .leaflet-container .leaflet-control-attribution.leaflet-control-attribution {
+    background: rgb(15 23 42 / 85%);
+    color: #cbd5e1;
+  }
+
+  .leaflet-container .leaflet-control-attribution.leaflet-control-attribution a {
+    color: #7dd3fc;
+  }
+
+  .leaflet-container .leaflet-bar a,
+  .leaflet-container .leaflet-bar a:hover {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-bottom-color: #334155;
+  }
+
+  .leaflet-container .leaflet-bar a.leaflet-disabled {
+    background: #0f172a;
+    color: #64748b;
   }
 }

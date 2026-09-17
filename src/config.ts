@@ -6,6 +6,20 @@ export const TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 export const TILE_MAX_ZOOM = 19;
 export const TILE_ATTRIBUTION =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+/**
+ * Dark basemap, used only when the system asks for dark mode AND a key is set.
+ * Keyless CARTO tiles come back stamped "API KEY REQUIRED", so without a key
+ * the map stays on the light tiles. Set VITE_CARTO_API_KEY in .env.local.
+ */
+export const CARTO_API_KEY: string = import.meta.env.VITE_CARTO_API_KEY ?? "";
+// The query parameter is `key`. An `api_key` parameter is silently ignored and
+// the tiles come back watermarked, which still responds 200.
+export const DARK_TILE_URL = `https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`;
+export const DARK_TILE_MAX_ZOOM = 20;
+export const DARK_TILE_ATTRIBUTION =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>';
+
 export const DATA_ATTRIBUTION =
   'Izvor podataka: Grad Zagreb (<a href="https://data.zagreb.hr/dataset/geoportal_javni_zdenci">data.zagreb.hr</a>)';
 

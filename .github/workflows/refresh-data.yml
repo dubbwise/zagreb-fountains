@@ -28,6 +28,8 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
+        env:
+          VITE_CARTO_API_KEY: ${{ secrets.CARTO_API_KEY }}
 
       - name: Commit snapshot if fountains changed
         id: commit

@@ -8,6 +8,24 @@ Map tiles © OpenStreetMap contributors.
 
 Node >= 22.12.
 
+## Environment
+
+Copy `.env.example` to `.env.local` and fill in:
+
+- `VITE_CARTO_API_KEY` — free key from [carto.com/basemaps/apikey](https://carto.com/basemaps/apikey), used only for
+  the dark basemap. Keyless CARTO tiles come back stamped "API KEY REQUIRED", so without a key the map stays on the
+  light OpenStreetMap tiles even when the system is in dark mode. The key is baked into the built JavaScript and is
+  public by design; CARTO's fair use allows 5 million tile requests per month.
+
+CI and deploys read the same value from the `CARTO_API_KEY` repository secret
+(`gh secret set CARTO_API_KEY`). `npm run verify`'s dark-mode test needs the key present locally.
+
+## Appearance
+
+The app follows the system light/dark setting — there is no in-app toggle. In dark mode the card, page and
+browser theme colour go dark, the basemap switches to CARTO's dark tiles (when a key is set), and fountain
+markers lighten for contrast. Changing the system setting swaps the map live, without a reload.
+
 ## Scripts
 
 - `npm run dev` — local dev server.

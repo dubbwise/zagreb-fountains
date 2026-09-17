@@ -104,9 +104,9 @@ function startLocation(): void {
 }
 
 function showFatal(): void {
-  fatalElement.innerHTML = `<div class="flex h-full flex-col items-center justify-center gap-4 bg-slate-100 p-6 text-center">
+  fatalElement.innerHTML = `<div class="flex h-full flex-col items-center justify-center gap-4 bg-slate-100 p-6 text-center dark:bg-slate-950">
     <p class="text-lg font-medium">${escapeHtml(strings.loadError)}</p>
-    <button type="button" class="rounded-xl bg-sky-700 px-6 py-3 font-semibold text-white">${escapeHtml(strings.retry)}</button>
+    <button type="button" class="rounded-xl bg-sky-700 px-6 py-3 font-semibold text-white dark:bg-sky-600">${escapeHtml(strings.retry)}</button>
   </div>`;
   fatalElement.classList.remove("hidden");
   fatalElement.querySelector("button")?.addEventListener("click", () => void boot());

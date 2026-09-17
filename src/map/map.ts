@@ -1,6 +1,10 @@
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {
+  CARTO_API_KEY,
+  DARK_TILE_ATTRIBUTION,
+  DARK_TILE_MAX_ZOOM,
+  DARK_TILE_URL,
   DATA_ATTRIBUTION,
   DEFAULT_CENTER,
   DEFAULT_ZOOM,
@@ -26,7 +30,9 @@ export interface FountainMap {
 
 const FOUNTAIN_RADIUS = 9;
 const HIGHLIGHT_RADIUS = 13;
-const HIGHLIGHT_STYLE: L.PathOptions = { color: "#f59e0b", weight: 4 };
+// Lime rather than amber: it stays clear of the orange "you are here" dot and
+// reads on both basemaps.
+const HIGHLIGHT_STYLE: L.PathOptions = { color: "#a3e635", weight: 4 };
 
 /** Styled in style.css: a white-ringed dot with a pulsing halo. */
 const USER_ICON = L.divIcon({
@@ -36,11 +42,13 @@ const USER_ICON = L.divIcon({
   iconAnchor: [8, 8],
 });
 
-function fountainStyle(fountain: Fountain): L.PathOptions {
+function fountainStyle(fountain: Fountain, dark: boolean): L.PathOptions {
+  const working = dark ? "#38bdf8" : "#0369a1";
+  const unverified = dark ? "#64748b" : "#94a3b8";
   return {
     color: "#ffffff",
     weight: 2,
-    fillColor: fountain.status === "working" ? "#0369a1" : "#94a3b8",
+    fillColor: fountain.status === "working" ? working : unverified,
     fillOpacity: 1,
   };
 }
@@ -50,14 +58,17 @@ export function createFountainMap(container: HTMLElement): FountainMap {
     [DEFAULT_CENTER.lat, DEFAULT_CENTER.lon],
     DEFAULT_ZOOM,
   );
-  L.tileLayer(TILE_URL, { maxZoom: TILE_MAX_ZOOM }).addTo(map);
+
+  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  const lightTiles = L.tileLayer(TILE_URL, { maxZoom: TILE_MAX_ZOOM });
+  // No key means no dark basemap; the light tiles then serve both themes.
+  const darkTiles = CARTO_API_KEY ? L.tileLayer(DARK_TILE_URL, { maxZoom: DARK_TILE_MAX_ZOOM }) : null;
+  const useDarkTiles = (): boolean => darkTiles !== null && darkQuery.matches;
+
   // Both controls share the top-right corner so they stack instead of overlapping,
   // and the bottom card never covers the required attribution.
-  L.control
-    .attribution({ position: "topright" })
-    .addAttribution(TILE_ATTRIBUTION)
-    .addAttribution(DATA_ATTRIBUTION)
-    .addTo(map);
+  const attribution = L.control.attribution({ position: "topright" }).addTo(map);
+  attribution.addAttribution(DATA_ATTRIBUTION);
   L.control.zoom({ position: "topright" }).addTo(map);
 
   const markers = new Map<string, { marker: L.CircleMarker; fountain: Fountain }>();
@@ -66,20 +77,47 @@ export function createFountainMap(container: HTMLElement): FountainMap {
   let userMarker: L.Marker | null = null;
   let accuracyCircle: L.Circle | null = null;
 
+  /** Each basemap carries its own credit, so only the visible one is listed. */
+  function applyTheme(): void {
+    const dark = useDarkTiles();
+    const [add, remove] = dark ? [darkTiles, lightTiles] : [lightTiles, darkTiles];
+    const [addCredit, removeCredit] = dark
+      ? [DARK_TILE_ATTRIBUTION, TILE_ATTRIBUTION]
+      : [TILE_ATTRIBUTION, DARK_TILE_ATTRIBUTION];
+    if (remove && map.hasLayer(remove)) {
+      map.removeLayer(remove);
+      attribution.removeAttribution(removeCredit);
+    }
+    if (add && !map.hasLayer(add)) {
+      add.addTo(map);
+      add.bringToBack();
+      attribution.addAttribution(addCredit);
+    }
+    for (const { marker, fountain } of markers.values()) {
+      if (fountain.id === highlightedId) continue;
+      marker.setStyle(fountainStyle(fountain, dark));
+    }
+  }
+
+  applyTheme();
+  darkQuery.addEventListener("change", applyTheme);
+
   function highlight(id: string | null): void {
+    const dark = useDarkTiles();
     const previous = highlightedId === null ? undefined : markers.get(highlightedId);
-    previous?.marker.setRadius(FOUNTAIN_RADIUS).setStyle(fountainStyle(previous.fountain));
+    previous?.marker.setRadius(FOUNTAIN_RADIUS).setStyle(fountainStyle(previous.fountain, dark));
     highlightedId = id;
     const next = id === null ? undefined : markers.get(id);
     next?.marker.setRadius(HIGHLIGHT_RADIUS).setStyle(HIGHLIGHT_STYLE).bringToFront();
   }
 
   function setFountains(fountains: readonly Fountain[]): void {
+    const dark = useDarkTiles();
     for (const { marker } of markers.values()) marker.remove();
     markers.clear();
     for (const fountain of fountains) {
       const marker = L.circleMarker([fountain.lat, fountain.lon], {
-        ...fountainStyle(fountain),
+        ...fountainStyle(fountain, dark),
         radius: FOUNTAIN_RADIUS,
       }).addTo(map);
       marker.on("click", () => onTap(fountain));

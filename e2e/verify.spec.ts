@@ -8,6 +8,20 @@ async function openApp(page: Page): Promise<void> {
   await expect(page.locator("path.leaflet-interactive")).not.toHaveCount(0);
 }
 
+/** Screenshots taken mid-fade show a patchwork of half-loaded tiles. */
+async function waitForTiles(page: Page): Promise<void> {
+  await page
+    .waitForFunction(
+      () => {
+        const tiles = Array.from(document.querySelectorAll(".leaflet-tile"));
+        return tiles.length > 0 && tiles.every((tile) => tile.classList.contains("leaflet-tile-loaded"));
+      },
+      null,
+      { timeout: 15_000 },
+    )
+    .catch(() => {});
+}
+
 test.describe("at Ban Jelačić Square", () => {
   test.use({ geolocation: { latitude: 45.8131, longitude: 15.9772, accuracy: 20 }, permissions: ["geolocation"] });
 
@@ -20,6 +34,7 @@ test.describe("at Ban Jelačić Square", () => {
       "href",
       /^https:\/\/www\.google\.com\/maps\/dir\/\?api=1&destination=45\.\d{6},15\.\d{6}&travelmode=walking$/,
     );
+    await waitForTiles(page);
     await page.screenshot({ path: `${SCREENSHOTS}/1-ban-jelacic.png` });
   });
 });
@@ -80,5 +95,49 @@ test.describe("clears approx. when GPS accuracy improves", () => {
     await context.setGeolocation({ latitude: 45.81315, longitude: 15.9772, accuracy: 15 });
 
     await expect(card).not.toContainText("approx.", { timeout: 15_000 });
+  });
+});
+
+test.describe("with the system set to dark", () => {
+  test.use({
+    colorScheme: "dark",
+    geolocation: { latitude: 45.8131, longitude: 15.9772, accuracy: 20 },
+    permissions: ["geolocation"],
+  });
+
+  // The dark basemap needs VITE_CARTO_API_KEY at build time (.env.local locally,
+  // a repository secret in CI), otherwise the map stays on the light tiles.
+  test("renders a dark card over the dark basemap", async ({ page }) => {
+    await openApp(page);
+    const card = page.locator("#card");
+    await expect(card).toContainText("Nearest fountain");
+
+    // Assert the surface is dark rather than matching an exact colour string:
+    // Tailwind 4 emits oklch(), so the computed value is palette-version specific.
+    const panelLightness = await card
+      .locator("div")
+      .first()
+      .evaluate((element) => {
+        const background = getComputedStyle(element).backgroundColor;
+        const oklch = /^oklch\(\s*([\d.]+)/.exec(background);
+        if (oklch) return Number(oklch[1]);
+        const rgb = /^rgba?\(\s*(\d+)[,\s]+(\d+)[,\s]+(\d+)/.exec(background);
+        if (!rgb) return null;
+        const [red, green, blue] = [Number(rgb[1]), Number(rgb[2]), Number(rgb[3])];
+        return (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
+      });
+    expect(panelLightness, `card background should be dark, got ${String(panelLightness)}`).toBeLessThan(0.4);
+
+    // The key must be present and non-empty: CARTO answers 200 either way, but
+    // keyless (or wrongly-named parameter) tiles come back stamped "API KEY
+    // REQUIRED", which only the screenshot review catches.
+    await expect(page.locator(".leaflet-tile").first()).toHaveAttribute(
+      "src",
+      /cartocdn\.com\/dark_all\/.+\.png\?key=.+/,
+    );
+    await expect(page.locator(".leaflet-control-attribution")).toContainText("CARTO");
+
+    await waitForTiles(page);
+    await page.screenshot({ path: `${SCREENSHOTS}/5-dark.png` });
   });
 });
