@@ -21,7 +21,9 @@ export interface Strings {
   introThemeDark: string;
   introLanguageLabel: string;
   introCreditsHeading: string;
-  introCreditsMap: string;
+  introCreditsMapPrefix: string;
+  introCreditsContributors: string;
+  introCreditsDarkBasemap: string;
   introCreditsData: string;
   introFeedback: string;
   introContinue: string;
@@ -51,7 +53,9 @@ export const en: Strings = {
   introThemeDark: "Dark",
   introLanguageLabel: "Language",
   introCreditsHeading: "Credits",
-  introCreditsMap: "Map: Leaflet, © OpenStreetMap contributors, dark basemap © CARTO.",
+  introCreditsMapPrefix: "Map:",
+  introCreditsContributors: "contributors",
+  introCreditsDarkBasemap: "dark basemap",
   introCreditsData: "Data: Grad Zagreb",
   introFeedback: "Feedback",
   introContinue: "Find water",

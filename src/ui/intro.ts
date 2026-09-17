@@ -1,9 +1,11 @@
-import { t } from "../i18n";
+import { CARTO_ATTRIBUTIONS_URL, OSM_COPYRIGHT_URL } from "../config";
+import { t, type Strings } from "../i18n";
 import type { Language, Theme } from "../settings";
 import { escapeHtml } from "./nearestCard";
 
 const FEEDBACK_EMAIL = "zg@paperbeatsrock.co";
 const DATASET_URL = "https://data.zagreb.hr/dataset/geoportal_javni_zdenci";
+const LINK_CLASS = "underline";
 
 const CHOICE_CLASS =
   "flex-1 rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium aria-pressed:border-sky-700 aria-pressed:bg-sky-700 aria-pressed:text-white dark:border-slate-600 dark:aria-pressed:border-sky-500 dark:aria-pressed:bg-sky-600";
@@ -15,6 +17,23 @@ export interface IntroState {
 
 function choice(attribute: string, value: string, label: string, active: boolean): string {
   return `<button type="button" ${attribute}="${value}" aria-pressed="${active ? "true" : "false"}" class="${CHOICE_CLASS}">${escapeHtml(label)}</button>`;
+}
+
+/**
+ * OpenStreetMap's attribution guidance and CARTO's basemap terms both require
+ * the credit to link to their respective attribution page. "Leaflet" and the
+ * two proper nouns are literal, untranslated text; only the surrounding
+ * fragments come from the i18n tables, and those are still escaped before
+ * they reach innerHTML — the URLs come from src/config.ts, not from
+ * translated (and therefore untrusted) strings.
+ */
+function creditsMapHtml(strings: Strings): string {
+  const osmLink = `<a class="${LINK_CLASS}" href="${OSM_COPYRIGHT_URL}" target="_blank" rel="noopener">OpenStreetMap</a>`;
+  const cartoLink = `<a class="${LINK_CLASS}" href="${CARTO_ATTRIBUTIONS_URL}" target="_blank" rel="noopener">CARTO</a>`;
+  return (
+    `${escapeHtml(strings.introCreditsMapPrefix)} Leaflet, © ${osmLink} ${escapeHtml(strings.introCreditsContributors)}, ` +
+    `${escapeHtml(strings.introCreditsDarkBasemap)} © ${cartoLink}.`
+  );
 }
 
 export function introHtml({ theme, language }: IntroState): string {
@@ -53,9 +72,9 @@ export function introHtml({ theme, language }: IntroState): string {
 
     <section class="text-sm text-slate-600 dark:text-slate-400">
       <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">${escapeHtml(strings.introCreditsHeading)}</h2>
-      <p class="mt-1">${escapeHtml(strings.introCreditsMap)}</p>
-      <p class="mt-1">${escapeHtml(strings.introCreditsData)} (<a class="underline" href="${DATASET_URL}" target="_blank" rel="noopener">data.zagreb.hr</a>)</p>
-      <p class="mt-1">${escapeHtml(strings.introFeedback)}: <a class="underline" href="mailto:${FEEDBACK_EMAIL}">${FEEDBACK_EMAIL}</a></p>
+      <p class="mt-1">${creditsMapHtml(strings)}</p>
+      <p class="mt-1">${escapeHtml(strings.introCreditsData)} (<a class="${LINK_CLASS}" href="${DATASET_URL}" target="_blank" rel="noopener">data.zagreb.hr</a>)</p>
+      <p class="mt-1">${escapeHtml(strings.introFeedback)}: <a class="${LINK_CLASS}" href="mailto:${FEEDBACK_EMAIL}">${FEEDBACK_EMAIL}</a></p>
     </section>
 
     <button type="button" data-action="continue" class="sticky bottom-0 block w-full rounded-xl bg-sky-700 px-4 py-3 text-center font-semibold text-white active:bg-sky-800 dark:bg-sky-600 dark:active:bg-sky-500">${escapeHtml(strings.introContinue)}</button>

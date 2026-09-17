@@ -9,8 +9,12 @@ describe("introHtml", () => {
     expect(html).toContain("Zagreb Fountains");
     expect(html).toContain("Why your location?");
     expect(html).toContain("It is never sent anywhere.");
-    expect(html).toContain("© OpenStreetMap contributors");
-    expect(html).toContain("CARTO");
+    expect(html).toContain(
+      '<a class="underline" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
+    );
+    expect(html).toContain(
+      '<a class="underline" href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+    );
     expect(html).toContain("Grad Zagreb");
     expect(html).toContain("https://data.zagreb.hr/dataset/geoportal_javni_zdenci");
     expect(html).toContain("mailto:zg@paperbeatsrock.co");
@@ -34,6 +38,12 @@ describe("introHtml", () => {
       expect(html).toContain("Zašto lokacija?");
       expect(html).toContain("Pronađi vodu");
       expect(html).toContain("Sustav");
+      expect(html).toContain(
+        '<a class="underline" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
+      );
+      expect(html).toContain(
+        '<a class="underline" href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+      );
     } finally {
       setActiveLanguage("en");
     }

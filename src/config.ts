@@ -4,8 +4,7 @@ export const DEFAULT_ZOOM = 14;
 
 export const TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 export const TILE_MAX_ZOOM = 19;
-export const TILE_ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+export const OSM_COPYRIGHT_URL = "https://www.openstreetmap.org/copyright";
 
 /**
  * Dark basemap, used only when the system asks for dark mode AND a key is set.
@@ -17,11 +16,7 @@ export const CARTO_API_KEY: string = import.meta.env.VITE_CARTO_API_KEY ?? "";
 // the tiles come back watermarked, which still responds 200.
 export const DARK_TILE_URL = `https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`;
 export const DARK_TILE_MAX_ZOOM = 20;
-export const DARK_TILE_ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>';
-
-export const DATA_ATTRIBUTION =
-  'Izvor podataka: Grad Zagreb (<a href="https://data.zagreb.hr/dataset/geoportal_javni_zdenci">data.zagreb.hr</a>)';
+export const CARTO_ATTRIBUTIONS_URL = "https://carto.com/attributions";
 
 export const GEOLOCATION_TIMEOUT_MS = 10_000;
 export const RECOMPUTE_DISTANCE_M = 25;
