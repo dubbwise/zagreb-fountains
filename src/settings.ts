@@ -3,7 +3,8 @@ export type Language = "en" | "hr";
 
 const THEME_KEY = "zf.theme";
 const LANGUAGE_KEY = "zf.lang";
-const THEME_COLOR = { light: "#0369a1", dark: "#020617" } as const;
+// Dark tracks --surface in style.css (gray-900); keep the two in step.
+const THEME_COLOR = { light: "#0369a1", dark: "#111827" } as const;
 
 export interface SettingsDeps {
   storage: Pick<Storage, "getItem" | "setItem" | "removeItem">;

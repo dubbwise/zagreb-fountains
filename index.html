@@ -23,7 +23,7 @@
       var dark = storedTheme === "dark" || (storedTheme !== "light" && prefersDark);
       document.documentElement.classList.toggle("dark", dark);
       var themeMeta = document.querySelector('meta[name="theme-color"]');
-      if (themeMeta) themeMeta.setAttribute("content", dark ? "#020617" : "#0369a1");
+      if (themeMeta) themeMeta.setAttribute("content", dark ? "#111827" : "#0369a1");
       var storedLanguage = null;
       try {
         storedLanguage = localStorage.getItem("zf.lang");
@@ -33,7 +33,7 @@
       if (storedLanguage === "hr" || storedLanguage === "en") document.documentElement.lang = storedLanguage;
     </script>
   </head>
-  <body class="h-dvh overflow-hidden bg-surface text-ink antialiased">
+  <body class="h-dvh overflow-hidden bg-surface text-body-strong antialiased">
     <div id="map" class="absolute inset-0"></div>
     <div
       id="intro"

@@ -26,7 +26,7 @@ export function escapeHtml(value: string): string {
 
 const panel = (inner: string): string =>
   `<div class="panel">${inner}</div>`;
-const message = (text: string): string => `<p class="text-ink-muted">${escapeHtml(text)}</p>`;
+const message = (text: string): string => `<p class="text-body">${escapeHtml(text)}</p>`;
 const badge = (text: string): string =>
   `<span class="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-900 dark:bg-amber-400/15 dark:text-amber-200">${escapeHtml(text)}</span>`;
 
@@ -37,12 +37,12 @@ function fountainHtml({ fountain, distanceM, approx, isNearest, directionsUrl }:
     `<h2 class="mt-1 text-lg font-semibold leading-snug">${escapeHtml(fountain.location)}</h2>`,
   ];
   if (fountain.hint) {
-    parts.push(`<p class="mt-0.5 text-sm text-ink-subtle">${escapeHtml(fountain.hint)}</p>`);
+    parts.push(`<p class="mt-0.5 text-sm text-body-subtle">${escapeHtml(fountain.hint)}</p>`);
   }
   if (distanceM !== null) {
     const distance = `${approx ? `${t().approx} ` : ""}${formatDistance(distanceM)}`;
     const line = `${distance} · ${t().walk(walkingMinutes(distanceM))}`;
-    parts.push(`<p class="mt-2 font-medium text-ink">${escapeHtml(line)}</p>`);
+    parts.push(`<p class="mt-2 font-medium text-body-strong">${escapeHtml(line)}</p>`);
   }
   const badges: string[] = [];
   if (fountain.status === "unverified") badges.push(badge(t().unverified));

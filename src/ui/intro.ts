@@ -52,26 +52,26 @@ export function introHtml({ theme, language }: IntroState): string {
   <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5">
     <header>
       <h1 id="intro-title" class="text-2xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
-      <p class="mt-1 text-ink-muted">${escapeHtml(strings.introLede)}</p>
+      <p class="mt-1 text-body">${escapeHtml(strings.introLede)}</p>
     </header>
 
     <section>
       <h2 class="label-caps text-sm text-accent-ink">${escapeHtml(strings.introLocationHeading)}</h2>
-      <p class="mt-1 text-ink-muted">${escapeHtml(strings.introLocationBody)}</p>
+      <p class="mt-1 text-body">${escapeHtml(strings.introLocationBody)}</p>
     </section>
 
     <section>
-      <h2 id="intro-theme-heading" class="mb-2 label-caps text-sm text-ink-subtle">${escapeHtml(strings.introThemeLabel)}</h2>
+      <h2 id="intro-theme-heading" class="mb-2 label-caps text-sm text-body-subtle">${escapeHtml(strings.introThemeLabel)}</h2>
       <div class="flex gap-2" role="group" aria-labelledby="intro-theme-heading">${themeChoices}</div>
     </section>
 
     <section>
-      <h2 id="intro-language-heading" class="mb-2 label-caps text-sm text-ink-subtle">${escapeHtml(strings.introLanguageLabel)}</h2>
+      <h2 id="intro-language-heading" class="mb-2 label-caps text-sm text-body-subtle">${escapeHtml(strings.introLanguageLabel)}</h2>
       <div class="flex gap-2" role="group" aria-labelledby="intro-language-heading">${languageChoices}</div>
     </section>
 
-    <section class="text-sm text-ink-subtle">
-      <h2 class="label-caps text-sm text-ink-subtle">${escapeHtml(strings.introCreditsHeading)}</h2>
+    <section class="text-sm text-body-subtle">
+      <h2 class="label-caps text-sm text-body-subtle">${escapeHtml(strings.introCreditsHeading)}</h2>
       <p class="mt-1">${creditsMapHtml(strings)}</p>
       <p class="mt-1">${escapeHtml(strings.introCreditsData)} (<a class="${LINK_CLASS}" href="${DATASET_URL}" target="_blank" rel="noopener">data.zagreb.hr</a>)</p>
       <p class="mt-1">${escapeHtml(strings.introFeedback)}: <a class="${LINK_CLASS}" href="mailto:${FEEDBACK_EMAIL}">${FEEDBACK_EMAIL}</a></p>

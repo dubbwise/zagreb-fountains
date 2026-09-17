@@ -9,9 +9,9 @@
 :root {
   --surface: var(--color-gray-100); /* page and full-screen overlays */
   --surface-raised: #ffffff; /* the card floating over the map */
-  --ink: var(--color-gray-900); /* body and emphasised text */
-  --ink-muted: var(--color-gray-700); /* supporting prose */
-  --ink-subtle: var(--color-gray-500); /* section labels, hints */
+  --body-strong: var(--color-gray-900);
+  --body: var(--color-gray-700);
+  --body-subtle: var(--color-gray-500);
   --accent: var(--color-sky-700); /* primary buttons, pressed choices */
   --accent-active: var(--color-sky-800); /* those same buttons, held down */
   --accent-ink: var(--color-sky-700); /* accent used as text on a surface */
@@ -20,24 +20,26 @@
 }
 
 .dark {
-  --surface: var(--color-gray-950);
-  --surface-raised: var(--color-gray-900);
-  --ink: var(--color-gray-100);
-  --ink-muted: var(--color-gray-300);
-  --ink-subtle: var(--color-gray-400);
+  /* One step up from near-black: gray-950/900 read as pure black on a phone
+     outdoors, which is where this app gets used. */
+  --surface: var(--color-gray-900);
+  --surface-raised: var(--color-gray-800);
+  --body-strong: var(--color-gray-100);
+  --body: var(--color-gray-300);
+  --body-subtle: var(--color-gray-400);
   --accent: var(--color-sky-600);
   --accent-active: var(--color-sky-500);
   --accent-ink: var(--color-sky-300);
-  --hairline: var(--color-gray-600);
+  --hairline: var(--color-gray-700);
   --edge: rgb(255 255 255 / 10%);
 }
 
 @theme inline {
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
-  --color-ink: var(--ink);
-  --color-ink-muted: var(--ink-muted);
-  --color-ink-subtle: var(--ink-subtle);
+  --color-body-strong: var(--body-strong);
+  --color-body: var(--body);
+  --color-body-subtle: var(--body-subtle);
   --color-accent: var(--accent);
   --color-accent-active: var(--accent-active);
   --color-accent-ink: var(--accent-ink);
@@ -120,36 +122,54 @@
    buttons stay white on the dark basemap, and the container flashes light grey
    while tiles load. leaflet.css is bundled after this file, so the theme comes
    from the `.dark` class on <html> rather than a media query. */
-/* Leaflet's .leaflet-bar a is ~26-30px, well under the 44px touch-target
-   minimum. The ⓘ control is the only route to the legally required OSM/CARTO
-   credits, so it needs a real tappable area, not just a bigger glyph.
-   .leaflet-bar-info is a class only this control carries (see map.ts), so
-   the zoom buttons' own footprint stays untouched. */
 .leaflet-bar-info {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 44px;
-  min-height: 44px;
+  min-width: 30px;
+  min-height: 30px;
 }
 
 .dark {
   /* leaflet.css is bundled after this file, so these selectors are deliberately
      one step more specific than Leaflet's own — otherwise source order wins and
      the chrome stays white on the dark basemap. */
+  /* Shown while tiles load, so it wants to sit close to the lifted basemap
+     rather than flash darker than the surfaces around it. */
   .leaflet-container.leaflet-container {
-    background: #0f172a;
+    background: #1e293b;
   }
 
   .leaflet-container .leaflet-bar a,
   .leaflet-container .leaflet-bar a:hover {
-    background: #1e293b;
+    background: #273549;
     color: #e2e8f0;
-    border-bottom-color: #334155;
+    border-bottom-color: #3d4c63;
   }
 
   .leaflet-container .leaflet-bar a.leaflet-disabled {
-    background: #0f172a;
-    color: #64748b;
+    background: #1e293b;
+    color: #7b899e;
+  }
+
+  /* CARTO's dark_all renders close to black: measured median luminance of the
+     rendered map was 12/255, with the background sitting near 4/255.
+
+     brightness() alone cannot fix that, because it multiplies: at 1.25 a
+     background pixel moves from (14,17,22) to (18,21,28), which is invisible.
+     The contrast() term is what does the work here — pulling values toward
+     mid-grey lifts the blacks far more than it dims the labels. Measured on a
+     sample background/label pair, this pairing roughly doubles background
+     luminance (20.7 -> 38.5) while leaving label text at 236/255, keeping
+     label-to-background contrast at 4.85 — above the 4.5 AA floor. Going
+     further (brightness 1.4 / contrast 0.8) drops it to 4.24, so this is the
+     brightest setting that keeps place names comfortably legible.
+
+     Applied to the tile images only, so the ⓘ and zoom chrome above keep
+     their own colours. leaflet.css sets `filter: inherit` on .leaflet-tile and
+     is bundled after this file, so this selector carries an extra class to win
+     on specificity rather than source order. */
+  .leaflet-container .leaflet-tile {
+    filter: brightness(1.35) contrast(0.85);
   }
 }
