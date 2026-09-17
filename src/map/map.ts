@@ -26,8 +26,17 @@ export interface FountainMap {
   setDark(dark: boolean): void;
   setInfoLabel(label: string): void;
   onInfoTap(callback: () => void): void;
-  /** Re-measure the container. Leaflet caches the size from construction time,
-      which is wrong when the map is built behind the intro overlay. */
+  /**
+   * Re-measure the container after the intro overlay closes. This is
+   * insurance against any layout change that happened while the overlay was
+   * up — for example a mobile browser's URL bar collapsing during scroll —
+   * not a fix for a stale size at construction time: #map is `absolute
+   * inset-0` and the intro is a sibling, so the map's own box never changes
+   * while the overlay is open, and Leaflet measures it lazily during the
+   * initial setView(), after layout, with trackResize on by default. (That
+   * stale-construction-size theory was tested and rejected — don't re-derive
+   * it.) Leaflet no-ops here when the size is in fact unchanged.
+   */
   refreshSize(): void;
 }
 

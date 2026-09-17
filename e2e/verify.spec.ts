@@ -2,6 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 
 const SCREENSHOTS = "e2e/screenshots";
 const WALK_LINE = /(\d+ m|\d+\.\d km) · ~\d+ min walk/;
+const TOLERANCE = 2;
 
 /** Records watchPosition calls so a test can prove the prompt was not fired. */
 async function spyOnGeolocation(page: Page): Promise<void> {
@@ -133,6 +134,24 @@ async function measureTileCoverageGaps(page: Page): Promise<TileCoverageGaps> {
   });
 }
 
+/**
+ * waitForTiles() ends in a soft `.catch(() => {})`, so a timed-out wait
+ * still returns normally. Without an assertion after it, a scenario that
+ * screenshots the map can go green over a half-built basemap — the exact
+ * failure this coverage check exists to catch. Every scenario that takes a
+ * map screenshot must call this instead of the bare wait.
+ */
+async function expectFullTileCoverage(page: Page): Promise<void> {
+  await waitForTiles(page);
+  const gaps = await measureTileCoverageGaps(page);
+  expect(
+    Math.max(gaps.left, gaps.right, gaps.top, gaps.bottom),
+    `basemap should fully cover the map container; measured gaps in px — ` +
+      `left: ${gaps.left.toFixed(1)}, right: ${gaps.right.toFixed(1)}, ` +
+      `top: ${gaps.top.toFixed(1)}, bottom: ${gaps.bottom.toFixed(1)}`,
+  ).toBeLessThanOrEqual(TOLERANCE);
+}
+
 test.describe("at Ban Jelačić Square", () => {
   test.use({ geolocation: { latitude: 45.8131, longitude: 15.9772, accuracy: 20 }, permissions: ["geolocation"] });
 
@@ -145,15 +164,7 @@ test.describe("at Ban Jelačić Square", () => {
       "href",
       /^https:\/\/www\.google\.com\/maps\/dir\/\?api=1&destination=45\.\d{6},15\.\d{6}&travelmode=walking$/,
     );
-    await waitForTiles(page);
-    const gaps = await measureTileCoverageGaps(page);
-    const TOLERANCE = 2;
-    expect(
-      Math.max(gaps.left, gaps.right, gaps.top, gaps.bottom),
-      `basemap should fully cover the map container; measured gaps in px — ` +
-        `left: ${gaps.left.toFixed(1)}, right: ${gaps.right.toFixed(1)}, ` +
-        `top: ${gaps.top.toFixed(1)}, bottom: ${gaps.bottom.toFixed(1)}`,
-    ).toBeLessThanOrEqual(TOLERANCE);
+    await expectFullTileCoverage(page);
     await page.screenshot({ path: `${SCREENSHOTS}/1-ban-jelacic.png` });
   });
 });
@@ -263,7 +274,7 @@ test.describe("with the system set to dark", () => {
     await page.getByRole("button", { name: "Find water" }).click();
     await expect(page.locator("#intro")).toBeHidden();
 
-    await waitForTiles(page);
+    await expectFullTileCoverage(page);
     await page.screenshot({ path: `${SCREENSHOTS}/5-dark.png` });
   });
 });
@@ -339,7 +350,7 @@ test.describe("language", () => {
     const card = page.locator("#card");
     await expect(card).toContainText("Najbliži zdenac");
     await expect(card).toContainText(/\d+ m · ~\d+ min hoda/);
-    await waitForTiles(page);
+    await expectFullTileCoverage(page);
     await page.screenshot({ path: `${SCREENSHOTS}/8-croatian.png` });
 
     await page.reload();
