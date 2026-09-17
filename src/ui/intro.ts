@@ -48,8 +48,8 @@ export function introHtml({ theme, language }: IntroState): string {
     choice("data-language", "hr", "Hrvatski", language === "hr"),
   ].join("");
 
-  return `<div class="min-h-full bg-slate-100 px-4 py-6 dark:bg-slate-950">
-  <div class="mx-auto flex min-h-full max-w-md flex-col gap-5">
+  return `<div class="flex min-h-full flex-col bg-slate-100 px-4 py-6 dark:bg-slate-950">
+  <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5">
     <header>
       <h1 id="intro-title" class="text-2xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
       <p class="mt-1 text-slate-700 dark:text-slate-300">${escapeHtml(strings.introLede)}</p>
