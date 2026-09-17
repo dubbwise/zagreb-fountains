@@ -2,14 +2,11 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {
   CARTO_API_KEY,
-  DARK_TILE_ATTRIBUTION,
   DARK_TILE_MAX_ZOOM,
   DARK_TILE_URL,
-  DATA_ATTRIBUTION,
   DEFAULT_CENTER,
   DEFAULT_ZOOM,
   LOW_ACCURACY_M,
-  TILE_ATTRIBUTION,
   TILE_MAX_ZOOM,
   TILE_URL,
 } from "../config";
@@ -26,6 +23,9 @@ export interface FountainMap {
   highlight(id: string | null): void;
   fitTo(points: readonly LatLon[]): void;
   onFountainTap(callback: (fountain: Fountain) => void): void;
+  setDark(dark: boolean): void;
+  setInfoLabel(label: string): void;
+  onInfoTap(callback: () => void): void;
 }
 
 const FOUNTAIN_RADIUS = 9;
@@ -53,22 +53,43 @@ function fountainStyle(fountain: Fountain, dark: boolean): L.PathOptions {
   };
 }
 
-export function createFountainMap(container: HTMLElement): FountainMap {
+export function createFountainMap(container: HTMLElement, options: { dark: boolean; infoLabel: string }): FountainMap {
   const map = L.map(container, { attributionControl: false, zoomControl: false }).setView(
     [DEFAULT_CENTER.lat, DEFAULT_CENTER.lon],
     DEFAULT_ZOOM,
   );
 
-  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
   const lightTiles = L.tileLayer(TILE_URL, { maxZoom: TILE_MAX_ZOOM });
   // No key means no dark basemap; the light tiles then serve both themes.
   const darkTiles = CARTO_API_KEY ? L.tileLayer(DARK_TILE_URL, { maxZoom: DARK_TILE_MAX_ZOOM }) : null;
-  const useDarkTiles = (): boolean => darkTiles !== null && darkQuery.matches;
+  let dark = options.dark && darkTiles !== null;
+  const useDarkTiles = (): boolean => dark;
 
-  // Both controls share the top-right corner so they stack instead of overlapping,
-  // and the bottom card never covers the required attribution.
-  const attribution = L.control.attribution({ position: "topright" }).addTo(map);
-  attribution.addAttribution(DATA_ATTRIBUTION);
+  // Both controls share the top-right corner so they stack instead of
+  // overlapping the bottom card. The info control replaces the attribution
+  // bar; its credits live on the intro screen this control reopens.
+  let onInfo: () => void = () => {};
+  let infoLink: HTMLElement | null = null;
+  const InfoControl = L.Control.extend({
+    onAdd(): HTMLElement {
+      const container = L.DomUtil.create("div", "leaflet-bar");
+      const link = L.DomUtil.create("a", "", container);
+      link.href = "#";
+      link.textContent = "ⓘ";
+      link.setAttribute("role", "button");
+      link.setAttribute("aria-label", options.infoLabel);
+      link.setAttribute("title", options.infoLabel);
+      link.style.fontSize = "18px";
+      L.DomEvent.on(link, "click", (event) => {
+        L.DomEvent.preventDefault(event);
+        L.DomEvent.stopPropagation(event);
+        onInfo();
+      });
+      infoLink = link;
+      return container;
+    },
+  });
+  new InfoControl({ position: "topright" }).addTo(map);
   L.control.zoom({ position: "topright" }).addTo(map);
 
   const markers = new Map<string, { marker: L.CircleMarker; fountain: Fountain }>();
@@ -77,21 +98,15 @@ export function createFountainMap(container: HTMLElement): FountainMap {
   let userMarker: L.Marker | null = null;
   let accuracyCircle: L.Circle | null = null;
 
-  /** Each basemap carries its own credit, so only the visible one is listed. */
   function applyTheme(): void {
     const dark = useDarkTiles();
     const [add, remove] = dark ? [darkTiles, lightTiles] : [lightTiles, darkTiles];
-    const [addCredit, removeCredit] = dark
-      ? [DARK_TILE_ATTRIBUTION, TILE_ATTRIBUTION]
-      : [TILE_ATTRIBUTION, DARK_TILE_ATTRIBUTION];
     if (remove && map.hasLayer(remove)) {
       map.removeLayer(remove);
-      attribution.removeAttribution(removeCredit);
     }
     if (add && !map.hasLayer(add)) {
       add.addTo(map);
       add.bringToBack();
-      attribution.addAttribution(addCredit);
     }
     for (const { marker, fountain } of markers.values()) {
       if (fountain.id === highlightedId) continue;
@@ -100,7 +115,6 @@ export function createFountainMap(container: HTMLElement): FountainMap {
   }
 
   applyTheme();
-  darkQuery.addEventListener("change", applyTheme);
 
   function highlight(id: string | null): void {
     const dark = useDarkTiles();
@@ -169,6 +183,17 @@ export function createFountainMap(container: HTMLElement): FountainMap {
     fitTo,
     onFountainTap(callback) {
       onTap = callback;
+    },
+    setDark(next) {
+      dark = next && darkTiles !== null;
+      applyTheme();
+    },
+    setInfoLabel(label) {
+      infoLink?.setAttribute("aria-label", label);
+      infoLink?.setAttribute("title", label);
+    },
+    onInfoTap(callback) {
+      onInfo = callback;
     },
   };
 }

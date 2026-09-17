@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* "You are here" marker: a solid dot with a white ring, plus a halo that pulses
    so it never reads as just another fountain circle. Two spans rather than a
@@ -47,8 +48,9 @@
 
 /* Leaflet ships light-only chrome: without this the attribution bar and zoom
    buttons stay white on the dark basemap, and the container flashes light grey
-   while tiles load. */
-@media (prefers-color-scheme: dark) {
+   while tiles load. leaflet.css is bundled after this file, so the theme comes
+   from the `.dark` class on <html> rather than a media query. */
+.dark {
   /* leaflet.css is bundled after this file, so these selectors are deliberately
      one step more specific than Leaflet's own — otherwise source order wins and
      the chrome stays white on the dark basemap. */

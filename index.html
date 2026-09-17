@@ -4,16 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="Find the nearest public drinking fountain in Zagreb." />
-    <meta name="theme-color" content="#0369a1" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0369a1" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>"
     />
     <title>Zagreb Fountains</title>
+    <script>
+      // Mirrors apply() in src/settings.ts — keep the two in step. Runs before
+      // first paint so dark-mode visitors never see a white flash.
+      try {
+        var storedTheme = localStorage.getItem("zf.theme");
+        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var dark = storedTheme === "dark" || (storedTheme !== "light" && prefersDark);
+        document.documentElement.classList.toggle("dark", dark);
+        document.querySelector('meta[name="theme-color"]').setAttribute("content", dark ? "#020617" : "#0369a1");
+        var storedLanguage = localStorage.getItem("zf.lang");
+        if (storedLanguage === "hr" || storedLanguage === "en") document.documentElement.lang = storedLanguage;
+      } catch (error) {
+        /* storage blocked: fall through to the system theme */
+      }
+    </script>
   </head>
   <body class="h-dvh overflow-hidden bg-slate-100 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
     <div id="map" class="absolute inset-0"></div>
+    <div id="intro" class="absolute inset-0 z-[1500] overflow-y-auto" role="dialog" aria-modal="true"></div>
     <section
       id="card"
       class="absolute inset-x-0 bottom-0 z-[1000] px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]"

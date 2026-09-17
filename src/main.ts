@@ -14,7 +14,10 @@ function byId(id: string): HTMLElement {
   return element;
 }
 
-const map = createFountainMap(byId("map"));
+const map = createFountainMap(byId("map"), {
+  dark: document.documentElement.classList.contains("dark"),
+  infoLabel: t().introOpen,
+});
 const cardElement = byId("card");
 const fatalElement = byId("fatal");
 
