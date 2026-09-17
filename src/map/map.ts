@@ -26,6 +26,9 @@ export interface FountainMap {
   setDark(dark: boolean): void;
   setInfoLabel(label: string): void;
   onInfoTap(callback: () => void): void;
+  /** Re-measure the container. Leaflet caches the size from construction time,
+      which is wrong when the map is built behind the intro overlay. */
+  refreshSize(): void;
 }
 
 const FOUNTAIN_RADIUS = 9;
@@ -203,6 +206,9 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
     },
     onInfoTap(callback) {
       onInfo = callback;
+    },
+    refreshSize() {
+      map.invalidateSize();
     },
   };
 }

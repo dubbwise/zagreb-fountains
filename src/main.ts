@@ -146,6 +146,7 @@ function openIntro(): void {
 /** Continuing starts the location watch once; reopening later must not re-prompt. */
 function closeIntro(): void {
   introElement.classList.add("hidden");
+  map.refreshSize();
   if (locationStarted) return;
   locationStarted = true;
   startLocation();
