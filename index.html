@@ -13,17 +13,24 @@
     <script>
       // Mirrors apply() in src/settings.ts — keep the two in step. Runs before
       // first paint so dark-mode visitors never see a white flash.
+      var storedTheme = null;
       try {
-        var storedTheme = localStorage.getItem("zf.theme");
-        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var dark = storedTheme === "dark" || (storedTheme !== "light" && prefersDark);
-        document.documentElement.classList.toggle("dark", dark);
-        document.querySelector('meta[name="theme-color"]').setAttribute("content", dark ? "#020617" : "#0369a1");
-        var storedLanguage = localStorage.getItem("zf.lang");
-        if (storedLanguage === "hr" || storedLanguage === "en") document.documentElement.lang = storedLanguage;
+        storedTheme = localStorage.getItem("zf.theme");
       } catch (error) {
-        /* storage blocked: fall through to the system theme */
+        /* storage blocked: fall through to the system preference below */
       }
+      var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      var dark = storedTheme === "dark" || (storedTheme !== "light" && prefersDark);
+      document.documentElement.classList.toggle("dark", dark);
+      var themeMeta = document.querySelector('meta[name="theme-color"]');
+      if (themeMeta) themeMeta.setAttribute("content", dark ? "#020617" : "#0369a1");
+      var storedLanguage = null;
+      try {
+        storedLanguage = localStorage.getItem("zf.lang");
+      } catch (error) {
+        /* storage blocked: keep the document language as authored */
+      }
+      if (storedLanguage === "hr" || storedLanguage === "en") document.documentElement.lang = storedLanguage;
     </script>
   </head>
   <body class="h-dvh overflow-hidden bg-slate-100 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">

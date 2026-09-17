@@ -58,19 +58,6 @@
     background: #0f172a;
   }
 
-  /* Leaflet's own `.leaflet-container .leaflet-control-attribution` sets the
-     white background later in the bundle, so match its specificity and add one
-     more class — otherwise only the text colour lands and the bar goes
-     light-grey-on-white. */
-  .leaflet-container .leaflet-control-attribution.leaflet-control-attribution {
-    background: rgb(15 23 42 / 85%);
-    color: #cbd5e1;
-  }
-
-  .leaflet-container .leaflet-control-attribution.leaflet-control-attribution a {
-    color: #7dd3fc;
-  }
-
   .leaflet-container .leaflet-bar a,
   .leaflet-container .leaflet-bar a:hover {
     background: #1e293b;

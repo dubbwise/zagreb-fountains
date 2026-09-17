@@ -85,6 +85,15 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
         L.DomEvent.stopPropagation(event);
         onInfo();
       });
+      // role="button" on an <a> activates on Enter (native link behaviour) but
+      // not Space, which ARIA expects for a button role.
+      L.DomEvent.on(link, "keydown", (event) => {
+        if (event instanceof KeyboardEvent && event.key === " ") {
+          L.DomEvent.preventDefault(event);
+          L.DomEvent.stopPropagation(event);
+          onInfo();
+        }
+      });
       infoLink = link;
       return container;
     },
