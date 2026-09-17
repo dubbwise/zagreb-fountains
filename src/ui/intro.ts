@@ -68,6 +68,20 @@ export function renderIntro(
   state: IntroState,
   handlers: { onTheme(theme: Theme): void; onLanguage(language: Language): void; onContinue(): void },
 ): void {
+  // Before re-rendering, remember which control has focus so we can restore it after.
+  // This prevents focus theft when a settings change (theme or language selection) re-renders the panel.
+  let focusSelector: string | null = null;
+  const active = document.activeElement;
+  if (active && container.contains(active)) {
+    const elem = active as HTMLElement;
+    const theme = elem.getAttribute("data-theme");
+    const language = elem.getAttribute("data-language");
+    const action = elem.getAttribute("data-action");
+    if (theme !== null) focusSelector = `[data-theme="${theme}"]`;
+    else if (language !== null) focusSelector = `[data-language="${language}"]`;
+    else if (action !== null) focusSelector = `[data-action="${action}"]`;
+  }
+
   container.innerHTML = introHtml(state);
   for (const button of container.querySelectorAll<HTMLButtonElement>("[data-theme]")) {
     button.addEventListener("click", () => handlers.onTheme(button.dataset.theme as Theme));
@@ -77,5 +91,12 @@ export function renderIntro(
   }
   const continueButton = container.querySelector<HTMLButtonElement>('[data-action="continue"]');
   continueButton?.addEventListener("click", handlers.onContinue);
-  continueButton?.focus();
+
+  // Restore focus to the control the user was interacting with, or focus Continue if this is the first open.
+  if (focusSelector) {
+    const toFocus = container.querySelector<HTMLButtonElement>(focusSelector);
+    toFocus?.focus();
+  } else {
+    continueButton?.focus();
+  }
 }
