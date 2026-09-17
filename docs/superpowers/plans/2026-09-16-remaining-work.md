@@ -11,12 +11,9 @@ Related docs:
 
 ## 1. Before launch (blocking)
 
-- [ ] **Confirm the open-data license terms.** The dataset is published under the Croatian *Otvorena dozvola*. A search summary said it allows commercial reuse with attribution; one source also mentioned a share-alike condition, and the official text at data.gov.hr/otvorena could not be retrieved during research. Confirm the exact attribution wording and whether share-alike applies.
-  - Today the app credits `Izvor podataka: Grad Zagreb (data.zagreb.hr)` in the map attribution (`src/config.ts`).
-  - If the terms differ, update `DATA_ATTRIBUTION` and the README.
+- [x] **Confirm the open-data license terms.** DONE 2026-09-17: the *Otvorena dozvola* allows free reuse with attribution. The existing credit `Izvor podataka: Grad Zagreb (data.zagreb.hr)` is appropriate and stands as is.
 
-- [ ] **Review the hint line shown on the card.** `napomena_teren` from the city is sometimes an internal survey note rather than something useful to a passer-by, for example "izvorno SKI lokacija", "-14,8 metara", "(potreban popravak!, curi)". 171 of 199 records have one.
-  - Options: keep as is; drop the hint entirely; or filter out hints that match internal patterns (a leading `-`, "izvorno", "SKI").
+- [ ] **Review the hint line shown on the card.** `napomena_teren` from the city is sometimes an internal survey note rather than something useful to a passer-by, for example "izvorno SKI lokacija", "-14,8 metara", "(potreban popravak!, curi)". 171 of 199 records have one. The decision is deferred; the current behaviour (showing `napomena_teren` as provided) stands until determined.
   - Where: the `hint` field in `scripts/lib/fountain-data.ts`, rendered by `src/ui/nearestCard.ts`.
 
 ## 2. Publishing — DONE 2026-09-16

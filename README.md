@@ -28,7 +28,7 @@ An ⓘ ("About this map" / "O ovoj karti") button on the map reopens the intro l
 
 **Theme** choices are System, Light, or Dark. The setting is stored in `localStorage` under the key `zf.theme`; an absent key means System. When System is chosen, the app follows the device preference and reacts to changes live. Explicit Light or Dark overrides the device setting. The theme drives the card, page, browser theme colour, basemap (CARTO dark tiles for Dark mode, where a key is set), and Leaflet controls.
 
-**Language** choices are English or Hrvatski (Croatian). The setting is stored under `zf.lang`; an absent key defaults to the browser's language. The app detects `navigator.language` starting with `hr` as Croatian, otherwise English. All user-visible text lives in `src/i18n/en.ts` and `src/i18n/hr.ts`, both typed by one `Strings` interface, so adding a language means creating a new file in `src/i18n/` with the same structure.
+**Language** choices are English or Hrvatski (Croatian). The setting is stored under `zf.lang`; an absent key defaults to the browser's language. The app detects `navigator.language` starting with `hr` as Croatian, otherwise English. All user-visible text lives in `src/i18n/en.ts` and `src/i18n/hr.ts`, both typed by one `Strings` interface, so a missing key fails the build. Adding a third language means five edits: a new table file implementing `Strings`, widening the `Language` union in `src/settings.ts`, registering the table in `TABLES` and extending `detectLanguage()` in `src/i18n/index.ts`, and adding a button to the language row in `src/ui/intro.ts`.
 
 **Attribution** lives on the intro screen rather than in a bar on the map. The credits section lists Leaflet, OpenStreetMap contributors, CARTO for the dark basemap, and the City of Zagreb as the data source, with a link to the dataset. The ⓘ control stays visible on the map at all times so those credits are always one tap away, which is what OpenStreetMap's and CARTO's terms require.
 
@@ -69,10 +69,9 @@ time to time.
 
 ## Pre-launch checklist
 
-- [ ] Confirm the exact Otvorena dozvola terms (attribution wording, any share-alike clause) on
-      data.gov.hr before announcing the site publicly.
+- [x] Confirm the exact Otvorena dozvola terms. DONE 2026-09-17: the licence allows free reuse with attribution. The existing credit `Izvor podataka: Grad Zagreb (data.zagreb.hr)` is appropriate and stands as is.
 - [ ] Review how the city's `napomena_teren` hints read to the public. Some are internal survey notes,
-      e.g. "izvorno SKI lokacija" or "-14,8 metara". Decide whether to keep, filter, or drop hints in v1.1.
+      e.g. "izvorno SKI lokacija" or "-14,8 metara". The decision is deferred; the current behaviour (showing `napomena_teren` as provided) stands until determined.
 
 ## Docs
 
