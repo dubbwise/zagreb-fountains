@@ -22,9 +22,15 @@ CI and deploys read the same value from the `CARTO_API_KEY` repository secret
 
 ## Appearance
 
-The app follows the system light/dark setting — there is no in-app toggle. In dark mode the card, page and
-browser theme colour go dark, the basemap switches to CARTO's dark tiles (when a key is set), and fountain
-markers lighten for contrast. Changing the system setting swaps the map live, without a reload.
+The app shows an intro screen on every launch. It carries the site description, attribution, a feedback link, and controls to set **theme** and **language**. Visitors dismiss it with "Find water" / "Pronađi vodu" or by pressing Escape, which also starts the location prompt; nothing location-related happens while the intro is open.
+
+An ⓘ ("About this map" / "O ovoj karti") button on the map reopens the intro later; closing it from there does not re-prompt for location.
+
+**Theme** choices are System, Light, or Dark. The setting is stored in `localStorage` under the key `zf.theme`; an absent key means System. When System is chosen, the app follows the device preference and reacts to changes live. Explicit Light or Dark overrides the device setting. The theme drives the card, page, browser theme colour, basemap (CARTO dark tiles for Dark mode, where a key is set), and Leaflet controls.
+
+**Language** choices are English or Hrvatski (Croatian). The setting is stored under `zf.lang`; an absent key defaults to the browser's language. The app detects `navigator.language` starting with `hr` as Croatian, otherwise English. All user-visible text lives in `src/i18n/en.ts` and `src/i18n/hr.ts`, both typed by one `Strings` interface, so adding a language means creating a new file in `src/i18n/` with the same structure.
+
+**Attribution** is compacted to the ⓘ button's popup on the intro screen, which lists OpenStreetMap, CARTO (when dark tiles are in use), Leaflet, and the City of Zagreb data credit. The button itself is always visible on the map to ensure attribution remains accessible.
 
 ## Scripts
 

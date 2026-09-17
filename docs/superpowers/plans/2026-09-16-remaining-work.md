@@ -61,5 +61,5 @@ These came out of task reviews, were triaged as non-blocking, and are recorded s
 - [ ] **Merge OpenStreetMap data.** 33 OSM drinking-water points sit more than 60 m from any city fountain; some are natural springs and should stay out. OSM also has bottle-refill tags for 92 points, wheelchair access for 11, and 103 street-level photos (Panoramax).
 - [ ] **Offline support:** a service worker for the data and map tiles, for tourists on limited data.
 - [ ] **Filters:** bottle refill, wheelchair access, seasonal, not in a cemetery.
-- [ ] **Croatian localization.** All copy already lives in `src/strings.ts`, so this is one extra file plus a language switch.
+- [x] **Croatian localization.** DONE 2026-09-17. See `docs/superpowers/specs/2026-09-17-zagreb-fountains-intro-design.md`.
 - [ ] **User reports** ("broken", "dry", "missing"). Needs a backend and moderation; explicitly out of scope for v1.
