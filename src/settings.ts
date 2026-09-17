@@ -48,15 +48,17 @@ export function createSettings(deps: SettingsDeps, defaultLanguage: Language): S
   }
 
   function getTheme(): Theme {
+    if (memoryTheme !== null) return memoryTheme;
     const stored = read(THEME_KEY);
     if (stored === "light" || stored === "dark") return stored;
-    return memoryTheme ?? "system";
+    return "system";
   }
 
   function getLanguage(): Language {
+    if (memoryLanguage !== null) return memoryLanguage;
     const stored = read(LANGUAGE_KEY);
     if (stored === "en" || stored === "hr") return stored;
-    return memoryLanguage ?? defaultLanguage;
+    return defaultLanguage;
   }
 
   function effectiveTheme(): "light" | "dark" {
@@ -88,7 +90,7 @@ export function createSettings(deps: SettingsDeps, defaultLanguage: Language): S
     effectiveTheme,
     getLanguage,
     setTheme(theme) {
-      memoryTheme = theme === "system" ? null : theme;
+      memoryTheme = theme;
       write(THEME_KEY, theme === "system" ? null : theme);
       apply();
       notify();

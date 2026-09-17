@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import { createSettings, type SettingsDeps } from "../src/settings";
+import { createSettings, themeColor, type SettingsDeps } from "../src/settings";
 
-function fakeDeps(overrides: { stored?: Record<string, string>; prefersDark?: boolean; throwing?: boolean } = {}) {
+function fakeDeps(overrides: { stored?: Record<string, string>; prefersDark?: boolean; throwing?: boolean; writesThrow?: boolean } = {}) {
   const stored = new Map(Object.entries(overrides.stored ?? {}));
   const mediaListeners: Array<() => void> = [];
   const root = { classList: { toggle: vi.fn() }, lang: "" };
@@ -12,11 +12,11 @@ function fakeDeps(overrides: { stored?: Record<string, string>; prefersDark?: bo
         return stored.get(key) ?? null;
       },
       setItem: (key, value) => {
-        if (overrides.throwing) throw new Error("blocked");
+        if (overrides.throwing || overrides.writesThrow) throw new Error("blocked");
         stored.set(key, value);
       },
       removeItem: (key) => {
-        if (overrides.throwing) throw new Error("blocked");
+        if (overrides.throwing || overrides.writesThrow) throw new Error("blocked");
         stored.delete(key);
       },
     },
@@ -53,7 +53,7 @@ describe("theme", () => {
     expect(stored.has("zf.theme")).toBe(false);
   });
 
-  it("applies the dark class and the theme colour to the document", () => {
+  it("applies the dark class to the document", () => {
     const { deps, root } = fakeDeps();
     const settings = createSettings(deps, "en");
     settings.setTheme("dark");
@@ -92,6 +92,27 @@ describe("theme", () => {
     expect(settings.effectiveTheme()).toBe("light");
     expect(listener).not.toHaveBeenCalled();
   });
+
+  it("lets a choice made this session win over stale storage (asymmetric read/write)", () => {
+    const { deps, root } = fakeDeps({ stored: { "zf.theme": "dark" }, writesThrow: true });
+    const settings = createSettings(deps, "en");
+    settings.setTheme("light");
+    expect(settings.getTheme()).toBe("light");
+    expect(settings.effectiveTheme()).toBe("light");
+    expect(root.classList.toggle).toHaveBeenLastCalledWith("dark", false);
+  });
+
+  it("choosing system after an explicit choice, with writes throwing", () => {
+    const { deps } = fakeDeps({ writesThrow: true });
+    const settings = createSettings(deps, "en");
+    settings.setTheme("dark");
+    expect(settings.getTheme()).toBe("dark");
+    settings.setTheme("system");
+    expect(settings.getTheme()).toBe("system");
+    expect(settings.effectiveTheme()).toBe("light");
+    deps.media.matches = true;
+    expect(settings.effectiveTheme()).toBe("dark");
+  });
 });
 
 describe("language", () => {
@@ -115,6 +136,14 @@ describe("language", () => {
     const { deps } = fakeDeps({ stored: { "zf.lang": "de" } });
     expect(createSettings(deps, "en").getLanguage()).toBe("en");
   });
+
+  it("lets a choice made this session win over stale storage (asymmetric read/write)", () => {
+    const { deps, root } = fakeDeps({ stored: { "zf.lang": "hr" }, writesThrow: true });
+    const settings = createSettings(deps, "en");
+    settings.setLanguage("en");
+    expect(settings.getLanguage()).toBe("en");
+    expect(root.lang).toBe("en");
+  });
 });
 
 describe("blocked storage", () => {
@@ -125,5 +154,12 @@ describe("blocked storage", () => {
     expect(() => settings.setTheme("dark")).not.toThrow();
     expect(settings.getTheme()).toBe("dark");
     expect(settings.effectiveTheme()).toBe("dark");
+  });
+});
+
+describe("themeColor", () => {
+  it("returns the theme color for light and dark", () => {
+    expect(themeColor("light")).toBe("#0369a1");
+    expect(themeColor("dark")).toBe("#020617");
   });
 });
