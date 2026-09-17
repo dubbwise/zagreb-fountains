@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Fountain } from "../src/data/fountains";
+import { setActiveLanguage } from "../src/i18n";
 import { cardHtml, type FountainCardState } from "../src/ui/nearestCard";
 
 const BRITANSKI_TRG: Fountain = {
@@ -77,5 +78,18 @@ describe("cardHtml", () => {
     const html = cardHtml(fountainState({ fountain: { ...BRITANSKI_TRG, location: "<img src=x onerror=alert(1)>" } }));
     expect(html).toContain("&lt;img src=x onerror=alert(1)&gt;");
     expect(html).not.toContain("<img");
+  });
+
+  it("renders in Croatian when that language is active", () => {
+    setActiveLanguage("hr");
+    try {
+      const html = cardHtml(fountainState({ fountain: { ...BRITANSKI_TRG, status: "unverified" } }));
+      expect(html).toContain("Najbliži zdenac");
+      expect(html).toContain("240 m · ~4 min hoda");
+      expect(html).toContain("Status nije potvrđen");
+      expect(html).toContain("Upute");
+    } finally {
+      setActiveLanguage("en");
+    }
   });
 });

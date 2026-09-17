@@ -4,7 +4,7 @@ import { loadFountains, type Fountain } from "./data/fountains";
 import { findNearest, haversineMeters, isNearZagreb, type LatLon, type NearestResult } from "./geo/distance";
 import { watchLocation, type LocationEvent } from "./geo/location";
 import { createFountainMap, type UserPosition } from "./map/map";
-import { strings } from "./strings";
+import { t } from "./i18n";
 import { directionsUrl } from "./ui/directions";
 import { escapeHtml, renderCard, type CardState } from "./ui/nearestCard";
 
@@ -105,8 +105,8 @@ function startLocation(): void {
 
 function showFatal(): void {
   fatalElement.innerHTML = `<div class="flex h-full flex-col items-center justify-center gap-4 bg-slate-100 p-6 text-center dark:bg-slate-950">
-    <p class="text-lg font-medium">${escapeHtml(strings.loadError)}</p>
-    <button type="button" class="rounded-xl bg-sky-700 px-6 py-3 font-semibold text-white dark:bg-sky-600">${escapeHtml(strings.retry)}</button>
+    <p class="text-lg font-medium">${escapeHtml(t().loadError)}</p>
+    <button type="button" class="rounded-xl bg-sky-700 px-6 py-3 font-semibold text-white dark:bg-sky-600">${escapeHtml(t().retry)}</button>
   </div>`;
   fatalElement.classList.remove("hidden");
   fatalElement.querySelector("button")?.addEventListener("click", () => void boot());

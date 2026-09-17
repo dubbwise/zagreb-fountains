@@ -1,0 +1,32 @@
+import type { Strings } from "./en";
+
+export const hr: Strings = {
+  nearestFountain: "Najbliži zdenac",
+  selectedFountain: "Zdenac",
+  directions: "Upute",
+  retry: "Pokušaj ponovno",
+  locating: "Tražim tvoju lokaciju…",
+  enableLocation: "Uključi lokaciju za pronalazak najbližeg zdenca",
+  outsideZagreb: "U tvojoj blizini nema zdenaca. Prikazujem Zagreb.",
+  unverified: "Status nije potvrđen",
+  cemetery: "Groblje — vrijedi radno vrijeme groblja",
+  loadError: "Učitavanje podataka nije uspjelo.",
+  approx: "otprilike",
+  walk: (minutes) => `~${minutes} min hoda`,
+  introTitle: "Zagrebački zdenci",
+  introLede: "Pronađi najbliži javni zdenac s pitkom vodom u Zagrebu, iz otvorenih podataka Grada Zagreba.",
+  introLocationHeading: "Zašto lokacija?",
+  introLocationBody:
+    "Koristi se u tvom pregledniku kako bi se izračunalo koji je zdenac najbliži. Nikamo se ne šalje.",
+  introThemeLabel: "Tema",
+  introThemeSystem: "Sustav",
+  introThemeLight: "Svijetla",
+  introThemeDark: "Tamna",
+  introLanguageLabel: "Jezik",
+  introCreditsHeading: "Zasluge",
+  introCreditsMap: "Karta: Leaflet, © OpenStreetMap suradnici, tamna karta © CARTO.",
+  introCreditsData: "Podaci: Grad Zagreb",
+  introFeedback: "Povratne informacije",
+  introContinue: "Pronađi vodu",
+  introOpen: "O ovoj karti",
+};

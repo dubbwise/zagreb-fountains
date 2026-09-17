@@ -1,6 +1,6 @@
 import type { Fountain } from "../data/fountains";
 import { formatDistance, walkingMinutes } from "../geo/distance";
-import { strings } from "../strings";
+import { t } from "../i18n";
 
 export type FountainCardState = {
   kind: "fountain";
@@ -32,7 +32,7 @@ const badge = (text: string): string =>
   `<span class="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-900 dark:bg-amber-400/15 dark:text-amber-200">${escapeHtml(text)}</span>`;
 
 function fountainHtml({ fountain, distanceM, approx, isNearest, directionsUrl }: FountainCardState): string {
-  const label = isNearest ? strings.nearestFountain : strings.selectedFountain;
+  const label = isNearest ? t().nearestFountain : t().selectedFountain;
   const parts = [
     `<p class="text-xs font-semibold uppercase tracking-wide text-sky-700 dark:text-sky-300">${escapeHtml(label)}</p>`,
     `<h2 class="mt-1 text-lg font-semibold leading-snug">${escapeHtml(fountain.location)}</h2>`,
@@ -41,18 +41,18 @@ function fountainHtml({ fountain, distanceM, approx, isNearest, directionsUrl }:
     parts.push(`<p class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">${escapeHtml(fountain.hint)}</p>`);
   }
   if (distanceM !== null) {
-    const distance = `${approx ? `${strings.approx} ` : ""}${formatDistance(distanceM)}`;
-    const line = `${distance} · ${strings.walk(walkingMinutes(distanceM))}`;
+    const distance = `${approx ? `${t().approx} ` : ""}${formatDistance(distanceM)}`;
+    const line = `${distance} · ${t().walk(walkingMinutes(distanceM))}`;
     parts.push(`<p class="mt-2 font-medium text-slate-800 dark:text-slate-100">${escapeHtml(line)}</p>`);
   }
   const badges: string[] = [];
-  if (fountain.status === "unverified") badges.push(badge(strings.unverified));
-  if (fountain.cemetery) badges.push(badge(strings.cemetery));
+  if (fountain.status === "unverified") badges.push(badge(t().unverified));
+  if (fountain.cemetery) badges.push(badge(t().cemetery));
   if (badges.length > 0) {
     parts.push(`<div class="mt-2 flex flex-wrap gap-2">${badges.join("")}</div>`);
   }
   parts.push(
-    `<a href="${escapeHtml(directionsUrl)}" target="_blank" rel="noopener" class="${BUTTON_CLASS}">${escapeHtml(strings.directions)}</a>`,
+    `<a href="${escapeHtml(directionsUrl)}" target="_blank" rel="noopener" class="${BUTTON_CLASS}">${escapeHtml(t().directions)}</a>`,
   );
   return parts.join("");
 }
@@ -60,13 +60,13 @@ function fountainHtml({ fountain, distanceM, approx, isNearest, directionsUrl }:
 export function cardHtml(state: CardState): string {
   switch (state.kind) {
     case "locating":
-      return panel(message(strings.locating));
+      return panel(message(t().locating));
     case "locationError":
       return panel(
-        `${message(strings.enableLocation)}<button type="button" data-action="retry" class="${BUTTON_CLASS}">${escapeHtml(strings.retry)}</button>`,
+        `${message(t().enableLocation)}<button type="button" data-action="retry" class="${BUTTON_CLASS}">${escapeHtml(t().retry)}</button>`,
       );
     case "outside":
-      return panel(message(strings.outsideZagreb));
+      return panel(message(t().outsideZagreb));
     case "fountain":
       return panel(fountainHtml(state));
   }
