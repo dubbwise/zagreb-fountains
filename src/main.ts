@@ -1,11 +1,13 @@
 import "./style.css";
 import { LOW_ACCURACY_M, RECOMPUTE_DISTANCE_M } from "./config";
 import { loadFountains, type Fountain } from "./data/fountains";
+import { detectLanguage, setActiveLanguage, t } from "./i18n";
 import { findNearest, haversineMeters, isNearZagreb, type LatLon, type NearestResult } from "./geo/distance";
 import { watchLocation, type LocationEvent } from "./geo/location";
 import { createFountainMap, type UserPosition } from "./map/map";
-import { t } from "./i18n";
+import { createSettings, themeColor } from "./settings";
 import { directionsUrl } from "./ui/directions";
+import { renderIntro } from "./ui/intro";
 import { escapeHtml, renderCard, type CardState } from "./ui/nearestCard";
 
 function byId(id: string): HTMLElement {
@@ -14,12 +16,21 @@ function byId(id: string): HTMLElement {
   return element;
 }
 
-const map = createFountainMap(byId("map"), {
-  dark: document.documentElement.classList.contains("dark"),
-  infoLabel: t().introOpen,
-});
+const settings = createSettings(
+  {
+    storage: localStorage,
+    media: window.matchMedia("(prefers-color-scheme: dark)"),
+    root: document.documentElement,
+  },
+  detectLanguage(navigator.language),
+);
+setActiveLanguage(settings.getLanguage());
+
+const map = createFountainMap(byId("map"), { dark: settings.effectiveTheme() === "dark", infoLabel: t().introOpen });
 const cardElement = byId("card");
 const fatalElement = byId("fatal");
+const introElement = byId("intro");
+let locationStarted = false;
 
 let fountains: Fountain[] = [];
 let position: UserPosition | null = null;
@@ -115,6 +126,48 @@ function showFatal(): void {
   fatalElement.querySelector("button")?.addEventListener("click", () => void boot());
 }
 
+function drawIntro(): void {
+  renderIntro(
+    introElement,
+    { theme: settings.getTheme(), language: settings.getLanguage() },
+    {
+      onTheme: (theme) => settings.setTheme(theme),
+      onLanguage: (language) => settings.setLanguage(language),
+      onContinue: closeIntro,
+    },
+  );
+}
+
+function openIntro(): void {
+  introElement.classList.remove("hidden");
+  drawIntro();
+}
+
+/** Continuing starts the location watch once; reopening later must not re-prompt. */
+function closeIntro(): void {
+  introElement.classList.add("hidden");
+  if (locationStarted) return;
+  locationStarted = true;
+  startLocation();
+}
+
+settings.onChange(() => {
+  setActiveLanguage(settings.getLanguage());
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", themeColor(settings.effectiveTheme()));
+  map.setDark(settings.effectiveTheme() === "dark");
+  map.setInfoLabel(t().introOpen);
+  if (!introElement.classList.contains("hidden")) drawIntro();
+  update();
+});
+
+map.onInfoTap(openIntro);
+
+// The spec treats Escape as "continue": same effect, including starting the
+// location watch the first time.
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !introElement.classList.contains("hidden")) closeIntro();
+});
+
 async function boot(): Promise<void> {
   fatalElement.classList.add("hidden");
   try {
@@ -125,7 +178,7 @@ async function boot(): Promise<void> {
     return;
   }
   map.setFountains(fountains);
-  startLocation();
+  update();
 }
 
 map.onFountainTap((fountain) => {
@@ -134,4 +187,5 @@ map.onFountainTap((fountain) => {
   update();
 });
 
+openIntro();
 void boot();
