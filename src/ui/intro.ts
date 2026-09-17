@@ -51,7 +51,7 @@ export function introHtml({ theme, language }: IntroState): string {
   return `<div class="min-h-full bg-slate-100 px-4 py-6 dark:bg-slate-950">
   <div class="mx-auto flex max-w-md flex-col gap-5">
     <header>
-      <h1 class="text-2xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
+      <h1 id="intro-title" class="text-2xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
       <p class="mt-1 text-slate-700 dark:text-slate-300">${escapeHtml(strings.introLede)}</p>
     </header>
 
@@ -61,13 +61,13 @@ export function introHtml({ theme, language }: IntroState): string {
     </section>
 
     <section>
-      <h2 class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">${escapeHtml(strings.introThemeLabel)}</h2>
-      <div class="flex gap-2">${themeChoices}</div>
+      <h2 id="intro-theme-heading" class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">${escapeHtml(strings.introThemeLabel)}</h2>
+      <div class="flex gap-2" role="group" aria-labelledby="intro-theme-heading">${themeChoices}</div>
     </section>
 
     <section>
-      <h2 class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">${escapeHtml(strings.introLanguageLabel)}</h2>
-      <div class="flex gap-2">${languageChoices}</div>
+      <h2 id="intro-language-heading" class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">${escapeHtml(strings.introLanguageLabel)}</h2>
+      <div class="flex gap-2" role="group" aria-labelledby="intro-language-heading">${languageChoices}</div>
     </section>
 
     <section class="text-sm text-slate-600 dark:text-slate-400">

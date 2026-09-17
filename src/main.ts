@@ -26,11 +26,14 @@ const settings = createSettings(
 );
 setActiveLanguage(settings.getLanguage());
 
-const map = createFountainMap(byId("map"), { dark: settings.effectiveTheme() === "dark", infoLabel: t().introOpen });
+const mapElement = byId("map");
+const map = createFountainMap(mapElement, { dark: settings.effectiveTheme() === "dark", infoLabel: t().introOpen });
 const cardElement = byId("card");
 const fatalElement = byId("fatal");
 const introElement = byId("intro");
 let locationStarted = false;
+/** The control that opened the intro, so closeIntro() can return focus to it. */
+let introOpener: Element | null = null;
 
 let fountains: Fountain[] = [];
 let position: UserPosition | null = null;
@@ -138,7 +141,18 @@ function drawIntro(): void {
   );
 }
 
-function openIntro(): void {
+/**
+ * `rememberOpener` is only set when this is called from the ⓘ control: on
+ * first load there is no opener, so focus is left where renderIntro puts it.
+ */
+function openIntro(rememberOpener = false): void {
+  introOpener = rememberOpener ? document.activeElement : null;
+  // #map and #card sit behind the (opaque) intro overlay but are not covered
+  // by it in the accessibility tree without this: inert removes both from
+  // tab order and from screen reader / aria-live announcements while the
+  // dialog is open, which is what "modal" is supposed to mean.
+  mapElement.inert = true;
+  cardElement.inert = true;
   introElement.classList.remove("hidden");
   drawIntro();
 }
@@ -146,6 +160,10 @@ function openIntro(): void {
 /** Continuing starts the location watch once; reopening later must not re-prompt. */
 function closeIntro(): void {
   introElement.classList.add("hidden");
+  mapElement.inert = false;
+  cardElement.inert = false;
+  if (introOpener instanceof HTMLElement && introOpener.isConnected) introOpener.focus();
+  introOpener = null;
   map.refreshSize();
   if (locationStarted) return;
   locationStarted = true;
@@ -161,7 +179,7 @@ settings.onChange(() => {
   update();
 });
 
-map.onInfoTap(openIntro);
+map.onInfoTap(() => openIntro(true));
 
 // The spec treats Escape as "continue": same effect, including starting the
 // location watch the first time.
