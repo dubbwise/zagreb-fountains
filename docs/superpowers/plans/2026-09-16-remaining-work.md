@@ -40,6 +40,20 @@ Repo: **https://github.com/dubbwise/zagreb-fountains** (public)
 - [ ] **Watch for the 60-day schedule disable.** GitHub disables scheduled workflows after 60 days without repository activity, and the refresh commits only when data changes, so the weekly refresh can stop silently. The README warns about this. Consider a calendar reminder to run `gh workflow run refresh-data.yml --ref main` monthly, or re-enable it in the Actions tab when it stops.
 - [ ] **Narrow the refresh workflow's write access** (final review, Minor 7). The refresh job runs `npm ci` install scripts while holding `contents: write` and persisted git credentials, so a compromised dependency could push to the repo. Fix by splitting fetch and validation from the commit step, or by setting `persist-credentials: false` on checkout and pushing with an explicit token only in the commit step.
 
+## 3a. From the v1.1 intro screen work (2026-09-17)
+
+These items came out of the v1.1 whole-branch review and were triaged as non-blocking.
+
+- [ ] **The location prompt still fires after a failed data load.** `src/main.ts` — `closeIntro()` flushes the deferred error screen and then starts the location watch unconditionally, so a first-time visitor whose fountain data fails to load sees the error screen and immediately gets a native permission prompt with no explanatory UI behind it. Pre-existing rather than introduced by v1.1, and the final re-review judged it a fast-follow rather than a blocker. Fix by gating `startLocation()` on a successful data load.
+
+- [ ] **Neither test suite covers Safari**, which is likely the most common browser for this app's audience. Playwright runs Chromium only. One symptom already surfaced and was fixed during v1.1: Safari does not focus a `<button>` on click, which broke the intro's focus restore until it was made explicit. Consider adding a WebKit project to `playwright.config.ts`.
+
+- [ ] **The tile-coverage guard measures a union bounding box** (`e2e/verify.spec.ts`), so it cannot detect a missing tile in the middle of the grid. Judged low risk because Leaflet loads tiles from the centre outward, meaning an interior-only gap is the opposite of the normal failure order. If tightening is ever wanted, also assert the loaded tile count against the expected grid size for the container.
+
+- [ ] **`tests/i18n.test.ts`'s key-parity test duplicates a compile-time guarantee** — `hr: Strings` already fails the build on a missing key. Harmless, and it does catch extra keys the type would not, so it was kept.
+
+- [ ] **`README.md`'s "where a key is set" phrasing is terse** — the Environment section a couple of paragraphs above explains the CARTO key fully, so this is only a cross-reference nicety.
+
 ## 4. Deferred small items (no behaviour risk)
 
 These came out of task reviews, were triaged as non-blocking, and are recorded so they aren't lost.
