@@ -7,8 +7,7 @@ const FEEDBACK_EMAIL = "zg@paperbeatsrock.co";
 const DATASET_URL = "https://data.zagreb.hr/dataset/geoportal_javni_zdenci";
 const LINK_CLASS = "underline";
 
-const CHOICE_CLASS =
-  "flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm font-medium aria-pressed:border-sky-700 aria-pressed:bg-sky-700 aria-pressed:text-white dark:border-gray-600 dark:aria-pressed:border-sky-500 dark:aria-pressed:bg-sky-600";
+const CHOICE_CLASS = "btn-choice";
 
 export interface IntroState {
   theme: Theme;
@@ -48,36 +47,37 @@ export function introHtml({ theme, language }: IntroState): string {
     choice("data-language", "hr", "Hrvatski", language === "hr"),
   ].join("");
 
-  return `<div class="flex min-h-full flex-col bg-gray-100 px-4 py-6 dark:bg-gray-950">
+  // No background here: #intro already paints the surface behind this panel.
+  return `<div class="flex min-h-full flex-col px-4 py-6">
   <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5">
     <header>
       <h1 id="intro-title" class="text-2xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
-      <p class="mt-1 text-gray-700 dark:text-gray-300">${escapeHtml(strings.introLede)}</p>
+      <p class="mt-1 text-ink-muted">${escapeHtml(strings.introLede)}</p>
     </header>
 
     <section>
-      <h2 class="text-sm font-semibold uppercase tracking-wide text-sky-700 dark:text-sky-300">${escapeHtml(strings.introLocationHeading)}</h2>
-      <p class="mt-1 text-gray-700 dark:text-gray-300">${escapeHtml(strings.introLocationBody)}</p>
+      <h2 class="label-caps text-sm text-accent-ink">${escapeHtml(strings.introLocationHeading)}</h2>
+      <p class="mt-1 text-ink-muted">${escapeHtml(strings.introLocationBody)}</p>
     </section>
 
     <section>
-      <h2 id="intro-theme-heading" class="mb-2 text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">${escapeHtml(strings.introThemeLabel)}</h2>
+      <h2 id="intro-theme-heading" class="mb-2 label-caps text-sm text-ink-subtle">${escapeHtml(strings.introThemeLabel)}</h2>
       <div class="flex gap-2" role="group" aria-labelledby="intro-theme-heading">${themeChoices}</div>
     </section>
 
     <section>
-      <h2 id="intro-language-heading" class="mb-2 text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">${escapeHtml(strings.introLanguageLabel)}</h2>
+      <h2 id="intro-language-heading" class="mb-2 label-caps text-sm text-ink-subtle">${escapeHtml(strings.introLanguageLabel)}</h2>
       <div class="flex gap-2" role="group" aria-labelledby="intro-language-heading">${languageChoices}</div>
     </section>
 
-    <section class="text-sm text-gray-600 dark:text-gray-400">
-      <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">${escapeHtml(strings.introCreditsHeading)}</h2>
+    <section class="text-sm text-ink-subtle">
+      <h2 class="label-caps text-sm text-ink-subtle">${escapeHtml(strings.introCreditsHeading)}</h2>
       <p class="mt-1">${creditsMapHtml(strings)}</p>
       <p class="mt-1">${escapeHtml(strings.introCreditsData)} (<a class="${LINK_CLASS}" href="${DATASET_URL}" target="_blank" rel="noopener">data.zagreb.hr</a>)</p>
       <p class="mt-1">${escapeHtml(strings.introFeedback)}: <a class="${LINK_CLASS}" href="mailto:${FEEDBACK_EMAIL}">${FEEDBACK_EMAIL}</a></p>
     </section>
 
-    <button type="button" data-action="continue" class="mt-auto block w-full rounded-xl bg-sky-700 px-4 py-3 text-center font-semibold text-white active:bg-sky-800 dark:bg-sky-600 dark:active:bg-sky-500">${escapeHtml(strings.introContinue)}</button>
+    <button type="button" data-action="continue" class="btn-primary mt-auto">${escapeHtml(strings.introContinue)}</button>
   </div>
 </div>`;
 }

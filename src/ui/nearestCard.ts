@@ -13,8 +13,7 @@ export type FountainCardState = {
 
 export type CardState = { kind: "locating" } | { kind: "locationError" } | { kind: "outside" } | FountainCardState;
 
-const BUTTON_CLASS =
-  "mt-3 block w-full rounded-xl bg-sky-700 px-4 py-3 text-center font-semibold text-white active:bg-sky-800 dark:bg-sky-600 dark:active:bg-sky-500";
+const BUTTON_CLASS = "btn-primary mt-3";
 
 export function escapeHtml(value: string): string {
   return value
@@ -26,24 +25,24 @@ export function escapeHtml(value: string): string {
 }
 
 const panel = (inner: string): string =>
-  `<div class="mx-auto max-w-md rounded-2xl bg-white p-4 shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-900 dark:ring-white/10">${inner}</div>`;
-const message = (text: string): string => `<p class="text-gray-700 dark:text-gray-200">${escapeHtml(text)}</p>`;
+  `<div class="panel">${inner}</div>`;
+const message = (text: string): string => `<p class="text-ink-muted">${escapeHtml(text)}</p>`;
 const badge = (text: string): string =>
   `<span class="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-900 dark:bg-amber-400/15 dark:text-amber-200">${escapeHtml(text)}</span>`;
 
 function fountainHtml({ fountain, distanceM, approx, isNearest, directionsUrl }: FountainCardState): string {
   const label = isNearest ? t().nearestFountain : t().selectedFountain;
   const parts = [
-    `<p class="text-xs font-semibold uppercase tracking-wide text-sky-700 dark:text-sky-300">${escapeHtml(label)}</p>`,
+    `<p class="label-caps text-xs text-accent-ink">${escapeHtml(label)}</p>`,
     `<h2 class="mt-1 text-lg font-semibold leading-snug">${escapeHtml(fountain.location)}</h2>`,
   ];
   if (fountain.hint) {
-    parts.push(`<p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">${escapeHtml(fountain.hint)}</p>`);
+    parts.push(`<p class="mt-0.5 text-sm text-ink-subtle">${escapeHtml(fountain.hint)}</p>`);
   }
   if (distanceM !== null) {
     const distance = `${approx ? `${t().approx} ` : ""}${formatDistance(distanceM)}`;
     const line = `${distance} · ${t().walk(walkingMinutes(distanceM))}`;
-    parts.push(`<p class="mt-2 font-medium text-gray-800 dark:text-gray-100">${escapeHtml(line)}</p>`);
+    parts.push(`<p class="mt-2 font-medium text-ink">${escapeHtml(line)}</p>`);
   }
   const badges: string[] = [];
   if (fountain.status === "unverified") badges.push(badge(t().unverified));
