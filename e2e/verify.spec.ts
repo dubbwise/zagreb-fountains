@@ -3,8 +3,26 @@ import { expect, test, type Page } from "@playwright/test";
 const SCREENSHOTS = "e2e/screenshots";
 const WALK_LINE = /(\d+ m|\d+\.\d km) · ~\d+ min walk/;
 
-async function openApp(page: Page): Promise<void> {
+/** Records watchPosition calls so a test can prove the prompt was not fired. */
+async function spyOnGeolocation(page: Page): Promise<void> {
+  await page.addInitScript(() => {
+    const target = navigator.geolocation;
+    const original = target.watchPosition.bind(target);
+    (window as unknown as { __watchCalls: number }).__watchCalls = 0;
+    target.watchPosition = ((...args: Parameters<Geolocation["watchPosition"]>) => {
+      (window as unknown as { __watchCalls: number }).__watchCalls += 1;
+      return original(...args);
+    }) as Geolocation["watchPosition"];
+  });
+}
+
+async function openApp(page: Page, options: { skipIntro?: boolean } = {}): Promise<void> {
+  await spyOnGeolocation(page);
   await page.goto("/");
+  await expect(page.locator("#intro")).toBeVisible();
+  if (options.skipIntro === false) return;
+  await page.getByRole("button", { name: /Find water|Pronađi vodu/ }).click();
+  await expect(page.locator("#intro")).toBeHidden();
   await expect(page.locator("path.leaflet-interactive")).not.toHaveCount(0);
 }
 
@@ -135,9 +153,96 @@ test.describe("with the system set to dark", () => {
       "src",
       /cartocdn\.com\/dark_all\/.+\.png\?key=.+/,
     );
-    await expect(page.locator(".leaflet-control-attribution")).toContainText("CARTO");
+    // The attribution bar no longer exists: Task 5 replaced it with the ⓘ
+    // control, whose intro carries the full credits (global constraints).
+    // Re-open it here to confirm CARTO's credit is still reachable, then
+    // close it again before the screenshot below.
+    await page.getByRole("button", { name: /About this map|O ovoj karti/ }).click();
+    await expect(page.locator("#intro")).toContainText("CARTO");
+    await page.getByRole("button", { name: "Find water" }).click();
+    await expect(page.locator("#intro")).toBeHidden();
 
     await waitForTiles(page);
     await page.screenshot({ path: `${SCREENSHOTS}/5-dark.png` });
+  });
+});
+
+test.describe("the intro screen", () => {
+  test.use({ geolocation: { latitude: 45.8131, longitude: 15.9772, accuracy: 20 }, permissions: ["geolocation"] });
+
+  test("explains the app and holds the location prompt until you continue", async ({ page }) => {
+    await openApp(page, { skipIntro: false });
+    const intro = page.locator("#intro");
+    await expect(intro).toContainText("Why your location?");
+    await expect(intro).toContainText("© OpenStreetMap contributors");
+    await expect(intro.getByRole("link", { name: "zg@paperbeatsrock.co" })).toHaveAttribute(
+      "href",
+      "mailto:zg@paperbeatsrock.co",
+    );
+    expect(await page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls)).toBe(0);
+    await page.screenshot({ path: `${SCREENSHOTS}/6-intro-light.png` });
+
+    await page.getByRole("button", { name: "Find water" }).click();
+    await expect(intro).toBeHidden();
+    await expect
+      .poll(() => page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls))
+      .toBeGreaterThan(0);
+    await expect(page.locator("#card")).toContainText("Nearest fountain");
+  });
+
+  test("reopens from the map without asking for location again", async ({ page }) => {
+    await openApp(page);
+    const callsAfterContinue = await page.evaluate(
+      () => (window as unknown as { __watchCalls: number }).__watchCalls,
+    );
+    await page.getByRole("button", { name: /About this map|O ovoj karti/ }).click();
+    await expect(page.locator("#intro")).toBeVisible();
+    await page.getByRole("button", { name: "Find water" }).click();
+    await expect(page.locator("#intro")).toBeHidden();
+    expect(await page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls)).toBe(
+      callsAfterContinue,
+    );
+  });
+});
+
+test.describe("theme override", () => {
+  test.use({
+    colorScheme: "light",
+    geolocation: { latitude: 45.8131, longitude: 15.9772, accuracy: 20 },
+    permissions: ["geolocation"],
+  });
+
+  test("Dark wins over a light system setting", async ({ page }) => {
+    await openApp(page, { skipIntro: false });
+    await page.getByRole("button", { name: "Dark" }).click();
+    await expect(page.locator("html")).toHaveClass(/dark/);
+    // renderIntro re-renders the panel on every settings change, so focus must
+    // be restored to the control the user just used rather than jumping to Continue.
+    await expect(page.getByRole("button", { name: "Dark" })).toBeFocused();
+    await page.screenshot({ path: `${SCREENSHOTS}/7-intro-dark.png` });
+
+    await page.getByRole("button", { name: "Find water" }).click();
+    await expect(page.locator(".leaflet-tile").first()).toHaveAttribute("src", /cartocdn\.com\/dark_all/);
+  });
+});
+
+test.describe("language", () => {
+  test.use({ geolocation: { latitude: 45.8131, longitude: 15.9772, accuracy: 20 }, permissions: ["geolocation"] });
+
+  test("Hrvatski translates the card and survives a reload", async ({ page }) => {
+    await openApp(page, { skipIntro: false });
+    await page.getByRole("button", { name: "Hrvatski" }).click();
+    await expect(page.locator("#intro")).toContainText("Zašto lokacija?");
+    await page.getByRole("button", { name: "Pronađi vodu" }).click();
+
+    const card = page.locator("#card");
+    await expect(card).toContainText("Najbliži zdenac");
+    await expect(card).toContainText(/\d+ m · ~\d+ min hoda/);
+    await waitForTiles(page);
+    await page.screenshot({ path: `${SCREENSHOTS}/8-croatian.png` });
+
+    await page.reload();
+    await expect(page.locator("#intro")).toContainText("Pronađi vodu");
+    await expect(page.locator("html")).toHaveAttribute("lang", "hr");
   });
 });
