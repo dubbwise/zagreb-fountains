@@ -26,18 +26,111 @@ async function openApp(page: Page, options: { skipIntro?: boolean } = {}): Promi
   await expect(page.locator("path.leaflet-interactive")).not.toHaveCount(0);
 }
 
-/** Screenshots taken mid-fade show a patchwork of half-loaded tiles. */
+interface TileCoverageGaps {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+}
+
+/**
+ * Waits until #map's grid of loaded tiles genuinely covers the container,
+ * rather than until whatever tiles happen to exist so far have finished
+ * loading. With only the first couple of tiles requested, "every existing
+ * tile is loaded" is trivially true and resolves before the rest of the grid
+ * (typically a dozen tiles at this viewport) has even been requested,
+ * leaving a screenshot of a half-built map.
+ */
 async function waitForTiles(page: Page): Promise<void> {
   await page
     .waitForFunction(
       () => {
-        const tiles = Array.from(document.querySelectorAll(".leaflet-tile"));
-        return tiles.length > 0 && tiles.every((tile) => tile.classList.contains("leaflet-tile-loaded"));
+        const container = document.querySelector("#map");
+        if (!container) return false;
+        const containerRect = container.getBoundingClientRect();
+        const tiles = Array.from(document.querySelectorAll(".leaflet-tile.leaflet-tile-loaded"));
+        if (tiles.length === 0) return false;
+        let left = Infinity;
+        let right = -Infinity;
+        let top = Infinity;
+        let bottom = -Infinity;
+        for (const tile of tiles) {
+          const rect = tile.getBoundingClientRect();
+          const clippedLeft = Math.max(rect.left, containerRect.left);
+          const clippedRight = Math.min(rect.right, containerRect.right);
+          const clippedTop = Math.max(rect.top, containerRect.top);
+          const clippedBottom = Math.min(rect.bottom, containerRect.bottom);
+          if (clippedRight <= clippedLeft || clippedBottom <= clippedTop) continue;
+          left = Math.min(left, clippedLeft);
+          right = Math.max(right, clippedRight);
+          top = Math.min(top, clippedTop);
+          bottom = Math.max(bottom, clippedBottom);
+        }
+        if (left === Infinity) return false;
+        const TOLERANCE = 2;
+        return (
+          left - containerRect.left <= TOLERANCE &&
+          containerRect.right - right <= TOLERANCE &&
+          top - containerRect.top <= TOLERANCE &&
+          containerRect.bottom - bottom <= TOLERANCE
+        );
       },
       null,
       { timeout: 15_000 },
     )
     .catch(() => {});
+}
+
+/**
+ * Measures, in CSS pixels, how far the union of loaded tiles falls short of
+ * covering each edge of the #map container. Zero or negative means that edge
+ * is fully covered; a positive value is the size of the visible gap.
+ */
+async function measureTileCoverageGaps(page: Page): Promise<TileCoverageGaps> {
+  return page.evaluate(() => {
+    const container = document.querySelector("#map");
+    if (!container) return { left: Infinity, right: Infinity, top: Infinity, bottom: Infinity };
+    const containerRect = container.getBoundingClientRect();
+    const tiles = Array.from(document.querySelectorAll(".leaflet-tile.leaflet-tile-loaded"));
+    if (tiles.length === 0) {
+      return {
+        left: containerRect.width,
+        right: containerRect.width,
+        top: containerRect.height,
+        bottom: containerRect.height,
+      };
+    }
+    let left = Infinity;
+    let right = -Infinity;
+    let top = Infinity;
+    let bottom = -Infinity;
+    for (const tile of tiles) {
+      const rect = tile.getBoundingClientRect();
+      const clippedLeft = Math.max(rect.left, containerRect.left);
+      const clippedRight = Math.min(rect.right, containerRect.right);
+      const clippedTop = Math.max(rect.top, containerRect.top);
+      const clippedBottom = Math.min(rect.bottom, containerRect.bottom);
+      if (clippedRight <= clippedLeft || clippedBottom <= clippedTop) continue;
+      left = Math.min(left, clippedLeft);
+      right = Math.max(right, clippedRight);
+      top = Math.min(top, clippedTop);
+      bottom = Math.max(bottom, clippedBottom);
+    }
+    if (left === Infinity) {
+      return {
+        left: containerRect.width,
+        right: containerRect.width,
+        top: containerRect.height,
+        bottom: containerRect.height,
+      };
+    }
+    return {
+      left: left - containerRect.left,
+      right: containerRect.right - right,
+      top: top - containerRect.top,
+      bottom: containerRect.bottom - bottom,
+    };
+  });
 }
 
 test.describe("at Ban Jelačić Square", () => {
@@ -53,6 +146,14 @@ test.describe("at Ban Jelačić Square", () => {
       /^https:\/\/www\.google\.com\/maps\/dir\/\?api=1&destination=45\.\d{6},15\.\d{6}&travelmode=walking$/,
     );
     await waitForTiles(page);
+    const gaps = await measureTileCoverageGaps(page);
+    const TOLERANCE = 2;
+    expect(
+      Math.max(gaps.left, gaps.right, gaps.top, gaps.bottom),
+      `basemap should fully cover the map container; measured gaps in px — ` +
+        `left: ${gaps.left.toFixed(1)}, right: ${gaps.right.toFixed(1)}, ` +
+        `top: ${gaps.top.toFixed(1)}, bottom: ${gaps.bottom.toFixed(1)}`,
+    ).toBeLessThanOrEqual(TOLERANCE);
     await page.screenshot({ path: `${SCREENSHOTS}/1-ban-jelacic.png` });
   });
 });
