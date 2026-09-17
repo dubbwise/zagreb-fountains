@@ -159,7 +159,7 @@ describe("blocked storage", () => {
 
 describe("themeColor", () => {
   it("returns the theme color for light and dark", () => {
-    expect(themeColor("light")).toBe("#0369a1");
-    expect(themeColor("dark")).toBe("#111827");
+    expect(themeColor("light")).toBe("#3376b8");
+    expect(themeColor("dark")).toBe("#292929");
   });
 });

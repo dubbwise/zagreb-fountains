@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="Find the nearest public drinking fountain in Zagreb." />
-    <meta name="theme-color" content="#0369a1" />
+    <meta name="theme-color" content="#3376b8" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>"
@@ -23,7 +23,7 @@
       var dark = storedTheme === "dark" || (storedTheme !== "light" && prefersDark);
       document.documentElement.classList.toggle("dark", dark);
       var themeMeta = document.querySelector('meta[name="theme-color"]');
-      if (themeMeta) themeMeta.setAttribute("content", dark ? "#111827" : "#0369a1");
+      if (themeMeta) themeMeta.setAttribute("content", dark ? "#292929" : "#3376b8");
       var storedLanguage = null;
       try {
         storedLanguage = localStorage.getItem("zf.lang");
@@ -37,7 +37,7 @@
     <div id="map" class="absolute inset-0"></div>
     <div
       id="intro"
-      class="absolute inset-0 z-[1500] overflow-y-auto bg-surface"
+      class="absolute inset-0 z-[1500] overflow-y-auto bg-surface/80"
       role="dialog"
       aria-modal="true"
       aria-labelledby="intro-title"

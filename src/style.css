@@ -6,32 +6,61 @@
    generated utilities reference these variables rather than bake in a colour,
    so `bg-surface` alone follows the theme and needs no `dark:` twin at the use
    site. To restyle the app, change a value here — not the markup. */
+/* Palette (sampled from the supplied swatches):
+     blue   #3376b8   indigo #3f448f   sky   #5dbeec   green #4b9759
+     mint   #84c086   gold   #d9ad60   sand  #ead4a5   white #ffffff
+     grey   #aaabaf   dgrey  #4c4c4c   black #292929
+
+   The palette has no light grey between white and #aaabaf, and no blue dark
+   enough to carry small text, so a few values below are mixes of two palette
+   members rather than swatches themselves — each is marked. Every
+   text-on-background pair in both themes was measured at 4.5:1 or better. */
 :root {
-  --surface: var(--color-gray-100); /* page and full-screen overlays */
+  /* Neutrals */
+  --surface: #f3f3f4; /* page + overlays — white mixed 14% toward grey */
   --surface-raised: #ffffff; /* the card floating over the map */
-  --body-strong: var(--color-gray-900);
-  --body: var(--color-gray-700);
-  --body-subtle: var(--color-gray-500);
-  --accent: var(--color-sky-700); /* primary buttons, pressed choices */
-  --accent-active: var(--color-sky-800); /* those same buttons, held down */
-  --accent-ink: var(--color-sky-700); /* accent used as text on a surface */
-  --hairline: var(--color-gray-300); /* choice button borders */
-  --edge: rgb(15 23 42 / 5%); /* the card's 1px ring */
+  --body-strong: #292929; /* palette black: headings, emphasised text */
+  --body: #4c4c4c; /* palette dark grey: supporting prose */
+  --body-subtle: #68686a; /* dgrey mixed 30% toward grey — 5.01:1 on surface */
+  --hairline: #dbdcdd; /* white mixed 42% toward grey: choice borders */
+  --edge: rgb(41 41 41 / 8%); /* the card's 1px ring */
+  /* Ring around the "you are here" dot. It carries the dot's visibility, so it
+     inverts per theme: a white ring measures 1.0-1.15 against pale OSM tiles,
+     which is no ring at all. */
+  --user-ring: #292929;
+
+  /* Brand */
+  --accent: #3376b8; /* palette blue: primary buttons, pressed choices */
+  --accent-active: #316599; /* blue mixed 22% toward black — held down */
+  --accent-ink: #326ba4; /* blue darkened 14%: raw blue is only 4.28:1 as text */
+
+  /* Semantic */
+  --badge-surface: #ead4a5; /* palette sand */
+  --badge-ink: #6c5b3e; /* gold mixed 62% toward black */
 }
 
 .dark {
-  /* One step up from near-black: gray-950/900 read as pure black on a phone
-     outdoors, which is where this app gets used. */
-  --surface: var(--color-gray-900);
-  --surface-raised: var(--color-gray-800);
-  --body-strong: var(--color-gray-100);
-  --body: var(--color-gray-300);
-  --body-subtle: var(--color-gray-400);
-  --accent: var(--color-sky-600);
-  --accent-active: var(--color-sky-500);
-  --accent-ink: var(--color-sky-300);
-  --hairline: var(--color-gray-700);
+  /* Neutrals — the palette's own dark end, which sits lighter than the
+     near-black this replaced, keeping the earlier "not pure black" fix. */
+  --surface: #292929; /* palette black */
+  --surface-raised: #343434; /* black mixed 30% toward dark grey */
+  --body-strong: #f6f7f7; /* white mixed 10% toward grey */
+  --body: #d0d1d3; /* white mixed 55% toward grey */
+  --body-subtle: #aaabaf; /* palette grey — 5.43:1 on the card */
+  --hairline: #4c4c4c; /* palette dark grey */
   --edge: rgb(255 255 255 / 10%);
+  --user-ring: #f6f7f7; /* white ring works here: the basemap is dark */
+
+  /* Brand — accent stays the palette blue in both themes on purpose: it is
+     the only blue here that carries white text at 4.5:1. The palette's sky
+     takes over as accent *text*, where it reads 5.95:1 on the card. */
+  --accent: #3376b8;
+  --accent-active: #316599;
+  --accent-ink: #5dbeec; /* palette sky */
+
+  /* Semantic */
+  --badge-surface: rgb(217 173 96 / 18%); /* palette gold, held back */
+  --badge-ink: #ead4a5; /* palette sand */
 }
 
 @theme inline {
@@ -73,6 +102,13 @@
   @apply font-semibold uppercase tracking-wide;
 }
 
+/** Status pill on the fountain card ("not confirmed", "cemetery"). */
+@utility badge {
+  @apply rounded-full px-2.5 py-1 text-xs font-medium;
+  background: var(--badge-surface);
+  color: var(--badge-ink);
+}
+
 /* "You are here" marker: a solid dot with a white ring, plus a halo that pulses
    so it never reads as just another fountain circle. Two spans rather than a
    pseudo-element, so paint order puts the halo behind the dot without relying
@@ -85,7 +121,7 @@
   position: absolute;
   inset: -6px;
   border-radius: 9999px;
-  background: rgba(235, 116, 37, 0.4);
+  background: rgb(217 173 96 / 45%);
   animation: user-dot-pulse 2s ease-out infinite;
 }
 
@@ -93,10 +129,10 @@
   position: absolute;
   inset: 0;
   box-sizing: border-box;
-  border: 3px solid #ffffff;
+  border: 3px solid var(--user-ring);
   border-radius: 9999px;
-  background: #e6870b;
-  box-shadow: 0 1px 4px rgb(15 23 42 / 45%);
+  background: #d9ad60;
+  box-shadow: 0 1px 4px rgb(41 41 41 / 45%);
 }
 
 @keyframes user-dot-pulse {
@@ -137,19 +173,19 @@
   /* Shown while tiles load, so it wants to sit close to the lifted basemap
      rather than flash darker than the surfaces around it. */
   .leaflet-container.leaflet-container {
-    background: #1e293b;
+    background: #333333;
   }
 
   .leaflet-container .leaflet-bar a,
   .leaflet-container .leaflet-bar a:hover {
-    background: #273549;
-    color: #e2e8f0;
-    border-bottom-color: #3d4c63;
+    background: #3d3d3d;
+    color: #f6f7f7;
+    border-bottom-color: #4c4c4c;
   }
 
   .leaflet-container .leaflet-bar a.leaflet-disabled {
-    background: #1e293b;
-    color: #7b899e;
+    background: #333333;
+    color: #8a8a8a;
   }
 
   /* CARTO's dark_all renders close to black: measured median luminance of the

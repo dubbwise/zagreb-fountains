@@ -28,7 +28,7 @@ const panel = (inner: string): string =>
   `<div class="panel">${inner}</div>`;
 const message = (text: string): string => `<p class="text-body">${escapeHtml(text)}</p>`;
 const badge = (text: string): string =>
-  `<span class="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-900 dark:bg-amber-400/15 dark:text-amber-200">${escapeHtml(text)}</span>`;
+  `<span class="badge">${escapeHtml(text)}</span>`;
 
 function fountainHtml({ fountain, distanceM, approx, isNearest, directionsUrl }: FountainCardState): string {
   const label = isNearest ? t().nearestFountain : t().selectedFountain;

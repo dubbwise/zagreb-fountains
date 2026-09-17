@@ -42,9 +42,9 @@ export interface FountainMap {
 
 const FOUNTAIN_RADIUS = 9;
 const HIGHLIGHT_RADIUS = 13;
-// Lime rather than amber: it stays clear of the orange "you are here" dot and
-// reads on both basemaps.
-const HIGHLIGHT_STYLE: L.PathOptions = { color: "#a3e635", weight: 4 };
+// Palette green: it stays clear of the blue fountain fills and the gold
+// "you are here" dot, and reads on both basemaps.
+const HIGHLIGHT_STYLE: L.PathOptions = { color: "#4b9759", weight: 4 };
 
 /** Styled in style.css: a white-ringed dot with a pulsing halo. */
 const USER_ICON = L.divIcon({
@@ -55,8 +55,10 @@ const USER_ICON = L.divIcon({
 });
 
 function fountainStyle(fountain: Fountain, dark: boolean): L.PathOptions {
-  const working = dark ? "#38bdf8" : "#0369a1";
-  const unverified = dark ? "#64748b" : "#94a3b8";
+  // Palette sky/blue for confirmed fountains, palette greys for unconfirmed:
+  // status reads as saturation, so it survives being seen at a glance outdoors.
+  const working = dark ? "#5dbeec" : "#3376b8";
+  const unverified = dark ? "#8a8b8f" : "#aaabaf";
   return {
     color: "#ffffff",
     weight: 2,
@@ -174,7 +176,10 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
       } else {
         accuracyCircle = L.circle(latLng, {
           radius: position.accuracyM,
-          color: "#2563eb",
+          // Gold, matching the user dot: on this palette blue means "fountain",
+          // so the accuracy ring belongs to the same family as the position it
+          // describes rather than to the markers it sits among.
+          color: "#d9ad60",
           weight: 1,
           fillOpacity: 0.1,
           interactive: false,

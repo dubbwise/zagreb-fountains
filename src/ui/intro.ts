@@ -48,8 +48,8 @@ export function introHtml({ theme, language }: IntroState): string {
   ].join("");
 
   // No background here: #intro already paints the surface behind this panel.
-  return `<div class="flex min-h-full flex-col px-4 py-6">
-  <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5">
+  return `<div class="flex min-h-full flex-col p-8">
+  <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5 bg-surface p-12 rounded-xl ring-12 ring-white/10">
     <header>
       <h1 id="intro-title" class="text-2xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
       <p class="mt-1 text-body">${escapeHtml(strings.introLede)}</p>
