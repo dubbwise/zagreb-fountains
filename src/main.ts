@@ -34,6 +34,13 @@ const introElement = byId("intro");
 let locationStarted = false;
 /** The control that opened the intro, so closeIntro() can return focus to it. */
 let introOpener: Element | null = null;
+/**
+ * Set when a fetch failure happens while the intro is still open: #fatal
+ * (z-2000) would otherwise cover #intro (z-1500) immediately, so a
+ * first-time visitor never sees the explainer or the credits. Flushed once
+ * the intro closes.
+ */
+let fatalPending = false;
 
 let fountains: Fountain[] = [];
 let position: UserPosition | null = null;
@@ -165,6 +172,10 @@ function closeIntro(): void {
   if (introOpener instanceof HTMLElement && introOpener.isConnected) introOpener.focus();
   introOpener = null;
   map.refreshSize();
+  if (fatalPending) {
+    fatalPending = false;
+    showFatal();
+  }
   if (locationStarted) return;
   locationStarted = true;
   startLocation();
@@ -184,7 +195,13 @@ map.onInfoTap(() => openIntro(true));
 // The spec treats Escape as "continue": same effect, including starting the
 // location watch the first time.
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !introElement.classList.contains("hidden")) closeIntro();
+  if (
+    event.key === "Escape" &&
+    !introElement.classList.contains("hidden") &&
+    fatalElement.classList.contains("hidden")
+  ) {
+    closeIntro();
+  }
 });
 
 async function boot(): Promise<void> {
@@ -193,7 +210,8 @@ async function boot(): Promise<void> {
     fountains = await loadFountains(`${import.meta.env.BASE_URL}data/fountains.json`);
   } catch (error) {
     console.error(error);
-    showFatal();
+    if (introElement.classList.contains("hidden")) showFatal();
+    else fatalPending = true;
     return;
   }
   map.setFountains(fountains);

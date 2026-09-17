@@ -85,7 +85,10 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
   const InfoControl = L.Control.extend({
     onAdd(): HTMLElement {
       const container = L.DomUtil.create("div", "leaflet-bar");
-      const link = L.DomUtil.create("a", "", container);
+      // Distinct from Leaflet's own zoom-button classes so the touch-target
+      // CSS in style.css can grow this control without also growing the
+      // zoom buttons, which share the same leaflet-bar and role="button".
+      const link = L.DomUtil.create("a", "leaflet-bar-info", container);
       link.href = "#";
       link.textContent = "ⓘ";
       link.setAttribute("role", "button");

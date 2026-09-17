@@ -49,7 +49,7 @@ export function introHtml({ theme, language }: IntroState): string {
   ].join("");
 
   return `<div class="min-h-full bg-slate-100 px-4 py-6 dark:bg-slate-950">
-  <div class="mx-auto flex max-w-md flex-col gap-5">
+  <div class="mx-auto flex min-h-full max-w-md flex-col gap-5">
     <header>
       <h1 id="intro-title" class="text-2xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
       <p class="mt-1 text-slate-700 dark:text-slate-300">${escapeHtml(strings.introLede)}</p>
@@ -77,7 +77,7 @@ export function introHtml({ theme, language }: IntroState): string {
       <p class="mt-1">${escapeHtml(strings.introFeedback)}: <a class="${LINK_CLASS}" href="mailto:${FEEDBACK_EMAIL}">${FEEDBACK_EMAIL}</a></p>
     </section>
 
-    <button type="button" data-action="continue" class="sticky bottom-0 block w-full rounded-xl bg-sky-700 px-4 py-3 text-center font-semibold text-white active:bg-sky-800 dark:bg-sky-600 dark:active:bg-sky-500">${escapeHtml(strings.introContinue)}</button>
+    <button type="button" data-action="continue" class="mt-auto block w-full rounded-xl bg-sky-700 px-4 py-3 text-center font-semibold text-white active:bg-sky-800 dark:bg-sky-600 dark:active:bg-sky-500">${escapeHtml(strings.introContinue)}</button>
   </div>
 </div>`;
 }
@@ -103,10 +103,20 @@ export function renderIntro(
 
   container.innerHTML = introHtml(state);
   for (const button of container.querySelectorAll<HTMLButtonElement>("[data-theme]")) {
-    button.addEventListener("click", () => handlers.onTheme(button.dataset.theme as Theme));
+    // Safari does not focus a <button> on click, so document.activeElement
+    // would otherwise stay <body> and the restore logic above would have
+    // nothing to go on. Focusing explicitly records the intent regardless of
+    // browser click-focus behaviour, before the settings change re-renders.
+    button.addEventListener("click", () => {
+      button.focus();
+      handlers.onTheme(button.dataset.theme as Theme);
+    });
   }
   for (const button of container.querySelectorAll<HTMLButtonElement>("[data-language]")) {
-    button.addEventListener("click", () => handlers.onLanguage(button.dataset.language as Language));
+    button.addEventListener("click", () => {
+      button.focus();
+      handlers.onLanguage(button.dataset.language as Language);
+    });
   }
   const continueButton = container.querySelector<HTMLButtonElement>('[data-action="continue"]');
   continueButton?.addEventListener("click", handlers.onContinue);

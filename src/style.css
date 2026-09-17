@@ -50,6 +50,19 @@
    buttons stay white on the dark basemap, and the container flashes light grey
    while tiles load. leaflet.css is bundled after this file, so the theme comes
    from the `.dark` class on <html> rather than a media query. */
+/* Leaflet's .leaflet-bar a is ~26-30px, well under the 44px touch-target
+   minimum. The ⓘ control is the only route to the legally required OSM/CARTO
+   credits, so it needs a real tappable area, not just a bigger glyph.
+   .leaflet-bar-info is a class only this control carries (see map.ts), so
+   the zoom buttons' own footprint stays untouched. */
+.leaflet-bar-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+
 .dark {
   /* leaflet.css is bundled after this file, so these selectors are deliberately
      one step more specific than Leaflet's own — otherwise source order wins and
