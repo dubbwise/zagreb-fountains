@@ -65,7 +65,7 @@ export function introHtml({ theme, language, lastCheckedAt }: IntroState): strin
       ? `<span>${escapeHtml(strings.introLastUpdated(formatCheckedAt(lastCheckedAt, language)))}</span>`
       : "";
 
-  return  `<div class="flex min-h-full flex-col md:p-8">
+  return `<div class="flex min-h-full flex-col md:p-8">
   <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5 bg-surface p-6 md:p-12 rounded-lg ring-1 md:ring-12 ring-edge">
     
     <header>

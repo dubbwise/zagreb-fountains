@@ -10,7 +10,7 @@ describe("introHtml", () => {
       language: "en",
       lastCheckedAt: "2026-09-15T15:40:55.478Z",
     });
-    expect(html).toContain("Find the nearest public water point in Zagreb");
+    expect(html).toContain("Find public water points in Zagreb");
     expect(html).toContain('id="intro-title"');
     expect(html).toContain("intro-title-mask");
     expect(html).toContain("istockphoto-496241260-612x612.jpg");
@@ -43,7 +43,7 @@ describe("introHtml", () => {
         language: "hr",
         lastCheckedAt: "2026-09-15T15:40:55.478Z",
       });
-      expect(html).toContain("Pronađi najbliži zdenac s pitkom vodom u Zagrebu");
+      expect(html).toContain("Pronađi zdenace s pitkom vodom u Zagrebu");
       expect(html).toContain("Pronađi najbliži zdenac");
       expect(html).toContain("Zadnja provjera:");
       expect(html).toContain(

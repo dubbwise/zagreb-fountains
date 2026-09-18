@@ -34,7 +34,8 @@ export const en: Strings = {
   walk: (minutes) => `~${minutes} min walk`,
   introLanguage: "Language",
   introTitle: "Find public water points in Zagreb",
-  introLocationBody: "Allow location in your browser to work out which water point is closest. It is never sent anywhere.",
+  introLocationBody:
+    "Allow location in your browser to work out which water point is closest. It is never sent anywhere.",
   introLastUpdated: (date) => `Last updated: ${date}`,
   introContinue: "Find nearest water point",
   introOpen: "Show intro screen",

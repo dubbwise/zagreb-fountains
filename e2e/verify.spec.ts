@@ -269,7 +269,7 @@ test.describe("with the system set to dark", () => {
     // control, whose intro carries the full credits (global constraints).
     // Re-open it here to confirm CARTO's credit is still reachable, then
     // close it again before the screenshot below.
-    await page.getByRole("button", { name: "About this map" }).click();
+    await page.getByRole("button", { name: "Show intro screen" }).click();
     await expect(page.locator("#intro")).toContainText("CARTO");
     await page.getByRole("button", { name: "Find nearest water point" }).click();
     await expect(page.locator("#intro")).toBeHidden();
@@ -285,7 +285,9 @@ test.describe("the intro screen", () => {
   test("explains the app and holds the location prompt until you continue", async ({ page }) => {
     await openApp(page, { skipIntro: false });
     const intro = page.locator("#intro");
-    await expect(intro).toContainText("Why your location?");
+    // The separate "Why your location?" heading is gone; the explanation now
+    // lives in introLocationBody alone.
+    await expect(intro).toContainText("It is never sent anywhere.");
     await expect(intro).toContainText(/OpenStreetMap/);
     await expect(intro.getByRole("link", { name: "zg@paperbeatsrock.co" })).toHaveAttribute(
       "href",
@@ -305,7 +307,7 @@ test.describe("the intro screen", () => {
   test("reopens from the map without asking for location again", async ({ page }) => {
     await openApp(page);
     const callsAfterContinue = await page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls);
-    await page.getByRole("button", { name: "About this map" }).click();
+    await page.getByRole("button", { name: "Show intro screen" }).click();
     await expect(page.locator("#intro")).toBeVisible();
     await page.getByRole("button", { name: "Find nearest water point" }).click();
     await expect(page.locator("#intro")).toBeHidden();
@@ -342,7 +344,7 @@ test.describe("language", () => {
   test("Hrvatski translates the card and survives a reload", async ({ page }) => {
     await openApp(page, { skipIntro: false });
     await page.getByRole("button", { name: "Hrvatski" }).click();
-    await expect(page.locator("#intro")).toContainText("Zašto lokacija?");
+    await expect(page.locator("#intro")).toContainText("Lokacija se ne šalje nikamo.");
     await page.getByRole("button", { name: "Pronađi najbliži zdenac" }).click();
 
     const card = page.locator("#card");
