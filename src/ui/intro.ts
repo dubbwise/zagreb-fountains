@@ -65,7 +65,7 @@ export function introHtml({ theme, language }: IntroState): string {
 
   // No background here: #intro already paints the surface behind this panel.
   return `<div class="flex min-h-full flex-col p-8">
-  <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5 bg-surface p-6 rounded-lg ring-12 ring-edge">
+  <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5 bg-surface p-12 rounded-lg ring-12 ring-edge">
     <section>
       <div class="flex items-center justify-between gap-2">
         <div class="flex gap-2" role="group" aria-label="${escapeHtml(strings.introLanguageLabel)}">${languageChoices}</div>
@@ -74,7 +74,7 @@ export function introHtml({ theme, language }: IntroState): string {
     </section>
 
     <header class="mt-4">
-      <h1 id="intro-title" class="text-3xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
+      <h1 id="intro-title" class="text-5xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
     </header>
 
     <button type="button" data-action="continue" class="btn-primary mt-4">${escapeHtml(strings.introContinue)}</button>
