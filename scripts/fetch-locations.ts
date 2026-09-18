@@ -1,16 +1,16 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
-import type { Snapshot } from "../src/data/fountains";
+import type { Snapshot } from "../src/data/locations";
 import {
   assertCountPlausible,
   buildSnapshot,
   normalizeFeatures,
-  sameFountains,
+  sameLocations,
   selectGeoJsonResource,
-} from "./lib/fountain-data";
+} from "./lib/location-data";
 
 const PACKAGE_SHOW_URL = "https://data.zagreb.hr/api/3/action/package_show?id=geoportal_javni_zdenci";
-const OUTPUT_PATH = "public/data/fountains.json";
+const OUTPUT_PATH = "public/data/locations.json";
 const REQUEST_HEADERS = { "User-Agent": "zagreb-fountains-data-refresh/1.0", Accept: "application/json" };
 
 async function getJson(url: string): Promise<unknown> {
@@ -31,37 +31,37 @@ async function readPreviousSnapshot(): Promise<Snapshot | null> {
 async function main(): Promise<void> {
   const resource = selectGeoJsonResource(await getJson(PACKAGE_SHOW_URL));
   console.log(`Downloading ${resource.url}`);
-  const { fountains, excluded, unrecognizedStatuses } = normalizeFeatures(await getJson(resource.url));
+  const { locations, excluded, unrecognizedStatuses } = normalizeFeatures(await getJson(resource.url));
 
-  const unverified = fountains.filter((fountain) => fountain.status === "unverified").length;
-  const cemetery = fountains.filter((fountain) => fountain.cemetery).length;
-  console.log(`Kept ${fountains.length} fountains (${unverified} unverified, ${cemetery} cemetery)`);
+  const unverified = locations.filter((location) => location.status === "unverified").length;
+  const cemetery = locations.filter((location) => location.cemetery).length;
+  console.log(`Kept ${locations.length} locations (${unverified} unverified, ${cemetery} cemetery)`);
   console.log(`Excluded ${excluded.length}:`);
   for (const exclusion of excluded) {
-    console.log(`  - ${exclusion.id} ${exclusion.location}: ${exclusion.reason}`);
+    console.log(`  - ${exclusion.id} ${exclusion.name}: ${exclusion.reason}`);
   }
   if (unrecognizedStatuses.length > 0) {
     console.log(`Warning: unrecognized status_odrz values: ${unrecognizedStatuses.join(", ")}`);
   }
 
   const previous = await readPreviousSnapshot();
-  const previousCount = previous ? (previous.fountains?.length ?? previous.count) : null;
-  assertCountPlausible(fountains.length, previousCount);
+  const previousCount = previous ? (previous.locations?.length ?? previous.count) : null;
+  assertCountPlausible(locations.length, previousCount);
 
   const now = new Date();
   const sourceModified = typeof resource.last_modified === "string" ? resource.last_modified : null;
-  const fountainsUnchanged = Boolean(previous && sameFountains(previous.fountains, fountains));
+  const locationsUnchanged = Boolean(previous && sameLocations(previous.locations, locations));
   const snapshot = buildSnapshot(
-    fountains,
+    locations,
     sourceModified,
     now,
-    fountainsUnchanged ? previous!.generatedAt : undefined,
+    locationsUnchanged ? previous!.generatedAt : undefined,
   );
 
   await mkdir(dirname(OUTPUT_PATH), { recursive: true });
   await writeFile(OUTPUT_PATH, `${JSON.stringify(snapshot, null, 2)}\n`);
-  if (fountainsUnchanged) {
-    console.log("No changes to fountains; bumped lastCheckedAt.");
+  if (locationsUnchanged) {
+    console.log("No changes to locations; bumped lastCheckedAt.");
   }
   console.log(`Wrote ${OUTPUT_PATH}`);
 }

@@ -1,17 +1,17 @@
-import type { Fountain } from "../data/fountains";
+import type { Location } from "../data/locations";
 import { formatDistance, walkingMinutes } from "../geo/distance";
 import { t } from "../i18n";
 
-export type FountainCardState = {
-  kind: "fountain";
-  fountain: Fountain;
+export type LocationCardState = {
+  kind: "location";
+  location: Location;
   distanceM: number | null;
   approx: boolean;
   isNearest: boolean;
   directionsUrl: string;
 };
 
-export type CardState = { kind: "locating" } | { kind: "locationError" } | { kind: "outside" } | FountainCardState;
+export type CardState = { kind: "locating" } | { kind: "locationError" } | { kind: "outside" } | LocationCardState;
 
 const BUTTON_CLASS = "btn-primary mt-3";
 
@@ -28,14 +28,14 @@ const panel = (inner: string): string => `<div class="panel">${inner}</div>`;
 const message = (text: string): string => `<p class="text-body">${escapeHtml(text)}</p>`;
 const badge = (text: string): string => `<span class="badge">${escapeHtml(text)}</span>`;
 
-function fountainHtml({ fountain, distanceM, approx, isNearest, directionsUrl }: FountainCardState): string {
-  const label = isNearest ? t().nearestFountain : t().selectedFountain;
+function locationHtml({ location, distanceM, approx, isNearest, directionsUrl }: LocationCardState): string {
+  const label = isNearest ? t().nearestLocation : t().selectedLocation;
   const parts = [
     `<p class="label-caps text-xs text-accent-ink">${escapeHtml(label)}</p>`,
-    `<h2 class="mt-1 text-lg font-semibold leading-snug">${escapeHtml(fountain.location)}</h2>`,
+    `<h2 class="mt-1 text-lg font-semibold leading-snug">${escapeHtml(location.name)}</h2>`,
   ];
-  if (fountain.hint) {
-    parts.push(`<p class="mt-0.5 text-sm text-body-subtle">${escapeHtml(fountain.hint)}</p>`);
+  if (location.hint) {
+    parts.push(`<p class="mt-0.5 text-sm text-body-subtle">${escapeHtml(location.hint)}</p>`);
   }
   if (distanceM !== null) {
     const distance = `${approx ? `${t().approx} ` : ""}${formatDistance(distanceM)}`;
@@ -43,8 +43,8 @@ function fountainHtml({ fountain, distanceM, approx, isNearest, directionsUrl }:
     parts.push(`<p class="mt-2 font-medium text-body-strong">${escapeHtml(line)}</p>`);
   }
   const badges: string[] = [];
-  if (fountain.status === "unverified") badges.push(badge(t().unverified));
-  if (fountain.cemetery) badges.push(badge(t().cemetery));
+  if (location.status === "unverified") badges.push(badge(t().unverified));
+  if (location.cemetery) badges.push(badge(t().cemetery));
   if (badges.length > 0) {
     parts.push(`<div class="mt-2 flex flex-wrap gap-2">${badges.join("")}</div>`);
   }
@@ -64,8 +64,8 @@ export function cardHtml(state: CardState): string {
       );
     case "outside":
       return panel(message(t().outsideZagreb));
-    case "fountain":
-      return panel(fountainHtml(state));
+    case "location":
+      return panel(locationHtml(state));
   }
 }
 

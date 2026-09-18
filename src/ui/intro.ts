@@ -1,7 +1,7 @@
 import { t } from "../i18n";
 import type { Language, Theme } from "../settings";
 import { FLAG_EN, FLAG_HR } from "./flags";
-import { ICON_DARK, ICON_LIGHT, ICON_SYSTEM } from "./icons";
+import { ICON_DARK, ICON_LIGHT } from "./icons";
 import { escapeHtml } from "./nearestCard";
 
 // Attributions
@@ -17,7 +17,6 @@ const DATASET_LINK = `<a class="underline underline-offset-2" href="${DATASET_UR
 const FEEDBACK_LINK = `<a class="underline underline-offset-2" href="mailto:${FEEDBACK_EMAIL}" target="_blank" rel="noopener">${FEEDBACK_EMAIL}</a>`;
 
 const CHOICE_CLASS = "btn-choice";
-const INTRO_TITLE_IMAGE = `${import.meta.env.BASE_URL}Coat_of_arms_of_Zagreb.svg`;
 const FAVICON = `${import.meta.env.BASE_URL}favicon.svg`;
 
 export interface IntroState {
@@ -52,11 +51,21 @@ function formatCheckedAt(iso: string, language: Language): string {
 
 export function introHtml({ theme, language, lastCheckedAt }: IntroState): string {
   const strings = t();
-  const themeChoices = [
-    choice("data-theme", "system", "", theme === "system", ICON_SYSTEM, "btn-choice-subtle", "System"),
-    choice("data-theme", "light", "", theme === "light", ICON_LIGHT, "btn-choice-subtle", "Light"),
-    choice("data-theme", "dark", "", theme === "dark", ICON_DARK, "btn-choice-subtle", "Dark"),
-  ].join("");
+  // A single toggle rather than a choice set. Pressed reports whether dark is
+  // on, and the icon shows the theme in effect. It deliberately carries no
+  // data-theme: renderIntro restores focus by selector after every re-render,
+  // so an attribute whose value flipped with each press would stop matching the
+  // button the user just clicked. The target theme is derived from state at
+  // click time instead, which keeps the selector stable.
+  const themeToggle = choice(
+    "data-action",
+    "toggle-theme",
+    "",
+    theme === "dark",
+    theme === "dark" ? ICON_DARK : ICON_LIGHT,
+    "btn-choice-subtle",
+    "Dark theme",
+  );
   const languageChoices = [
     choice("data-language", "hr", "", language === "hr", FLAG_HR, "btn-choice-subtle", "Hrvatski"),
     choice("data-language", "en", "", language === "en", FLAG_EN, "btn-choice-subtle", "English"),
@@ -75,25 +84,25 @@ export function introHtml({ theme, language, lastCheckedAt }: IntroState): strin
           <img src="${FAVICON}" alt="" width="32" height="32" class="size-12 bg-accent color-white p-1 rounded-xl" />
           <span class="text-lg font-medium">Francek</span>
         </div>
-        <div class="flex gap-2 hidden" role="group">${themeChoices}</div>
         <div class="flex gap-2 ml-auto" role="group" aria-label="${escapeHtml(strings.introLanguage)}">${languageChoices}</div>
       </div>
     </header>
 
-    <section class="mt-[8vh] mb-auto">
-      <h1 id="intro-title" class="intro-title-mask bg-accent text-[3.25rem] md:text-7xl font-extrabold leading-[0.9] tracking-tight pb-4">${escapeHtml(strings.introTitle)}</h1>
-    </section>
-    <section class="flex flex-col gap-3 mb-[8vh]">
+    <section class="my-[6vh] space-y-6">
+      <h1 id="intro-title" class="text-accent text-[3.25rem] md:text-7xl font-extrabold leading-[0.9] tracking-tight pb-4">${escapeHtml(strings.introTitle)}</h1>
+      <p class="text-base text-body-subtle leading-snug">${escapeHtml(strings.introLocationBody)}</p>
       <button type="button" data-action="continue" class="btn-primary">${escapeHtml(strings.introContinue)}</button>
-      <p class="text-xs text-body-subtle leading-snug">${escapeHtml(strings.introLocationBody)}</p>
     </section>
 
-    <footer class="text-xs text-body-subtle leading-none flex flex-wrap gap-2">
-      ${LEAFLET_LINK}
-      ${OSM_LINK}
-      ${CARTO_LINK}
-      ${DATASET_LINK}
-      ${updated}
+    <footer class="text-xs text-body-subtle leading-none flex justify-between gap-2 -mb-1 mt-auto">
+      <div class="flex flex-wrap gap-2">
+        ${LEAFLET_LINK}
+        ${OSM_LINK}
+        ${CARTO_LINK}
+        ${DATASET_LINK}
+        ${updated}
+      </div>
+      <div class="flex gap-2">${themeToggle}</div>
     </footer>
   </div>
 </div>`;
@@ -110,25 +119,22 @@ export function renderIntro(
   const active = document.activeElement;
   if (active && container.contains(active)) {
     const elem = active as HTMLElement;
-    const theme = elem.getAttribute("data-theme");
     const language = elem.getAttribute("data-language");
     const action = elem.getAttribute("data-action");
-    if (theme !== null) focusSelector = `[data-theme="${theme}"]`;
-    else if (language !== null) focusSelector = `[data-language="${language}"]`;
+    if (language !== null) focusSelector = `[data-language="${language}"]`;
     else if (action !== null) focusSelector = `[data-action="${action}"]`;
   }
 
   container.innerHTML = introHtml(state);
-  for (const button of container.querySelectorAll<HTMLButtonElement>("[data-theme]")) {
-    // Safari does not focus a <button> on click, so document.activeElement
-    // would otherwise stay <body> and the restore logic above would have
-    // nothing to go on. Focusing explicitly records the intent regardless of
-    // browser click-focus behaviour, before the settings change re-renders.
-    button.addEventListener("click", () => {
-      button.focus();
-      handlers.onTheme(button.dataset.theme as Theme);
-    });
-  }
+  const themeToggle = container.querySelector<HTMLButtonElement>('[data-action="toggle-theme"]');
+  // Safari does not focus a <button> on click, so document.activeElement
+  // would otherwise stay <body> and the restore logic above would have
+  // nothing to go on. Focusing explicitly records the intent regardless of
+  // browser click-focus behaviour, before the settings change re-renders.
+  themeToggle?.addEventListener("click", () => {
+    themeToggle.focus();
+    handlers.onTheme(state.theme === "dark" ? "light" : "dark");
+  });
   for (const button of container.querySelectorAll<HTMLButtonElement>("[data-language]")) {
     button.addEventListener("click", () => {
       button.focus();

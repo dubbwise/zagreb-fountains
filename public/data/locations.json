@@ -3,1908 +3,1908 @@
   "lastCheckedAt": "2026-09-15T15:40:55.478Z",
   "sourceModified": "2026-09-14T11:08:23.379555",
   "count": 193,
-  "fountains": [
+  "locations": [
     {
       "id": "010c42c0-80f0-487c-b394-de300eb1de1c",
       "lat": 45.81546,
       "lon": 15.93404,
-      "location": "Terminal Črnomerec-jug",
       "hint": "juzni terminali okretista Črnomerec",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Terminal Črnomerec-jug"
     },
     {
       "id": "01538760-9ec6-4a73-8acb-d03381836dfc",
       "lat": 45.810356,
       "lon": 15.978505,
-      "location": "Trg Nikole Šubića Zrinskog (Zrinjevac), jugoistocno od paviljona",
       "hint": "na Trgu Nikole Šubića Zrinskog (Zrinjevac) , jugoistocno od paviljona -14,8 metara",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Trg Nikole Šubića Zrinskog (Zrinjevac), jugoistocno od paviljona"
     },
     {
       "id": "020d9eb8-49be-42b1-ab91-8c6070eae534",
       "lat": 45.791915,
       "lon": 16.052357,
-      "location": "I. Kozari put na križanju s Kozari",
       "hint": "raskrizje I. Kozari put i Kozari; približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "I. Kozari put na križanju s Kozari"
     },
     {
       "id": "0329b976-07f1-427e-9805-d6c2069dd97a",
       "lat": 45.817312,
       "lon": 15.998534,
-      "location": "Trg Otokara Keršovanija kod kbr. 17",
       "hint": "Trg Otokara Keršovanija 17",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Trg Otokara Keršovanija kod kbr. 17"
     },
     {
       "id": "03a2e128-8b30-4ffe-92e2-726ae7a896eb",
       "lat": 45.809054,
       "lon": 16.041371,
-      "location": "Savudrijska ulica, kod križanja sa Sovinjačkom",
       "hint": "krizanje Savudrijske i Sovinjačke; izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Savudrijska ulica, kod križanja sa Sovinjačkom"
     },
     {
       "id": "04832b2e-a4c4-4bff-9244-ee689ce4e5d8",
       "lat": 45.835704,
       "lon": 16.072371,
-      "location": "Park poginulih dragovoljaca Trnovčice - Ulica Izidora Poljaka",
       "hint": "jugoistocni dio parka",
       "status": "working",
       "cemetery": false,
-      "type": "Ostalo"
+      "type": "Ostalo",
+      "name": "Park poginulih dragovoljaca Trnovčice - Ulica Izidora Poljaka"
     },
     {
       "id": "0653cf06-03ca-4334-bcce-30303d8103f2",
       "lat": 45.843554,
       "lon": 16.039961,
-      "location": "Groblje Miroševac",
       "hint": "drinking_water; dodano s Open Street Map",
       "status": "working",
       "cemetery": true,
-      "type": "Ostalo"
+      "type": "Ostalo",
+      "name": "Groblje Miroševac"
     },
     {
       "id": "08898411-7a93-42f1-900c-d60ccdca2d2e",
       "lat": 45.854876,
       "lon": 15.939197,
-      "location": "Lukšić gornji ispred kbr. 30A",
       "hint": "ispred kbr 30A Lukšić Gornji",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Lukšić gornji ispred kbr. 30A"
     },
     {
       "id": "0912911f-8f02-4b3f-b153-a9f30a6f3a1b",
       "lat": 45.836406,
       "lon": 16.072343,
-      "location": "Park poginulih dragovoljaca Trnovčice - Trutina ulica",
       "hint": "istočni dio Trutinine ulice",
       "status": "working",
       "cemetery": false,
-      "type": "Ostalo"
+      "type": "Ostalo",
+      "name": "Park poginulih dragovoljaca Trnovčice - Trutina ulica"
     },
     {
       "id": "09e1ae96-720f-4e39-b171-14360993b156",
       "lat": 45.830555,
       "lon": 16.070818,
-      "location": "Park Zlate Bartl nasuprot kbr. 11",
       "hint": "sjeverno od parka i igrališta , nasuprot kbr 11",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park Zlate Bartl nasuprot kbr. 11"
     },
     {
       "id": "0a7f3f87-7f50-40d3-b115-05e821b32996",
       "lat": 45.801388,
       "lon": 15.966496,
-      "location": "Radonjska ulica kod kbr. 9",
       "hint": "nasuprot kucnog broja 9, Radonjska ulica",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Radonjska ulica kod kbr. 9"
     },
     {
       "id": "0bf2bb44-a9bc-4f3c-bd19-854bcab57f22",
       "lat": 45.844085,
       "lon": 15.984838,
-      "location": "Krematorij",
       "hint": "ispod uzidanih kazeta, ispod krematorija",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "0e9aa21d-0db3-4753-b002-5929a27e6bcc",
       "lat": 45.845301,
       "lon": 15.98537,
-      "location": "Krematorij",
       "hint": "polje 4",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "10dfe8a3-3824-4598-b1a4-48e1b10fc16d",
       "lat": 45.843598,
       "lon": 15.986794,
-      "location": "Krematorij",
       "hint": "polje 42",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "1134a2fc-c075-4ccd-a813-06db1ba4924e",
       "lat": 45.789594,
       "lon": 15.966374,
-      "location": "Prisavlje - kod kbr. 12",
       "hint": "uz nasip, juzno od parkiralista (jugoistocno od nebodera kbr 12 Prisavlje)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Prisavlje - kod kbr. 12"
     },
     {
       "id": "160c00b5-533b-4b79-81e6-a992a53c92c7",
       "lat": 45.831609,
       "lon": 16.091246,
-      "location": "Ulica potočnica",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica potočnica"
     },
     {
       "id": "1801d16c-3902-49c7-81a3-9bf8b322586c",
       "lat": 45.843735,
       "lon": 15.984514,
-      "location": "Krematorij",
       "hint": "pokraj krematorija",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "19941723-6c68-4651-abf7-46e494964b9a",
       "lat": 45.814407,
       "lon": 15.998016,
-      "location": "Trg Eugena Kvaternika",
       "status": "unverified",
       "cemetery": false,
-      "type": "TriBu 20"
+      "type": "TriBu 20",
+      "name": "Trg Eugena Kvaternika"
     },
     {
       "id": "1daabd5d-bc9a-49a3-8f14-20f7b6f61015",
       "lat": 45.782422,
       "lon": 15.91923,
-      "location": "Jarun",
       "hint": "otok Tresnjevka u Jarunskom kompleksu; približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Jarun"
     },
     {
       "id": "1ef0715f-d838-4476-a1c7-5d8ac6ba76d8",
       "lat": 45.853405,
       "lon": 15.934471,
-      "location": "Mali potok kod kbr. 6",
       "hint": "ulica Mali potok između kbr 4 i kbr 6",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Mali potok kod kbr. 6"
     },
     {
       "id": "20822689-b43a-41e9-8802-28a8cd5e1a79",
       "lat": 45.764391,
       "lon": 16.014308,
-      "location": "Gata, Tišinska ulica IV. odvojak",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Gata, Tišinska ulica IV. odvojak"
     },
     {
       "id": "224c2ea1-81aa-4a79-b917-410c92b6b60c",
       "lat": 45.79389,
       "lon": 15.97239,
-      "location": "Slavonska avenija kod HRT",
       "hint": "nasuprot kbr 132 Miramarska cesta",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Slavonska avenija kod HRT"
     },
     {
       "id": "23b63b86-3067-47bc-8ec1-b2808b66b559",
       "lat": 45.786786,
       "lon": 15.914676,
-      "location": "Jarun",
       "hint": "sjeverna strana jezera nasuprot tribina na veslačkoj stazi; približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Jarun"
     },
     {
       "id": "24a95e8e-9cfa-4960-824f-d86d79b8773b",
       "lat": 45.779313,
       "lon": 15.937199,
-      "location": "Jarun",
       "hint": "istočna strana u odnosu na jezero; približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Jarun"
     },
     {
       "id": "262fdfa3-3b32-46c6-bbae-2ca12b80d7ca",
       "lat": 45.861689,
       "lon": 15.982588,
-      "location": "Ulica nad Tunelom (zapadna strana u parku obitelji Kostelić)",
       "hint": "nasuprot Zicare Sljeme, juzno od parka",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica nad Tunelom (zapadna strana u parku obitelji Kostelić)"
     },
     {
       "id": "27cf3b8c-702d-4134-a429-adec78b94e56",
       "lat": 45.80572,
       "lon": 15.896059,
-      "location": "Trg Ivana Kukuljevića, sjeverna strana",
       "hint": "sjeverna strana Trga Ivana Kukuljevića",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Trg Ivana Kukuljevića, sjeverna strana"
     },
     {
       "id": "2827e786-c83c-423f-846a-bec6ca362108",
       "lat": 45.84652,
       "lon": 15.984176,
-      "location": "Krematorij",
       "hint": "polje 16a",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "2835c703-12a9-420b-a60b-fc8d01c9430b",
       "lat": 45.845665,
       "lon": 15.984212,
-      "location": "Krematorij",
       "hint": "polje 2",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "29c5b260-c0b3-4352-847c-5e1b96a9d14b",
       "lat": 45.844028,
       "lon": 15.986629,
-      "location": "Krematorij",
       "hint": "polje 44",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "2a12eed5-d1db-4d79-a8a5-823ed9bc4380",
       "lat": 45.796536,
       "lon": 15.98984,
-      "location": "Kruge kod kbr. 29",
       "hint": "Kruge kod kbr. 29 - dodano s Open Street Maps",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Kruge kod kbr. 29"
     },
     {
       "id": "2b813426-b9ad-4262-855f-d72f64467669",
       "lat": 45.793379,
       "lon": 16.055893,
-      "location": "Kozari I. odvojak južno od igrališta",
       "hint": "sjeverna strana Kozari I. odvojak (juzno od igralista)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Kozari I. odvojak južno od igrališta"
     },
     {
       "id": "2cc1bb9e-c7c3-43e5-9cd0-8fe5d55e9258",
       "lat": 45.795231,
       "lon": 15.982647,
-      "location": "Sprečka ulica 33A - u parku",
       "hint": "zapadni dio parkića, ispod Slavonske avenije . Sprečka 33A",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Sprečka ulica 33A - u parku"
     },
     {
       "id": "2fa3f8b2-f313-46a0-b97e-1e46654709d7",
       "lat": 45.79507,
       "lon": 15.975024,
-      "location": "Zrmanjska, križanje s Ličkom ulicom",
       "hint": "križanje Zrmanjske i Ličke ulice, ispred kbr 40 Lička",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Zrmanjska, križanje s Ličkom ulicom"
     },
     {
       "id": "31b18004-1683-44d5-8c21-ff89d78812d3",
       "lat": 45.844147,
       "lon": 15.985817,
-      "location": "Krematorij",
       "hint": "u šumi ispod krematorija",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "31c1561a-e0c4-48aa-87f4-1d78d3b082fc",
       "lat": 45.831812,
       "lon": 16.106811,
-      "location": "Bistrička ulica, na stazi uz potok Vuger",
       "hint": "uz istočnu stranu potoka",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Bistrička ulica, na stazi uz potok Vuger"
     },
     {
       "id": "34f08bbc-c624-406d-abf1-95347d506097",
       "lat": 45.773117,
       "lon": 15.966288,
-      "location": "Park Mladenaca - u parku za pse",
       "hint": "u sredistu parka za pse",
       "status": "unverified",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Park Mladenaca - u parku za pse"
     },
     {
       "id": "377d28f4-91fc-456c-8866-98b990375342",
       "lat": 45.780456,
       "lon": 15.995639,
-      "location": "Meštrovićev trg, uz košarkaško igralište",
       "hint": "juzno od kosarkaskog igralista, uz pješačku stazu",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Meštrovićev trg, uz košarkaško igralište"
     },
     {
       "id": "38f95bf6-f41c-40b1-b717-0fa4cd73fe7c",
       "lat": 45.715446,
       "lon": 15.930405,
-      "location": "Igralište Milekanska - Amerikanska ulica",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Igralište Milekanska - Amerikanska ulica"
     },
     {
       "id": "3a205dab-622d-429c-bbb4-98d943cf94e9",
       "lat": 45.825018,
       "lon": 16.021489,
-      "location": "Maksimirski perivoj, sjeverno od Vidikovca",
       "hint": "sjeverno od Vidikovca",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Maksimirski perivoj, sjeverno od Vidikovca"
     },
     {
       "id": "3be68cf0-1f79-4c8d-ac2b-285a8da09842",
       "lat": 45.774951,
       "lon": 15.962897,
-      "location": "Školsko igralište OŠ Trnsko",
       "hint": "(potreban popravak!, curi) sjeveroistocno od igralista",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Školsko igralište OŠ Trnsko"
     },
     {
       "id": "3be81607-1999-44eb-aab6-bed097c011d2",
       "lat": 45.80242,
       "lon": 15.898552,
-      "location": "Tržnica Špansko - Ulica Dobriše Cesarića",
       "hint": "sredina tržnice Špansko (unutar nadstrešnice)",
       "status": "working",
       "cemetery": false,
-      "type": "Ostalo"
+      "type": "Ostalo",
+      "name": "Tržnica Špansko - Ulica Dobriše Cesarića"
     },
     {
       "id": "3beb0648-359e-4c77-877a-b1c6baf17b7a",
       "lat": 45.892684,
       "lon": 16.057131,
-      "location": "Groblje Čučerje",
       "hint": "groblje Čučerje",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Čučerje"
     },
     {
       "id": "3c30aa94-0f69-4509-9a8d-c26c71107a14",
       "lat": 45.840841,
       "lon": 16.020745,
-      "location": "Čret, Melinišće",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Čret, Melinišće"
     },
     {
       "id": "3e2fb592-fb6c-4436-a9b7-63072cb0fa96",
       "lat": 45.788759,
       "lon": 15.999673,
-      "location": "Savica Prisavlje - park za pse",
       "hint": "u parku za pse",
       "status": "working",
       "cemetery": false,
-      "type": "Ostalo"
+      "type": "Ostalo",
+      "name": "Savica Prisavlje - park za pse"
     },
     {
       "id": "3f6428f8-9ffa-4c63-accc-dfc381bca6bf",
       "lat": 45.783889,
       "lon": 15.989074,
-      "location": "Ulica Damira Tomljanovića Gavrana-park Bundek",
       "hint": "Bundek park",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Damira Tomljanovića Gavrana-park Bundek"
     },
     {
       "id": "42967a79-7b92-4f7e-9d4e-af5c5a80cac3",
       "lat": 45.796607,
       "lon": 15.979746,
-      "location": "Vrbanjska kod kbr. 3",
       "hint": "uz zapadnu ogradu kbr 3 (Vrbanjska ulica)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Vrbanjska kod kbr. 3"
     },
     {
       "id": "452b15ba-4643-42af-87a7-053bb691a67e",
       "lat": 45.813529,
       "lon": 16.014498,
-      "location": "Granešinska - Tenjska južno od kbr. 1",
       "hint": "južno od kbr 1 Tenjska ulica; izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Granešinska - Tenjska južno od kbr. 1"
     },
     {
       "id": "45413b9d-c69f-44c7-a15a-a5f23607e3da",
       "lat": 45.849636,
       "lon": 15.92624,
-      "location": "Talani - sjeverno od kbr 37A",
       "hint": "Ulica Talani - zapadno od trafostanice",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Talani - sjeverno od kbr 37A"
     },
     {
       "id": "459d0312-0c35-4d96-80d0-8a4321944fea",
       "lat": 45.805978,
       "lon": 15.913567,
-      "location": "Medarska ulica",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Medarska ulica"
     },
     {
       "id": "45d09c0e-7369-44e5-b802-a5f5829630c7",
       "lat": 45.806218,
       "lon": 15.979126,
-      "location": "Trg kralja Tomislava, središnji ulaz u park",
       "hint": "istočna strana Tomislavovog trga, uz središnji ulaz u park",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Trg kralja Tomislava, središnji ulaz u park"
     },
     {
       "id": "45e1e76f-e22b-44eb-9a63-7cc7031c808d",
       "lat": 45.846019,
       "lon": 15.985394,
-      "location": "Krematorij",
       "hint": "polje 11",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "467e4b59-3228-43ac-aead-54f302dee4aa",
       "lat": 45.814644,
       "lon": 15.89824,
-      "location": "Ulica Majke Terezije - Vrapče, dječji park južno od bolnice",
       "hint": "ispod bolnice, sjeveroistocno od kosarkaskog igralista. nasuprot ulice Majke Terezije 12",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Majke Terezije - Vrapče, dječji park južno od bolnice"
     },
     {
       "id": "488e0ec1-a4cc-4009-8625-048a0c0c58a6",
       "lat": 45.785068,
       "lon": 15.95237,
-      "location": "Okretište Savski most",
       "hint": "okretište Savski most (zapadna strana)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Okretište Savski most"
     },
     {
       "id": "49a96461-f0c1-49e1-bd21-fa7c144c80da",
       "lat": 45.793236,
       "lon": 15.978853,
-      "location": "Avenija Većeslava Holjevca, kod raskrižja ulica Trnjanske ledine II i III",
       "hint": "raskrižje ulica Trnjanske Ledine II i III",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Avenija Većeslava Holjevca, kod raskrižja ulica Trnjanske ledine II i III"
     },
     {
       "id": "49d20042-4bce-4ca5-af8e-a7141749d1b1",
       "lat": 45.780089,
       "lon": 15.914426,
-      "location": "Jarun",
       "hint": "jugozapadna strana jezera; približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Jarun"
     },
     {
       "id": "4e8b3826-3aa1-4ad0-aebd-2c09028f2cd9",
       "lat": 45.843078,
       "lon": 15.987487,
-      "location": "Krematorij",
       "hint": "polje 47",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "4f9cc61f-43f3-405a-af1f-26cc30db4041",
       "lat": 45.827007,
       "lon": 16.110179,
-      "location": "Trg Dragutina Domjanića kod kbr. 5",
       "hint": "nasuprot Muzeja (kbr 5)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Trg Dragutina Domjanića kod kbr. 5"
     },
     {
       "id": "50877905-0b91-4525-a955-fcf5b37e53b2",
       "lat": 45.784211,
       "lon": 15.986735,
-      "location": "Ulica Damira Tomljanovića Gavrana-park Bundek",
       "hint": "izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Damira Tomljanovića Gavrana-park Bundek"
     },
     {
       "id": "5124ac86-9e2b-4954-8156-6271cc56c5e1",
       "lat": 45.810853,
       "lon": 16.00724,
-      "location": "Čerinina ulica kod kbr. 13",
       "hint": "zapadno od parka , nasuprot kbr Čerinina 13",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Čerinina ulica kod kbr. 13"
     },
     {
       "id": "51f3e20d-aebe-465a-accf-a31205bbaf13",
       "lat": 45.792118,
       "lon": 15.9776,
-      "location": "Ulica Prudi kod kbr. 26A",
       "hint": "ispred kućnog broja 26 ulica Prudi",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Prudi kod kbr. 26A"
     },
     {
       "id": "5265cf79-73fa-4279-88de-3276e8fb6dc3",
       "lat": 45.782974,
       "lon": 15.954826,
-      "location": "Remetinečka cesta, južni ulaz Savskog mosta",
       "hint": "juzni ulaz Savskog mosta",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Remetinečka cesta, južni ulaz Savskog mosta"
     },
     {
       "id": "53540227-502f-4260-b7cf-5b19f67fecb6",
       "lat": 45.816232,
       "lon": 15.874582,
-      "location": "Park 101. brigade Hrvatske vojske, dječji park",
       "hint": "ulaz u djecji park",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park 101. brigade Hrvatske vojske, dječji park"
     },
     {
       "id": "59df22c6-f6c7-4c09-a8cf-ebf8acb243f9",
       "lat": 45.83581,
       "lon": 15.971757,
-      "location": "Cmrok",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Cmrok"
     },
     {
       "id": "5acc5b3f-7d6b-419c-8b04-e416683a37a7",
       "lat": 45.804592,
       "lon": 15.974754,
-      "location": "Grgura Ninskog-Miramarski podvožnjak, adrenalinski park sa spravama",
       "hint": "Adrenalinski park sa spravama za vježbanje",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Grgura Ninskog-Miramarski podvožnjak, adrenalinski park sa spravama"
     },
     {
       "id": "5ad05984-6f1f-4ae5-9caf-d55f75e92139",
       "lat": 45.794813,
       "lon": 15.901719,
-      "location": "Park Emila Cossetta",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park Emila Cossetta"
     },
     {
       "id": "5b441ae4-cc07-4d95-bc6f-004d4e0b071e",
       "lat": 45.811676,
       "lon": 16.106602,
-      "location": "Vladimira Stahuljaka kod kbr. 1 - uz igralište",
       "hint": "zapadno od igrališta",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Vladimira Stahuljaka kod kbr. 1 - uz igralište"
     },
     {
       "id": "5c0f7436-491f-41e4-8a6a-3b2bfb2277dd",
       "lat": 45.780425,
       "lon": 15.985657,
-      "location": "Stonska ulica, dječje igralište",
       "hint": "jugoistocni ulaz djecjeg igralista",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Stonska ulica, dječje igralište"
     },
     {
       "id": "5f726d9e-48e9-4cc7-b08f-cddfb089686a",
       "lat": 45.842849,
       "lon": 15.987732,
-      "location": "Krematorij",
       "hint": "kraj kružnog trga, drinking_water; dodano s Open Street Map",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "60a54c25-a9eb-43e5-8a84-37b6a616a56d",
       "lat": 45.812806,
       "lon": 15.995671,
-      "location": "Križanje Šubićeve i Martićeve ulice, južni ulaz na tržnicu Kvaternikov trg",
       "hint": "izgrađen zdenac pitke vode",
       "status": "working",
       "cemetery": false,
-      "type": "Vindabona"
+      "type": "Vindabona",
+      "name": "Križanje Šubićeve i Martićeve ulice, južni ulaz na tržnicu Kvaternikov trg"
     },
     {
       "id": "60c2afad-fe9a-4501-9679-802af099c3ed",
       "lat": 45.802811,
       "lon": 15.972979,
-      "location": "Bednjanska kod kbr. 13",
       "hint": "uz istocnu ogradu kbr 13 (Bednjanska ulica)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Bednjanska kod kbr. 13"
     },
     {
       "id": "62a450d0-9b36-4119-b6f9-60b83b798185",
       "lat": 45.799262,
       "lon": 15.930178,
-      "location": "Ulica Dragutina Golika",
       "hint": "sjeverno od kuće br.44a",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Dragutina Golika"
     },
     {
       "id": "63ebe39d-3c2c-4673-9887-c9aefe2e1c48",
       "lat": 45.77125,
       "lon": 15.970199,
-      "location": "Radmanovačka 39",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Radmanovačka 39"
     },
     {
       "id": "6acc5470-31fa-4507-89bf-9b32fb6b2590",
       "lat": 45.84375,
       "lon": 15.987061,
-      "location": "Krematorij",
       "hint": "polje 43 (ima 2 zdenca na polju 43)",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "6aed885d-8683-4e99-bf9b-5a1a3fac3d96",
       "lat": 45.823403,
       "lon": 16.01505,
-      "location": "Maksimirski perivoj, kod zapadnog ulaza Prilesje",
       "hint": "unutar parka, zapadni ulaz Prilesje, pored Sokolske mogile",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Maksimirski perivoj, kod zapadnog ulaza Prilesje"
     },
     {
       "id": "6e39952d-a96a-4e4b-acef-9089dbd6c1c5",
       "lat": 45.842368,
       "lon": 16.028328,
-      "location": "Spomen-park Dotrščina, ulaz Štefanovec",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Spomen-park Dotrščina, ulaz Štefanovec"
     },
     {
       "id": "70381105-45e1-4d32-b203-e7d304368127",
       "lat": 45.816804,
       "lon": 16.04973,
-      "location": "Park Tomislava Ivčića - južno uz stazu",
       "hint": "u sklopu Parka Tomislava Ivčića; izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park Tomislava Ivčića - južno uz stazu"
     },
     {
       "id": "723802ff-5fce-40c0-889d-fabbd29f4f79",
       "lat": 45.83316,
       "lon": 15.989409,
-      "location": "Groblje Mirogoj - jug",
       "hint": "izvorno SKI lokacija",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj - jug"
     },
     {
       "id": "72a3067f-26fe-4143-94b3-509db04b4cd5",
       "lat": 45.843518,
       "lon": 15.987795,
-      "location": "Krematorij",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "7412661a-c328-4675-939c-57043c01720a",
       "lat": 45.815903,
       "lon": 15.934533,
-      "location": "Terminal Črnomerec-sjever",
       "hint": "juzni terminali okretista Črnomerec",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Terminal Črnomerec-sjever"
     },
     {
       "id": "7588ef21-5a14-4304-bad1-8896b74c989d",
       "lat": 45.783723,
       "lon": 16.000329,
-      "location": "Obala 8. svibnja 1945.-park Bundek",
       "hint": "juzno od nasipa",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Obala 8. svibnja 1945.-park Bundek"
     },
     {
       "id": "75ca4b9e-62ea-4fd5-9bdb-6b62200f0332",
       "lat": 45.818149,
       "lon": 16.014094,
-      "location": "SRC Svetice",
       "hint": "SRC Svetice, sjeverno od staze za trčanje",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "SRC Svetice"
     },
     {
       "id": "777773c6-80fe-4581-a768-14f3b7638020",
       "lat": 45.838822,
       "lon": 15.985904,
-      "location": "Groblje Mirogoj",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "7993f33d-fba4-469f-a2ff-627b61a3587c",
       "lat": 45.844981,
       "lon": 16.038766,
-      "location": "Groblje Miroševac",
       "hint": "kod zapadnog ulaza, preko puta crkve",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Miroševac"
     },
     {
       "id": "7b257e0a-993b-4549-88c4-a8203c1ac461",
       "lat": 45.779197,
       "lon": 15.989064,
-      "location": "Ulica Savezne Republike Njemačke kod kbr. 6, dječje igralište",
       "hint": "zapadni dio zgrade Ulica Savezne Republike Njemacke , br.6. ulaz u park",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Savezne Republike Njemačke kod kbr. 6, dječje igralište"
     },
     {
       "id": "7cb30f00-075e-4ce5-a28b-0acfb9ff24ba",
       "lat": 45.835922,
       "lon": 15.983992,
-      "location": "Groblje Mirogoj",
       "hint": "drinking_water; dodano s Open Street Map, kod glavnog ulaza",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "7f494005-6675-4246-98c2-a29f8fe965fc",
       "lat": 45.81863,
       "lon": 16.005487,
-      "location": "Park Otti Berger - uz neboder u Ulici Ivana Rendića kbr. 23",
       "hint": "08/08/2024 mailom poslana obavijest da je u funkciji",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park Otti Berger - uz neboder u Ulici Ivana Rendića kbr. 23"
     },
     {
       "id": "7f7292b7-c654-4989-8104-a50623afafb2",
       "lat": 45.839045,
       "lon": 15.983595,
-      "location": "Groblje Mirogoj",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "80779434-d3fb-479f-a92f-a25157e36703",
       "lat": 45.83285,
       "lon": 15.991584,
-      "location": "Groblje Mirogoj",
       "hint": "drinking_water; dodano s Open Street Map",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "80d18e08-1b06-48ec-8644-cb22d33953e3",
       "lat": 45.789308,
       "lon": 15.962332,
-      "location": "Prisavlje uz nasip (Boćarski dom -dječje igralište)",
       "hint": "sjeverozapadni ulaz u dječji park",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Prisavlje uz nasip (Boćarski dom -dječje igralište)"
     },
     {
       "id": "825b6add-507e-43c4-88c5-a6b615046c52",
       "lat": 45.827498,
       "lon": 16.070972,
-      "location": "ulica Sitnice",
       "hint": "sjeverno od dječjeg igrališta u Ulici Sitnice",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "ulica Sitnice"
     },
     {
       "id": "842c9dbc-3ce3-4267-85d4-e4ba78d15157",
       "lat": 45.832656,
       "lon": 15.984151,
-      "location": "Groblje Mirogoj",
       "hint": "drinking_water; dodano s Open Street Map, na kraju arkada",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "8475df76-efc8-444f-bb59-217f04edee75",
       "lat": 45.845477,
       "lon": 15.98327,
-      "location": "Krematorij",
       "hint": "ispod krematorija, preko puta polja 5 i 5a",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "8596b290-ea0d-4caa-8890-047804249320",
       "lat": 45.812749,
       "lon": 15.964876,
-      "location": "Britanski trg",
       "hint": "sjeverno od javnog WC-a",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Britanski trg"
     },
     {
       "id": "85b18415-0268-4eaa-a15b-b7f48f5e968c",
       "lat": 45.836014,
       "lon": 15.988549,
-      "location": "Groblje Mirogoj",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "87963598-3416-4bf0-bb5e-9e39026e697c",
       "lat": 45.838342,
       "lon": 15.985625,
-      "location": "Groblje Mirogoj",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "87d4bfd8-7cfc-4d76-aab9-4d3f82c5a7a0",
       "lat": 45.78049,
       "lon": 15.936786,
-      "location": "Jarun",
       "hint": "uz Malo jezero za istocne strane; približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Jarun"
     },
     {
       "id": "8c4f581f-f189-4170-9b62-183dcb9619aa",
       "lat": 45.813009,
       "lon": 15.964608,
-      "location": "Britanski trg kod kbr.3",
       "hint": "preko puta kbr 3 Britanski trg",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Britanski trg kod kbr.3"
     },
     {
       "id": "8e6311d3-ab6a-4ec4-aa8c-34409ed810a6",
       "lat": 45.76929,
       "lon": 15.949333,
-      "location": "Remetinečki gaj 20C, uz park",
       "hint": "jugoistocni ugao zgrade br. 20C (uz park)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Remetinečki gaj 20C, uz park"
     },
     {
       "id": "9115d6b4-a99c-4bab-b992-d280ce760f10",
       "lat": 45.815113,
       "lon": 15.967625,
-      "location": "Rokov perivoj 4",
       "hint": "Rokov perivoj, nasuprot kućnog broja 4",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Rokov perivoj 4"
     },
     {
       "id": "91e37850-faa3-482f-a4e2-8d3f9061e1a4",
       "lat": 45.785863,
       "lon": 15.916765,
-      "location": "Jarun",
       "hint": "sa sjeverne strane jezera, nasuprot tribina na veslačkoj stazi; približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Jarun"
     },
     {
       "id": "92797392-f5ac-4698-acf1-9bffac469997",
       "lat": 45.799168,
       "lon": 15.904374,
-      "location": "Dječji trg kod kbr. 1",
       "hint": "sredina Djecjeg trga, voda malo curi (treba popravak)",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Dječji trg kod kbr. 1"
     },
     {
       "id": "9344615f-8a6e-4a03-b126-6c33ee5972c5",
       "lat": 45.843424,
       "lon": 15.987345,
-      "location": "Krematorij",
       "hint": "polje 43",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "93d9122f-4882-4a9c-a1df-60d0484d51f6",
       "lat": 45.800616,
       "lon": 15.967627,
-      "location": "Koranska kod kbr. 26",
       "hint": "kucni broj 28-26 Koranska ulica",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Koranska kod kbr. 26"
     },
     {
       "id": "946c1405-e4dc-44bf-ae35-ff7af1ee9afe",
       "lat": 45.798165,
       "lon": 15.998268,
-      "location": "Šoltanska ulica kod kbr. 17",
       "hint": "preko puta kucnog broja 17 (Šoltanska ulica)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Šoltanska ulica kod kbr. 17"
     },
     {
       "id": "94ad52d5-a065-4d7d-999d-5e6be333fb9d",
       "lat": 45.811811,
       "lon": 15.997006,
-      "location": "Park Bartula Kašića - uz ogradu dječjeg parka",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park Bartula Kašića - uz ogradu dječjeg parka"
     },
     {
       "id": "94bb38b6-8301-4ed6-8563-a44a190567b7",
       "lat": 45.76473,
       "lon": 16.000053,
-      "location": "Ulica sv. Mateja 107 - zelena površina uz stazu",
       "hint": "izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica sv. Mateja 107 - zelena površina uz stazu"
     },
     {
       "id": "954fb276-99e7-4146-a758-d0a2f04ff523",
       "lat": 45.860483,
       "lon": 15.976455,
-      "location": "Gračansko dolje, kod kbr. 43",
       "hint": "zapadno od kbr 43 Gračansko dolje",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Gračansko dolje, kod kbr. 43"
     },
     {
       "id": "9a5fdf43-3b4f-4ce6-b172-5bd93520ff1b",
       "lat": 45.843537,
       "lon": 15.984415,
-      "location": "Groblje Mirogoj",
       "hint": "pokraj polja 153, iznad krematorija",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "9c9f707f-f4aa-4f6c-b60f-57fa6c599ea7",
       "lat": 45.786709,
       "lon": 15.956379,
-      "location": "Veslačka - uz stepenice prema nasipu",
       "hint": "Veslačka uz stepenice prema nasipu",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Veslačka - uz stepenice prema nasipu"
     },
     {
       "id": "9e8fdad1-df64-4df7-857d-12bf0c0ff3e3",
       "lat": 45.788871,
       "lon": 15.999703,
-      "location": "Savica Prisavlje - piknik park",
       "hint": "uz sjevernu ogradu izvan parka za pse",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Savica Prisavlje - piknik park"
     },
     {
       "id": "9fd37199-2a82-4da8-a435-91e1c7722bf5",
       "lat": 45.797937,
       "lon": 15.977075,
-      "location": "Križanje Japranska ulica - Paromliska cesta",
       "hint": "Paromlinska - Japranska ulica (križanje); približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Križanje Japranska ulica - Paromliska cesta"
     },
     {
       "id": "a097af71-b392-4afe-85ab-d08af3ff5db1",
       "lat": 45.825208,
       "lon": 16.047903,
-      "location": "Perivoj Ivane Brlić Mažuranić - sjeverozapadni ulaz",
       "hint": "sjeverozapadni ulaz u Perivoj Ivane B. M.",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Perivoj Ivane Brlić Mažuranić - sjeverozapadni ulaz"
     },
     {
       "id": "a0e2082d-a1b0-4043-a4e8-1e9e523f5e08",
       "lat": 45.893259,
       "lon": 16.058588,
-      "location": "Groblje Čučerje",
       "hint": "groblje Čučerje",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Čučerje"
     },
     {
       "id": "a4723119-4f4a-43bf-aee1-de4ca7283da4",
       "lat": 45.845558,
       "lon": 15.984778,
-      "location": "Krematorij",
       "hint": "polje 3",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "a5416cef-34c6-47ef-a91b-4c3823b75933",
       "lat": 45.795844,
       "lon": 15.967261,
-      "location": "Kninski trg, dječje igralište",
       "hint": "južna strana dječjeg igrališta",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Kninski trg, dječje igralište"
     },
     {
       "id": "a6062412-c6ad-46e4-b572-ab5347913bdf",
       "lat": 45.852954,
       "lon": 15.991653,
-      "location": "Križanje ulica Vinec i Črešnjevec, dječje igralište",
       "hint": "u djecjem parku na krizanju ulice Vinec i ulice Črešnjevec",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Križanje ulica Vinec i Črešnjevec, dječje igralište"
     },
     {
       "id": "a72c9e46-ca22-40e0-929f-a4765b1791b6",
       "lat": 45.775246,
       "lon": 15.991873,
-      "location": "Ulica Savezne Republike Njemačke - Ulica Zulejke Stefanini Tućan",
       "hint": "jugoistocni ulaz u park za pse",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Savezne Republike Njemačke - Ulica Zulejke Stefanini Tućan"
     },
     {
       "id": "a7c823fc-85d7-4829-a635-7d2a9457e9d6",
       "lat": 45.788609,
       "lon": 15.99905,
-      "location": "Prisavlje - uz ogradu gradskih vrtova",
       "hint": "uz jugostočni rub ograde gradskih vrtova",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Prisavlje - uz ogradu gradskih vrtova"
     },
     {
       "id": "a82e8ba4-4a2e-447c-a96c-2550d89022a9",
       "lat": 45.78851,
       "lon": 15.997138,
-      "location": "Savica Prisavlje - piknik park",
       "hint": "sjeverno od nasipa, na juznom dijelu parka",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Savica Prisavlje - piknik park"
     },
     {
       "id": "a9ca2325-4225-44a9-b649-4afb506e0f52",
       "lat": 45.788004,
       "lon": 15.998996,
-      "location": "Savica Prisavlje - piknik park",
       "hint": "izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Savica Prisavlje - piknik park"
     },
     {
       "id": "aa29c5d4-d2ad-42ed-b457-0516e354b6b7",
       "lat": 45.812638,
       "lon": 15.942344,
-      "location": "Park kod križanja Selske i Prilaza baruna Filipovića",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park kod križanja Selske i Prilaza baruna Filipovića"
     },
     {
       "id": "aa2afe7c-1522-4e22-9cb6-4fa09dfa04d5",
       "lat": 45.797047,
       "lon": 15.982592,
-      "location": "Bosutska - Sprečka na križanju",
       "hint": "dodano s Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Bosutska - Sprečka na križanju"
     },
     {
       "id": "aaf74e1b-5691-4748-8ce7-522b49da5920",
       "lat": 45.796069,
       "lon": 15.991757,
-      "location": "Križanje ulice Pile II. i ulice Pile I.",
       "hint": "krizanje ulice Pile II. i ulice Pile I.",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Križanje ulice Pile II. i ulice Pile I."
     },
     {
       "id": "ab56ea57-7d27-4387-a3bc-ed0151b88d74",
       "lat": 45.820904,
       "lon": 16.113968,
-      "location": "Jelkovečka cesta 4, sajmište",
       "hint": "sredina prostora za sajam (Sesvete)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Jelkovečka cesta 4, sajmište"
     },
     {
       "id": "ac026c57-25d9-49e8-b2a0-a3716ae9c4c5",
       "lat": 45.788327,
       "lon": 15.998383,
-      "location": "Savica Prisavlje - piknik park",
       "hint": "izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Savica Prisavlje - piknik park"
     },
     {
       "id": "ac199cd0-9a69-472f-9d68-ee7a12955bce",
       "lat": 45.861675,
       "lon": 15.97308,
-      "location": "Lonjšćina kod kbr. 22",
       "hint": "ispred kbr 22 Lonscinjska",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Lonjšćina kod kbr. 22"
     },
     {
       "id": "af5af314-7aa5-425f-b697-419d3218edc6",
       "lat": 45.834139,
       "lon": 15.990212,
-      "location": "Groblje Mirogoj",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "afd9ab69-2838-436b-babe-731460034638",
       "lat": 45.813927,
       "lon": 15.928824,
-      "location": "Tržnica Kustošija",
       "hint": "na južnom dijelu tržnice",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Tržnica Kustošija"
     },
     {
       "id": "afe188f0-d6b3-4d11-ad3c-293b90c2a25b",
       "lat": 45.781027,
       "lon": 15.934712,
-      "location": "Jarun",
       "hint": "sjeverna strana Malog jezera; približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Jarun"
     },
     {
       "id": "b119aabc-5216-493c-bb39-7169e427aa2a",
       "lat": 45.855897,
       "lon": 15.970081,
-      "location": "Isce kod kbr. 15",
       "hint": "unutar igralista (zapadno), sjeverno od kbr 15 (Pučka škola); izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Isce kod kbr. 15"
     },
     {
       "id": "b2a523ff-e49e-4edb-b262-9de8e8c907ca",
       "lat": 45.757991,
       "lon": 16.020188,
-      "location": "Jakuševečka ulica uz crkvu i groblje Jakuševec",
       "hint": "unutar groblja Jakuševec, sjeverno od mrtvačnice; približno prema Open Street Map",
       "status": "working",
       "cemetery": true,
-      "type": "Ostalo"
+      "type": "Ostalo",
+      "name": "Jakuševečka ulica uz crkvu i groblje Jakuševec"
     },
     {
       "id": "b2f0ea20-7609-49ca-9105-c783199a4f42",
       "lat": 45.792178,
       "lon": 16.044797,
-      "location": "Kanalski put, južno od dječjeg igrališta",
       "status": "unverified",
       "cemetery": false,
-      "type": "Ostalo"
+      "type": "Ostalo",
+      "name": "Kanalski put, južno od dječjeg igrališta"
     },
     {
       "id": "b2fa1e93-92ef-416c-8371-061e9baba3c4",
       "lat": 45.77266,
       "lon": 15.966348,
-      "location": "Park Mladenaca - u parku za pse",
       "hint": "juzni dio parka za pse",
       "status": "unverified",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Park Mladenaca - u parku za pse"
     },
     {
       "id": "b3d2fdcb-47c6-4f30-bddb-a67874fc707f",
       "lat": 45.824349,
       "lon": 16.036779,
-      "location": "Okretište Dubrava",
       "hint": "okretiste Dubrava; dodano s Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Okretište Dubrava"
     },
     {
       "id": "b490d4b3-9803-4473-8a88-dce09deb305e",
       "lat": 45.781507,
       "lon": 15.910534,
-      "location": "Jarun",
       "hint": "drinking_fountain - dodano s Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Jarun"
     },
     {
       "id": "b53aa9af-25d4-4ffb-b0cc-f3df60c71fc9",
       "lat": 45.796645,
       "lon": 15.979106,
-      "location": "Fontane - Hrvatske bratske zajednice",
       "hint": "dodano s Open Street Map, dva komada jedan kraj drugog",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Fontane - Hrvatske bratske zajednice"
     },
     {
       "id": "b542364c-81c3-47ac-b67e-0aea39c01125",
       "lat": 45.84107,
       "lon": 15.986387,
-      "location": "Groblje Mirogoj",
       "hint": "uz stepenice i pokraj polja 156",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "b8652b23-860f-444e-9de7-fc6e677ecd41",
       "lat": 45.811992,
       "lon": 15.974058,
-      "location": "Trg Petra Preradovića",
       "status": "unverified",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Trg Petra Preradovića"
     },
     {
       "id": "bc6fd5e2-9058-4857-bd92-89330b86c19c",
       "lat": 45.82974,
       "lon": 16.027635,
-      "location": "Maksimirski perivoj, kod IV jezera",
       "hint": "juzno od IV. jezera, sjeverno od kbr 29",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Maksimirski perivoj, kod IV jezera"
     },
     {
       "id": "bd3f9ff2-8805-4f99-a44f-a6bcd03bd3c3",
       "lat": 45.800288,
       "lon": 15.969812,
-      "location": "Galovačka ulica",
       "hint": "nasuprot kbr 13 i 15 ( Galovačka ulica)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Galovačka ulica"
     },
     {
       "id": "be15471e-e353-4bb5-bfd6-82df4981e296",
       "lat": 45.765601,
       "lon": 15.988587,
-      "location": "Vladimira Varićaka kod kbr. 5",
       "hint": "izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Vladimira Varićaka kod kbr. 5"
     },
     {
       "id": "be63e428-839f-4093-9a75-6759abac6352",
       "lat": 45.799137,
       "lon": 15.954036,
-      "location": "Zvornička ulica - istočna strana tržnice Trešnjevka",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Zvornička ulica - istočna strana tržnice Trešnjevka"
     },
     {
       "id": "be823ea4-0297-4b37-ace3-6f6eafa36eb2",
       "lat": 45.814815,
       "lon": 15.977316,
-      "location": "Opatovina/Skalinska ulica",
       "status": "unverified",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Opatovina/Skalinska ulica"
     },
     {
       "id": "bee93c3b-337e-41c0-af52-ed3510a78ecd",
       "lat": 45.832648,
       "lon": 15.870005,
-      "location": "Dubravica 109a",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Dubravica 109a"
     },
     {
       "id": "c1b110c2-f616-45fb-8e01-092e64543bbf",
       "lat": 45.780626,
       "lon": 15.912814,
-      "location": "Jarun",
       "hint": "jugozapadni dio jezera; približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Jarun"
     },
     {
       "id": "c2902017-588a-412e-869e-bf3473d0d805",
       "lat": 45.809771,
       "lon": 15.878041,
-      "location": "Ulica Jankomir kod kbr. 8",
       "hint": "ulica Jankomir, sjeverno od kucnog broja  8",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Jankomir kod kbr. 8"
     },
     {
       "id": "c31df40e-8299-4625-928a-bc80f92d17b1",
       "lat": 45.827889,
       "lon": 16.077167,
-      "location": "Okretište Dubec",
       "hint": "okretiste Dubec; približna po Google Street View",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Okretište Dubec"
     },
     {
       "id": "c39c93bf-126f-4d7f-843a-eff196f37399",
       "lat": 45.772106,
       "lon": 15.964147,
-      "location": "Trnsko - tržnica",
       "hint": "tržnica Trnsko, jedna slavina radi druga ne",
       "status": "working",
       "cemetery": false,
-      "type": "Vindabona"
+      "type": "Vindabona",
+      "name": "Trnsko - tržnica"
     },
     {
       "id": "c5b5312f-a36b-4dcf-a119-c2ba84be3b00",
       "lat": 45.7874,
       "lon": 15.983907,
-      "location": "Obala 8. svibnja 1945.-park Bundek",
       "hint": "izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Obala 8. svibnja 1945.-park Bundek"
     },
     {
       "id": "c887454b-7e7f-4e90-9e1d-c822dfb5471d",
       "lat": 45.84163,
       "lon": 15.983747,
-      "location": "Groblje Mirogoj",
       "hint": "na polju 120, križ na polju 121 i pano na polju 132",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "c95e1041-3ed0-40a2-8076-2aa961f1a764",
       "lat": 45.808391,
       "lon": 15.978778,
-      "location": "Trg Josipa Jurja Strossmayera, park",
       "hint": "jugoistočno od Strossmayerovog kipa",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Trg Josipa Jurja Strossmayera, park"
     },
     {
       "id": "cb675670-2dae-449b-899e-cd13741a6fa6",
       "lat": 45.797498,
       "lon": 15.907318,
-      "location": "Šetalište 150. brigade Hrvatske vojske",
       "hint": "unutar parka, sjeverno od dječjeg igrališta",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Šetalište 150. brigade Hrvatske vojske"
     },
     {
       "id": "cf3ddfdc-1264-4d9e-a565-3a3b1cde699f",
       "lat": 45.773979,
       "lon": 15.966224,
-      "location": "Park Mladenaca - u parku za pse",
       "hint": "sjeverni dio parka za pse",
       "status": "unverified",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Park Mladenaca - u parku za pse"
     },
     {
       "id": "cfad7be2-2d2d-4006-b6a7-7ac476341ac0",
       "lat": 45.806712,
       "lon": 15.986495,
-      "location": "Ulica kneza Domagoja",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica kneza Domagoja"
     },
     {
       "id": "d0ecaad4-3a30-4fff-bf1d-a07edfb81769",
       "lat": 45.8081,
       "lon": 15.969763,
-      "location": "Trg Ivana, Antuna i Vladimira Mažuranića",
       "status": "unverified",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Trg Ivana, Antuna i Vladimira Mažuranića"
     },
     {
       "id": "d1e12986-84bb-483d-ad62-d02eaa24b7b7",
       "lat": 45.844538,
       "lon": 15.985125,
-      "location": "Krematorij",
       "hint": "polje 34",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "d2cf9f08-5bfc-419b-a44b-bfca4f3a385b",
       "lat": 45.786851,
       "lon": 15.938368,
-      "location": "Ulica Franje Fuisa kod kbr. 6, park uz potok",
       "hint": "sjeverozapadni dio igrališta, uz potok",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Franje Fuisa kod kbr. 6, park uz potok"
     },
     {
       "id": "d4607146-0624-48df-9546-a3d5fdb2b510",
       "lat": 45.844627,
       "lon": 15.986252,
-      "location": "Krematorij",
       "hint": "polje 22a",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "d5b0ec41-4aaf-4ff0-ba63-53598988d648",
       "lat": 45.830411,
       "lon": 16.078724,
-      "location": "dječje igralište, Ulica Rudolfa Ivankovića",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "dječje igralište, Ulica Rudolfa Ivankovića"
     },
     {
       "id": "d610d900-21ce-47af-99c6-1b5370074a51",
       "lat": 45.791706,
       "lon": 15.975052,
-      "location": "Trnjanska struga južno od zgrade HRT",
       "hint": "nasuprot kbr 24 Trnjanska struga",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Trnjanska struga južno od zgrade HRT"
     },
     {
       "id": "d743fbf1-0948-4b2c-a1ca-d7e26d409854",
       "lat": 45.805774,
       "lon": 15.944204,
-      "location": "Krapinska, park za pse",
       "hint": "zapadni ulaz u park za pse",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krapinska, park za pse"
     },
     {
       "id": "d8fe344d-15f5-4adb-81a9-5d17a3fb724f",
       "lat": 45.8178,
       "lon": 15.97999,
-      "location": "Park Ribnjak-sjever, kod kbr. 44",
       "hint": "izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park Ribnjak-sjever, kod kbr. 44"
     },
     {
       "id": "d936e8e0-fa52-4936-8e96-1072612fed9d",
       "lat": 45.802047,
       "lon": 16.01516,
-      "location": "Donje Svetice kod kbr. 103",
       "hint": "peko puta LIDL trgovine",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Donje Svetice kod kbr. 103"
     },
     {
       "id": "d9652b66-e0ae-40de-922a-24322fd6f591",
       "lat": 45.814,
       "lon": 15.876163,
-      "location": "Ulica Sigetje - Gajnice, park za pse",
       "hint": "unutar parka za pse",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Sigetje - Gajnice, park za pse"
     },
     {
       "id": "dac5ef76-8dbf-42c0-bfff-1f136f845162",
       "lat": 45.801207,
       "lon": 16.019807,
-      "location": "Ivekovićeva ulica - s južne strane vježbališta kod kbr. 4",
       "hint": "Ivekovićeva ulica, s južne strane vježbališta i dječjeg igrališta",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ivekovićeva ulica - s južne strane vježbališta kod kbr. 4"
     },
     {
       "id": "ddd159c6-3284-43d7-900b-287964a886ae",
       "lat": 45.837156,
       "lon": 15.984071,
-      "location": "Groblje Mirogoj",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "de3d5faf-b35c-410c-8f28-d4d9c1180999",
       "lat": 45.778958,
       "lon": 15.913207,
-      "location": "Jarun",
       "hint": "jugozapadna strana jezera; približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Jarun"
     },
     {
       "id": "dffe47a3-4682-49e8-9865-07f3f5b65e06",
       "lat": 45.844089,
       "lon": 15.98749,
-      "location": "Krematorij",
       "hint": "polje 41",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "e3c8ab0d-2ddf-407f-b54a-11f34fcf1f92",
       "lat": 45.818203,
       "lon": 16.024814,
-      "location": "Ravnice školsko igralište - Aleja Antuna Augustinčića kod kbr. 8",
       "hint": "na sportskim terenima uz školsko igralište",
       "status": "working",
       "cemetery": false,
-      "type": "Vindabona"
+      "type": "Vindabona",
+      "name": "Ravnice školsko igralište - Aleja Antuna Augustinčića kod kbr. 8"
     },
     {
       "id": "e4ffdd67-3e8c-4fd8-9bbf-0b1f3ce37cb0",
       "lat": 45.792161,
       "lon": 16.045824,
-      "location": "Kanalski put, ulaz u park kod kbr. 56A",
       "hint": "prije ulaza u juznu strana parka, nasuprot kbr 56A Kanalski put",
       "status": "unverified",
       "cemetery": false,
-      "type": "Ostalo"
+      "type": "Ostalo",
+      "name": "Kanalski put, ulaz u park kod kbr. 56A"
     },
     {
       "id": "e597048c-98b7-4de4-b0e4-2f6d9ad7c1ed",
       "lat": 45.835889,
       "lon": 16.068118,
-      "location": "Ulica Klin, zapadno od nogometnog igrališta",
       "hint": "sa zapadne strane nogometnog igrališta",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Klin, zapadno od nogometnog igrališta"
     },
     {
       "id": "e626ad4c-3663-442b-bada-8685f04a335d",
       "lat": 45.797988,
       "lon": 15.949414,
-      "location": "Park Stara Trešnjevka - uz ogradu dječjeg parka",
       "hint": "uz Park Stara Trešnjevka (juzni ulaz)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park Stara Trešnjevka - uz ogradu dječjeg parka"
     },
     {
       "id": "e67d6b49-1884-4351-8c67-95f744f8e250",
       "lat": 45.840207,
       "lon": 15.982372,
-      "location": "Groblje Mirogoj",
       "hint": "srednji ulaz u nove arkade uz Rrmetsku cestu",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Groblje Mirogoj"
     },
     {
       "id": "e6fd14f7-5fca-4184-80e1-c0d49638a4f5",
       "lat": 45.806332,
       "lon": 15.952648,
-      "location": "Trg Krešimira Ćosića kod kbr. 1",
       "hint": "istočni dio Trga Krešimira Ćosića (nasuprot kbr 1 Metalčeva ulica)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Trg Krešimira Ćosića kod kbr. 1"
     },
     {
       "id": "eae05023-94eb-4def-9c2e-ae9ecaa97f22",
       "lat": 45.780507,
       "lon": 15.932905,
-      "location": "Jarun",
       "hint": "sjeverna strana Malog jezera; približno prema Open Street Map",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Jarun"
     },
     {
       "id": "ecae8b08-721a-46a0-819f-e1fab8c7eb1a",
       "lat": 45.810095,
       "lon": 15.891553,
-      "location": "Trg hrvatskih pavlina - kod ulaza u gimnaziju",
       "hint": "jugozapadno od gimnazije Lucijana Vranjanina. pokvareno (curi sa strane), treba popravak!",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Trg hrvatskih pavlina - kod ulaza u gimnaziju"
     },
     {
       "id": "ee625ce5-3713-42dd-b2d7-2d2c7d2dfd74",
       "lat": 45.845254,
       "lon": 15.983793,
-      "location": "Krematorij",
       "hint": "na dnu stepenica ispod krematorija",
       "status": "working",
       "cemetery": true,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Krematorij"
     },
     {
       "id": "f10994de-3764-44c1-9a2e-acc21f4cb904",
       "lat": 45.812988,
       "lon": 16.02222,
-      "location": "Ulica Ante Jakšića",
       "hint": "između stambene zgrade br. 7-11 i stambene zgrade br. 13-17",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Ante Jakšića"
     },
     {
       "id": "f12bc508-c47c-45f8-b783-4c425b443cec",
       "lat": 45.816354,
       "lon": 15.888313,
-      "location": "Park Lujze Janović Wagner",
       "hint": "sjeveroistočni ulaz u park",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park Lujze Janović Wagner"
     },
     {
       "id": "f15f3b96-bc27-48de-ae26-b2ccc9a7407e",
       "lat": 45.783931,
       "lon": 15.983356,
-      "location": "Ulica Damira Tomljanovića Gavrana-park Bundek",
       "hint": "izvorno SKI lokacija",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Ulica Damira Tomljanovića Gavrana-park Bundek"
     },
     {
       "id": "f1ff2902-a90b-48f0-bc27-57f1ae6380c8",
       "lat": 45.819549,
       "lon": 15.881995,
-      "location": "Bolnička cesta, park kod kbr. 96 i OŠ Stenjevec",
       "hint": "zapadni dio ulaska u park",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Bolnička cesta, park kod kbr. 96 i OŠ Stenjevec"
     },
     {
       "id": "f2761c08-f86f-4d58-a512-3970478c33cc",
       "lat": 45.820359,
       "lon": 15.88697,
-      "location": "Male Putine kod kbr. 11, dječji park",
       "hint": "ispred kbr 11 Male Putine , ulaz u dječji park",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Male Putine kod kbr. 11, dječji park"
     },
     {
       "id": "f3e8c994-e416-47c0-a056-30afe7b5068d",
       "lat": 45.789002,
       "lon": 15.935023,
-      "location": "Park 149 brigade Hrvatske vojske, južni ulaz u park",
       "hint": "juzni ulaz u park",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park 149 brigade Hrvatske vojske, južni ulaz u park"
     },
     {
       "id": "f504b7f0-a774-48ea-9c9e-f33134f9dc52",
       "lat": 45.799249,
       "lon": 16.00369,
-      "location": "Rapska 39",
       "status": "unverified",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Rapska 39"
     },
     {
       "id": "f62ae820-9e70-4e35-ac85-206331e6649c",
       "lat": 45.795631,
       "lon": 15.990749,
-      "location": "Pile I. - Kruge",
       "hint": "krizanje ulice Kruge i ulica Pile I.",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Pile I. - Kruge"
     },
     {
       "id": "f6af5405-40bf-45dc-9148-9fadf380acb9",
       "lat": 45.807213,
       "lon": 15.989802,
-      "location": "Trg kralja Petra Krešimira IV kod kbr. 14",
       "hint": "Trg kralja Petra Krešimira IV kod kbr 14, južni dio parka k(Kraljice Jelene)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Trg kralja Petra Krešimira IV kod kbr. 14"
     },
     {
       "id": "f725a118-da10-4ba9-b66f-0d63f1942db3",
       "lat": 45.790703,
       "lon": 15.980042,
-      "location": "Trnjanska cesta nasuprot kbr 117. - uz nasip",
       "hint": "uz nasip,  nasuprot kucnog broja 117 (Trnjanska cesta)",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Trnjanska cesta nasuprot kbr 117. - uz nasip"
     },
     {
       "id": "f76ca4f6-908e-4556-9793-e0ec711bd8d5",
       "lat": 45.802133,
       "lon": 15.964379,
-      "location": "Savska cesta - Koturaška cesta 75, park pored OŠ",
       "hint": "krizanje Savska /Koturaška pored OŠ Tin Ujević",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Savska cesta - Koturaška cesta 75, park pored OŠ"
     },
     {
       "id": "fa979995-048b-45eb-b6b2-75920fec1521",
       "lat": 45.820136,
       "lon": 16.01542,
-      "location": "Park Maksimir - uz glavni ulaz",
       "hint": "glavni ulaz u park na lijevu stranu , uz javnu ustanovu kbr 1",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Park Maksimir - uz glavni ulaz"
     },
     {
       "id": "fac0048f-3a60-43e1-a536-e0633106b378",
       "lat": 45.799304,
       "lon": 15.986135,
-      "location": "Breznička I. - Kruge",
       "hint": "nasuprot Breznicka kbr. 1",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Breznička I. - Kruge"
     },
     {
       "id": "fbacaf69-f6c8-4778-9171-61b9762a9e1c",
       "lat": 45.797593,
       "lon": 15.97835,
-      "location": "Hrvatske bratske zajednice, park za pse",
       "hint": "u ogradjenom parku, sjeveroistočni ugao NSB-a",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Hrvatske bratske zajednice, park za pse"
     },
     {
       "id": "fe3d6797-a8b3-4ad2-818d-7285d25f8c75",
       "lat": 45.797314,
       "lon": 15.979338,
-      "location": "Fontane - Hrvatske bratske zajednice",
       "hint": "dva komada, jedan kraj drugug",
       "status": "working",
       "cemetery": false,
-      "type": "Pojilica"
+      "type": "Pojilica",
+      "name": "Fontane - Hrvatske bratske zajednice"
     },
     {
       "id": "fea11ff7-844c-4bc5-9422-7cfc468d77ee",
       "lat": 45.789817,
       "lon": 15.990257,
-      "location": "Novska kod kbr. 30 , dječje igralište uz nasip",
       "hint": "uz nasip , južno od Novske ulice br.30",
       "status": "working",
       "cemetery": false,
-      "type": "Viktorija zdenac"
+      "type": "Viktorija zdenac",
+      "name": "Novska kod kbr. 30 , dječje igralište uz nasip"
     }
   ]
 }

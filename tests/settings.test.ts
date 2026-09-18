@@ -1,11 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { createSettings, themeColor, type SettingsDeps } from "../src/settings";
 
-function fakeDeps(
-  overrides: { stored?: Record<string, string>; prefersDark?: boolean; throwing?: boolean; writesThrow?: boolean } = {},
-) {
+function fakeDeps(overrides: { stored?: Record<string, string>; throwing?: boolean; writesThrow?: boolean } = {}) {
   const stored = new Map(Object.entries(overrides.stored ?? {}));
-  const mediaListeners: Array<() => void> = [];
   const root = { classList: { toggle: vi.fn() }, lang: "" };
   const deps: SettingsDeps = {
     storage: {
@@ -22,37 +19,44 @@ function fakeDeps(
         stored.delete(key);
       },
     },
-    media: {
-      matches: overrides.prefersDark ?? false,
-      addEventListener: (_type, listener) => mediaListeners.push(listener),
-    },
     root,
   };
-  return { deps, stored, root, fireMediaChange: () => mediaListeners.forEach((listener) => listener()) };
+  return { deps, stored, root };
 }
 
 describe("theme", () => {
-  it("defaults to system and follows the media query", () => {
-    const { deps } = fakeDeps({ prefersDark: true });
-    const settings = createSettings(deps, "en");
-    expect(settings.getTheme()).toBe("system");
-    expect(settings.effectiveTheme()).toBe("dark");
+  it("defaults to light when nothing is stored", () => {
+    const { deps } = fakeDeps();
+    expect(createSettings(deps, "en").getTheme()).toBe("light");
   });
 
-  it("an explicit choice overrides the media query", () => {
-    const { deps, stored } = fakeDeps({ prefersDark: true });
-    const settings = createSettings(deps, "en");
-    settings.setTheme("light");
-    expect(settings.effectiveTheme()).toBe("light");
-    expect(stored.get("zf.theme")).toBe("light");
+  it("reads a stored choice", () => {
+    const { deps } = fakeDeps({ stored: { "zf.theme": "dark" } });
+    expect(createSettings(deps, "en").getTheme()).toBe("dark");
   });
 
-  it("choosing system clears the stored value", () => {
+  it("ignores an unrecognised stored value", () => {
+    // "system" was a valid value in an earlier version; it must now read as light.
+    const { deps } = fakeDeps({ stored: { "zf.theme": "system" } });
+    expect(createSettings(deps, "en").getTheme()).toBe("light");
+  });
+
+  it("persists an explicit choice", () => {
+    const { deps, stored } = fakeDeps();
+    const settings = createSettings(deps, "en");
+    settings.setTheme("dark");
+    expect(settings.getTheme()).toBe("dark");
+    expect(stored.get("zf.theme")).toBe("dark");
+  });
+
+  it("persists light rather than clearing the key", () => {
+    // Light is the default, but it is still written: an absent key and a
+    // stored "light" must behave identically, and a future default change
+    // should not silently rewrite a visitor's explicit choice.
     const { deps, stored } = fakeDeps({ stored: { "zf.theme": "dark" } });
     const settings = createSettings(deps, "en");
-    expect(settings.getTheme()).toBe("dark");
-    settings.setTheme("system");
-    expect(stored.has("zf.theme")).toBe(false);
+    settings.setTheme("light");
+    expect(stored.get("zf.theme")).toBe("light");
   });
 
   it("applies the dark class to the document", () => {
@@ -76,44 +80,21 @@ describe("theme", () => {
     expect(listener).toHaveBeenCalledTimes(1);
   });
 
-  it("follows live system changes only while set to system", () => {
-    const { deps, fireMediaChange } = fakeDeps();
-    const settings = createSettings(deps, "en");
-    const listener = vi.fn();
-    settings.onChange(listener);
-
-    deps.media.matches = true;
-    fireMediaChange();
-    expect(settings.effectiveTheme()).toBe("dark");
-    expect(listener).toHaveBeenCalledTimes(1);
-
-    settings.setTheme("light");
-    listener.mockClear();
-    deps.media.matches = false;
-    fireMediaChange();
-    expect(settings.effectiveTheme()).toBe("light");
-    expect(listener).not.toHaveBeenCalled();
-  });
-
   it("lets a choice made this session win over stale storage (asymmetric read/write)", () => {
     const { deps, root } = fakeDeps({ stored: { "zf.theme": "dark" }, writesThrow: true });
     const settings = createSettings(deps, "en");
     settings.setTheme("light");
     expect(settings.getTheme()).toBe("light");
-    expect(settings.effectiveTheme()).toBe("light");
     expect(root.classList.toggle).toHaveBeenLastCalledWith("dark", false);
   });
 
-  it("choosing system after an explicit choice, with writes throwing", () => {
+  it("toggles back and forth with writes throwing", () => {
     const { deps } = fakeDeps({ writesThrow: true });
     const settings = createSettings(deps, "en");
     settings.setTheme("dark");
     expect(settings.getTheme()).toBe("dark");
-    settings.setTheme("system");
-    expect(settings.getTheme()).toBe("system");
-    expect(settings.effectiveTheme()).toBe("light");
-    deps.media.matches = true;
-    expect(settings.effectiveTheme()).toBe("dark");
+    settings.setTheme("light");
+    expect(settings.getTheme()).toBe("light");
   });
 });
 
@@ -152,10 +133,9 @@ describe("blocked storage", () => {
   it("still works, keeping the choice in memory", () => {
     const { deps } = fakeDeps({ throwing: true });
     const settings = createSettings(deps, "en");
-    expect(settings.getTheme()).toBe("system");
+    expect(settings.getTheme()).toBe("light");
     expect(() => settings.setTheme("dark")).not.toThrow();
     expect(settings.getTheme()).toBe("dark");
-    expect(settings.effectiveTheme()).toBe("dark");
   });
 });
 

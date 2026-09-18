@@ -14,7 +14,7 @@ Instead:
 - **Compare against the i18n table**, not a literal:
   `expect(html).toContain(en.introTitle)` — not the sentence itself.
   Playwright specs are TypeScript and can import `src/i18n/en.ts` too.
-- **Locate elements by structure**, not by text: `[data-theme="dark"]`,
+- **Locate elements by structure**, not by text: `[data-action="toggle-theme"]`,
   `[data-language="hr"]`, `#intro-title`, `role` + `aria-pressed`.
 - Where a control's accessible name is hardcoded in source rather than coming
   from the i18n tables, prefer a `data-*` selector over the visible string.

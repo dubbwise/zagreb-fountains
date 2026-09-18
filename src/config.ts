@@ -6,7 +6,7 @@ export const TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 export const TILE_MAX_ZOOM = 19;
 
 /**
- * Dark basemap, used only when the system asks for dark mode AND a key is set.
+ * Dark basemap, used only in the dark theme AND when a key is set.
  * Keyless CARTO tiles come back stamped "API KEY REQUIRED", so without a key
  * the map stays on the light tiles. Set VITE_CARTO_API_KEY in .env.local.
  */

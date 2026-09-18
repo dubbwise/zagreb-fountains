@@ -14,14 +14,12 @@ import { introHtml } from "../src/ui/intro";
 describe("introHtml", () => {
   const CHECKED_AT = "2026-09-15T15:40:55.478Z";
 
-  it("renders the title, the masked image and the attribution links", () => {
+  it("renders the title and the attribution links", () => {
     setActiveLanguage("en");
-    const html = introHtml({ theme: "system", language: "en", lastCheckedAt: CHECKED_AT });
+    const html = introHtml({ theme: "light", language: "en", lastCheckedAt: CHECKED_AT });
 
     expect(html).toContain(en.introTitle);
     expect(html).toContain('id="intro-title"');
-    expect(html).toContain("intro-title-mask");
-    expect(html).toContain("Coat_of_arms_of_Zagreb.svg");
     expect(html).toContain(en.introLocationBody);
     expect(html).toContain(en.introContinue);
 
@@ -34,17 +32,23 @@ describe("introHtml", () => {
 
   it("marks the active theme and language", () => {
     setActiveLanguage("en");
-    const html = introHtml({ theme: "dark", language: "en" });
-    expect(html).toContain('data-theme="dark" aria-pressed="true"');
-    expect(html).toContain('data-theme="light" aria-pressed="false"');
-    expect(html).toContain('data-language="en" aria-pressed="true"');
-    expect(html).toContain('data-language="hr" aria-pressed="false"');
+    const dark = introHtml({ theme: "dark", language: "en" });
+    expect(dark).toContain('data-action="toggle-theme" aria-pressed="true"');
+    expect(dark).toContain('data-language="en" aria-pressed="true"');
+    expect(dark).toContain('data-language="hr" aria-pressed="false"');
+
+    // The theme is one toggle reporting whether dark is on, not a button per
+    // theme. The absence of data-theme is the contract renderIntro's focus
+    // restore relies on, so it is asserted rather than assumed.
+    const light = introHtml({ theme: "light", language: "en" });
+    expect(light).toContain('data-action="toggle-theme" aria-pressed="false"');
+    expect(light).not.toContain("data-theme=");
   });
 
   it("renders the Croatian table when that language is active", () => {
     setActiveLanguage("hr");
     try {
-      const html = introHtml({ theme: "system", language: "hr", lastCheckedAt: CHECKED_AT });
+      const html = introHtml({ theme: "light", language: "hr", lastCheckedAt: CHECKED_AT });
       expect(html).toContain(hr.introTitle);
       expect(html).toContain(hr.introContinue);
       expect(html).not.toContain(en.introTitle);
@@ -59,7 +63,7 @@ describe("introHtml", () => {
     // the sentence it sits in.
     const formatted = new Intl.DateTimeFormat("en-GB", { dateStyle: "medium" }).format(new Date(CHECKED_AT));
 
-    expect(introHtml({ theme: "system", language: "en", lastCheckedAt: CHECKED_AT })).toContain(formatted);
-    expect(introHtml({ theme: "system", language: "en" })).not.toContain(formatted);
+    expect(introHtml({ theme: "light", language: "en", lastCheckedAt: CHECKED_AT })).toContain(formatted);
+    expect(introHtml({ theme: "light", language: "en" })).not.toContain(formatted);
   });
 });

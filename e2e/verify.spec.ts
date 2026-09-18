@@ -159,10 +159,10 @@ async function expectFullTileCoverage(page: Page): Promise<void> {
 test.describe("at Ban Jelačić Square", () => {
   test.use({ geolocation: { latitude: 45.8131, longitude: 15.9772, accuracy: 20 }, permissions: ["geolocation"] });
 
-  test("highlights the nearest fountain with directions", async ({ page }) => {
+  test("highlights the nearest location with directions", async ({ page }) => {
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText(en.nearestFountain);
+    await expect(card).toContainText(en.nearestLocation);
     await expect(card).toContainText(WALK_LINE);
     await expect(card.getByRole("link", { name: en.directions })).toHaveAttribute(
       "href",
@@ -176,10 +176,10 @@ test.describe("at Ban Jelačić Square", () => {
 test.describe("in Maksimir Park", () => {
   test.use({ geolocation: { latitude: 45.8229, longitude: 16.0176, accuracy: 20 }, permissions: ["geolocation"] });
 
-  test("highlights the nearest fountain", async ({ page }) => {
+  test("highlights the nearest location", async ({ page }) => {
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText(en.nearestFountain);
+    await expect(card).toContainText(en.nearestLocation);
     await expect(card).toContainText(WALK_LINE);
     await page.screenshot({ path: `${SCREENSHOTS}/2-maksimir.png` });
   });
@@ -188,7 +188,7 @@ test.describe("in Maksimir Park", () => {
 test.describe("in Split (outside Zagreb)", () => {
   test.use({ geolocation: { latitude: 43.5081, longitude: 16.4402, accuracy: 20 }, permissions: ["geolocation"] });
 
-  test("explains there are no fountains nearby", async ({ page }) => {
+  test("explains there are no locations nearby", async ({ page }) => {
     await openApp(page);
     await expect(page.locator("#card")).toContainText(en.outsideZagreb);
     await page.screenshot({ path: `${SCREENSHOTS}/3-split.png` });
@@ -232,9 +232,8 @@ test.describe("clears approx. when GPS accuracy improves", () => {
   });
 });
 
-test.describe("with the system set to dark", () => {
+test.describe("with the dark theme stored", () => {
   test.use({
-    colorScheme: "dark",
     geolocation: { latitude: 45.8131, longitude: 15.9772, accuracy: 20 },
     permissions: ["geolocation"],
   });
@@ -242,9 +241,13 @@ test.describe("with the system set to dark", () => {
   // The dark basemap needs VITE_CARTO_API_KEY at build time (.env.local locally,
   // a repository secret in CI), otherwise the map stays on the light tiles.
   test("renders a dark card over the dark basemap", async ({ page }) => {
+    // The app ignores prefers-color-scheme, so the stored value is the only way
+    // into dark. Emulating a dark OS here would leave the app light and this
+    // test would quietly stop covering the dark basemap and its API key.
+    await page.addInitScript(() => localStorage.setItem("zf.theme", "dark"));
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText(en.nearestFountain);
+    await expect(card).toContainText(en.nearestLocation);
 
     // Assert the surface is dark rather than matching an exact colour string:
     // Tailwind 4 emits oklch(), so the computed value is palette-version specific.
@@ -304,7 +307,7 @@ test.describe("the intro screen", () => {
     await expect
       .poll(() => page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls))
       .toBeGreaterThan(0);
-    await expect(page.locator("#card")).toContainText(en.nearestFountain);
+    await expect(page.locator("#card")).toContainText(en.nearestLocation);
   });
 
   test("reopens from the map without asking for location again", async ({ page }) => {
@@ -320,22 +323,35 @@ test.describe("the intro screen", () => {
   });
 });
 
-test.describe("theme override", () => {
+test.describe("theme toggle", () => {
   test.use({
-    colorScheme: "light",
+    // Deliberately a dark OS: the app must still start light, because it no
+    // longer consults prefers-color-scheme.
+    colorScheme: "dark",
     geolocation: { latitude: 45.8131, longitude: 15.9772, accuracy: 20 },
     permissions: ["geolocation"],
   });
 
-  test("Dark wins over a light system setting", async ({ page }) => {
+  test("starts light despite the system, then toggles to dark and back", async ({ page }) => {
     await openApp(page, { skipIntro: false });
-    await page.locator('[data-theme="dark"]').click();
+    await expect(page.locator("html")).not.toHaveClass(/dark/);
+
+    const toggle = page.locator('[data-action="toggle-theme"]');
+    await toggle.click();
     await expect(page.locator("html")).toHaveClass(/dark/);
     // renderIntro re-renders the panel on every settings change, so focus must
-    // be restored to the control the user just used rather than jumping to Continue.
-    await expect(page.locator('[data-theme="dark"]')).toBeFocused();
+    // be restored to the control the user just used rather than jumping to
+    // Continue. The toggle carries a stable data-action for exactly this
+    // reason: a value that flipped with the theme would stop matching here.
+    await expect(toggle).toBeFocused();
     await page.screenshot({ path: `${SCREENSHOTS}/7-intro-dark.png` });
 
+    // Toggling back is the half a three-button choice set could not get wrong.
+    await toggle.click();
+    await expect(page.locator("html")).not.toHaveClass(/dark/);
+    await expect(toggle).toBeFocused();
+
+    await toggle.click();
     await page.getByRole("button", { name: en.introContinue }).click();
     await expect(page.locator(".leaflet-tile").first()).toHaveAttribute("src", /cartocdn\.com\/dark_all/);
   });
@@ -351,7 +367,7 @@ test.describe("language", () => {
     await page.getByRole("button", { name: hr.introContinue }).click();
 
     const card = page.locator("#card");
-    await expect(card).toContainText(hr.nearestFountain);
+    await expect(card).toContainText(hr.nearestLocation);
     await expect(card).toContainText(/\d+ m · ~\d+ min hoda/);
     await expectFullTileCoverage(page);
     await page.screenshot({ path: `${SCREENSHOTS}/8-croatian.png` });

@@ -1,21 +1,21 @@
-export type Theme = "system" | "light" | "dark";
+export type Theme = "light" | "dark";
 export type Language = "en" | "hr";
 
 const THEME_KEY = "zf.theme";
 const LANGUAGE_KEY = "zf.lang";
-// Light is --accent, dark is --surface, both from style.css; keep them in step.
 const THEME_COLOR = { light: "#3376b8", dark: "#292929" } as const;
+
+/** Light unless the visitor has chosen otherwise; the OS preference is not consulted. */
+const DEFAULT_THEME: Theme = "light";
 
 export interface SettingsDeps {
   storage: Pick<Storage, "getItem" | "setItem" | "removeItem">;
-  media: { matches: boolean; addEventListener(type: "change", listener: () => void): void };
   root: { classList: { toggle(token: string, force: boolean): void }; lang: string };
 }
 
 export interface Settings {
   getTheme(): Theme;
   setTheme(theme: Theme): void;
-  effectiveTheme(): "light" | "dark";
   getLanguage(): Language;
   setLanguage(language: Language): void;
   onChange(listener: () => void): () => void;
@@ -39,10 +39,9 @@ export function createSettings(deps: SettingsDeps, defaultLanguage: Language): S
     }
   }
 
-  function write(key: string, value: string | null): void {
+  function write(key: string, value: string): void {
     try {
-      if (value === null) deps.storage.removeItem(key);
-      else deps.storage.setItem(key, value);
+      deps.storage.setItem(key, value);
     } catch {
       // Keeping the choice in memory is better than failing the interaction.
     }
@@ -52,7 +51,7 @@ export function createSettings(deps: SettingsDeps, defaultLanguage: Language): S
     if (memoryTheme !== null) return memoryTheme;
     const stored = read(THEME_KEY);
     if (stored === "light" || stored === "dark") return stored;
-    return "system";
+    return DEFAULT_THEME;
   }
 
   function getLanguage(): Language {
@@ -62,15 +61,8 @@ export function createSettings(deps: SettingsDeps, defaultLanguage: Language): S
     return defaultLanguage;
   }
 
-  function effectiveTheme(): "light" | "dark" {
-    const theme = getTheme();
-    if (theme !== "system") return theme;
-    return deps.media.matches ? "dark" : "light";
-  }
-
   function apply(): void {
-    const dark = effectiveTheme() === "dark";
-    deps.root.classList.toggle("dark", dark);
+    deps.root.classList.toggle("dark", getTheme() === "dark");
     deps.root.lang = getLanguage();
   }
 
@@ -78,21 +70,14 @@ export function createSettings(deps: SettingsDeps, defaultLanguage: Language): S
     for (const listener of [...listeners]) listener();
   }
 
-  deps.media.addEventListener("change", () => {
-    if (getTheme() !== "system") return;
-    apply();
-    notify();
-  });
-
   apply();
 
   return {
     getTheme,
-    effectiveTheme,
     getLanguage,
     setTheme(theme) {
       memoryTheme = theme;
-      write(THEME_KEY, theme === "system" ? null : theme);
+      write(THEME_KEY, theme);
       apply();
       notify();
     },
@@ -111,7 +96,7 @@ export function createSettings(deps: SettingsDeps, defaultLanguage: Language): S
   };
 }
 
-/** The colour the browser chrome should use for a given effective theme. */
-export function themeColor(effective: "light" | "dark"): string {
-  return THEME_COLOR[effective];
+/** The colour the browser chrome should use for a given theme. */
+export function themeColor(theme: Theme): string {
+  return THEME_COLOR[theme];
 }

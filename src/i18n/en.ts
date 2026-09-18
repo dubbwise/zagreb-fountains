@@ -1,6 +1,6 @@
 export interface Strings {
-  nearestFountain: string;
-  selectedFountain: string;
+  nearestLocation: string;
+  selectedLocation: string;
   directions: string;
   retry: string;
   locating: string;
@@ -20,8 +20,8 @@ export interface Strings {
 }
 
 export const en: Strings = {
-  nearestFountain: "Nearest water point",
-  selectedFountain: "Water point",
+  nearestLocation: "Nearest water point",
+  selectedLocation: "Water point",
   directions: "Directions",
   retry: "Retry",
   locating: "Finding your location…",
@@ -35,8 +35,8 @@ export const en: Strings = {
   introLanguage: "Language",
   introTitle: "Find public water points in Zagreb.",
   introLocationBody:
-    "Browser will ask for location to find the nearest water point. Location is local use only, never sent anywhere.",
+    "Browser will ask for location to find the nearest water point. Location is used only on your device, never sent anywhere.",
   introLastUpdated: (date) => `Updated: ${date}`,
-  introContinue: "Open map",
+  introContinue: "Find nearest water point",
   introOpen: "Show intro screen",
 };

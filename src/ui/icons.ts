@@ -16,13 +16,7 @@ const SVG_OPEN =
   `stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ` +
   `aria-hidden="true" focusable="false">`;
 
-/** Monitor — the "System" theme choice. */
-export const ICON_SYSTEM =
-  `${SVG_OPEN}<rect width="20" height="14" x="2" y="3" rx="2"></rect>` +
-  `<line x1="8" x2="16" y1="21" y2="21"></line>` +
-  `<line x1="12" x2="12" y1="17" y2="21"></line></svg>`;
-
-/** Sun — the "Light" theme choice. */
+/** Sun — shown while the light theme is in effect. */
 export const ICON_LIGHT =
   `${SVG_OPEN}<circle cx="12" cy="12" r="4"></circle>` +
   `<path d="M12 2v2"></path><path d="M12 20v2"></path>` +

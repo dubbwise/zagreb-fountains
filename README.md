@@ -26,7 +26,7 @@ The app shows an intro screen on every launch. It carries the site description, 
 
 A home button ("About this map" / "O ovoj karti") on the map reopens the intro later; closing it from there does not re-prompt for location.
 
-**Theme** choices are System, Light, or Dark. The setting is stored in `localStorage` under the key `zf.theme`; an absent key means System. When System is chosen, the app follows the device preference and reacts to changes live. Explicit Light or Dark overrides the device setting. The theme drives the card, page, browser theme colour, basemap (CARTO dark tiles for Dark mode, where a key is set), and Leaflet controls.
+**Theme** is Light or Dark, switched by a single toggle on the intro screen. Light is the default, and the device's `prefers-color-scheme` is deliberately not consulted: the app looks the same on every machine until someone chooses otherwise. The setting is stored in `localStorage` under the key `zf.theme`; an absent or unrecognised value means Light. A small script in `index.html` applies the stored value before first paint so dark-theme visitors never see a white flash — it mirrors `getTheme()` in `src/settings.ts`, and the two must stay in step. The theme drives the card, page, browser theme colour, basemap (CARTO dark tiles for Dark, where a key is set), and Leaflet controls.
 
 **Language** choices are English or Hrvatski (Croatian). The setting is stored under `zf.lang`; an absent key defaults to the browser's language. The app detects `navigator.language` starting with `hr` as Croatian, otherwise English. All user-visible text lives in `src/i18n/en.ts` and `src/i18n/hr.ts`, both typed by one `Strings` interface, so a missing key fails the build. Adding a third language means five edits: a new table file implementing `Strings`, widening the `Language` union in `src/settings.ts`, registering the table in `TABLES` and extending `detectLanguage()` in `src/i18n/index.ts`, and adding a button to the language row in `src/ui/intro.ts`.
 
@@ -34,7 +34,7 @@ A home button ("About this map" / "O ovoj karti") on the map reopens the intro l
 
 **Typography** is the Exat family, declared as `--font-sans` in the same file. The trial files live in `public/Exat TEST/` and are gitignored, so they are never committed or deployed: the `@font-face` URLs are root-absolute rather than bundled asset imports, which means a build without them still succeeds and the browser falls back to the system stack. Three weights are declared (400/500/700); Exat has no Semibold, so `font-semibold` resolves to Bold. When licensed files are available, convert them to WOFF2, move them to `src/fonts/`, and switch to relative `url()` so Vite fingerprints them.
 
-**Icons** are inline SVG strings in `src/ui/icons.ts` (theme controls, and the home/zoom glyphs on the map) and `src/ui/flags.ts` (language), not a runtime icon dependency. They are trusted markup written into `innerHTML` without escaping, so nothing from the i18n tables or the fountain data may ever be added to them.
+**Icons** are inline SVG strings in `src/ui/icons.ts` (theme controls, and the home/zoom glyphs on the map) and `src/ui/flags.ts` (language), not a runtime icon dependency. They are trusted markup written into `innerHTML` without escaping, so nothing from the i18n tables or the location data may ever be added to them.
 
 **Attribution** lives on the intro screen rather than in a bar on the map. The credits section lists Leaflet, OpenStreetMap contributors, CARTO for the dark basemap, and the City of Zagreb as the data source, with a link to the dataset. The home control stays visible on the map at all times so those credits are always one tap away, which is what OpenStreetMap's and CARTO's terms require.
 
@@ -45,8 +45,8 @@ A home button ("About this map" / "O ovoj karti") on the map reopens the intro l
 - `npm run preview` — serve the production build locally.
 - `npm run typecheck` — `tsc --noEmit`.
 - `npm run test` — run the Vitest unit suite.
-- `npm run fetch-data` — download the latest fountain data from `data.zagreb.hr`, validate it, and rewrite
-  `public/data/fountains.json`. Always bumps `lastCheckedAt`; keeps `generatedAt` and the fountain list when
+- `npm run fetch-data` — download the latest location data from `data.zagreb.hr`, validate it, and rewrite
+  `public/data/locations.json`. Always bumps `lastCheckedAt`; keeps `generatedAt` and the location list when
   nothing else changed. Refuses (exits non-zero, writes nothing) if validation fails — see "Safety guard" in
   the spec.
 - `npm run verify` — Playwright end-to-end checks against a production build served on port 4173. First
@@ -73,8 +73,8 @@ Pages.
 ## Data refresh
 
 `.github/workflows/refresh-data.yml` runs every Monday at 04:00 UTC, and on manual dispatch. It fetches the
-latest data, validates and builds it, and always rewrites `public/data/fountains.json` so `lastCheckedAt`
-reflects the check. Fountain rows and `generatedAt` only change when the list itself changed. The commit
+latest data, validates and builds it, and always rewrites `public/data/locations.json` so `lastCheckedAt`
+reflects the check. Location rows and `generatedAt` only change when the list itself changed. The commit
 triggers a deploy so the intro footer stays current.
 
 **Warning:** GitHub disables scheduled workflows after 60 days with no repository activity. If the weekly

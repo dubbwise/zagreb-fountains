@@ -1,10 +1,10 @@
 import "./style.css";
 import { LOW_ACCURACY_M, RECOMPUTE_DISTANCE_M } from "./config";
-import { loadSnapshot, type Fountain } from "./data/fountains";
+import { loadSnapshot, type Location } from "./data/locations";
 import { detectLanguage, setActiveLanguage, t } from "./i18n";
 import { findNearest, haversineMeters, isNearZagreb, type LatLon, type NearestResult } from "./geo/distance";
 import { watchLocation, type LocationEvent } from "./geo/location";
-import { createFountainMap, type UserPosition } from "./map/map";
+import { createLocationMap, type UserPosition } from "./map/map";
 import { createSettings, themeColor } from "./settings";
 import { directionsUrl } from "./ui/directions";
 import { renderIntro } from "./ui/intro";
@@ -19,7 +19,6 @@ function byId(id: string): HTMLElement {
 const settings = createSettings(
   {
     storage: localStorage,
-    media: window.matchMedia("(prefers-color-scheme: dark)"),
     root: document.documentElement,
   },
   detectLanguage(navigator.language),
@@ -27,7 +26,7 @@ const settings = createSettings(
 setActiveLanguage(settings.getLanguage());
 
 const mapElement = byId("map");
-const map = createFountainMap(mapElement, { dark: settings.effectiveTheme() === "dark", infoLabel: t().introOpen });
+const map = createLocationMap(mapElement, { dark: settings.getTheme() === "dark", infoLabel: t().introOpen });
 const cardElement = byId("card");
 const fatalElement = byId("fatal");
 const introElement = byId("intro");
@@ -42,28 +41,28 @@ let introOpener: Element | null = null;
  */
 let fatalPending = false;
 
-let fountains: Fountain[] = [];
+let locations: Location[] = [];
 let lastCheckedAt: string | null = null;
 let position: UserPosition | null = null;
 let locationFailed = false;
 let computedAt: LatLon | null = null;
 let nearest: NearestResult | null = null;
-/** A fountain the user tapped; null means "show the nearest". */
-let tapped: Fountain | null = null;
+/** A location the user tapped; null means "show the nearest". */
+let tapped: Location | null = null;
 let hasFitted = false;
 let stopWatching: () => void = () => {};
 /** Whether the last card render used the "approx." (low-accuracy) prefix. */
 let renderedApprox = false;
 
-function cardState(shown: Fountain | null): CardState {
+function cardState(shown: Location | null): CardState {
   const near = position !== null && isNearZagreb(position);
   if (shown) {
     return {
-      kind: "fountain",
-      fountain: shown,
+      kind: "location",
+      location: shown,
       distanceM: near && position ? haversineMeters(position, shown) : null,
       approx: near && position !== null && position.accuracyM > LOW_ACCURACY_M,
-      isNearest: nearest?.fountain.id === shown.id,
+      isNearest: nearest?.location.id === shown.id,
       directionsUrl: directionsUrl(shown, navigator.userAgent, navigator.maxTouchPoints),
     };
   }
@@ -73,7 +72,7 @@ function cardState(shown: Fountain | null): CardState {
 }
 
 function update(): void {
-  const shown = tapped ?? nearest?.fountain ?? null;
+  const shown = tapped ?? nearest?.location ?? null;
   map.highlight(shown?.id ?? null);
   renderCard(cardElement, cardState(shown), { onRetry: startLocation });
   renderedApprox = position !== null && position.accuracyM > LOW_ACCURACY_M;
@@ -104,7 +103,7 @@ function handleLocation(event: LocationEvent): void {
     return;
   }
   if (computedAt && haversineMeters(computedAt, position) < RECOMPUTE_DISTANCE_M) {
-    // Still too close to recompute the nearest fountain, but a coarse first
+    // Still too close to recompute the nearest location, but a coarse first
     // fix followed by a precise one at the same spot should still drop
     // (or add) the "approx." prefix on the card.
     if (position.accuracyM > LOW_ACCURACY_M !== renderedApprox) update();
@@ -112,11 +111,11 @@ function handleLocation(event: LocationEvent): void {
   }
 
   computedAt = { lat: position.lat, lon: position.lon };
-  nearest = findNearest(position, fountains);
+  nearest = findNearest(position, locations);
   if (nearest && !hasFitted) {
-    map.fitTo([position, nearest.fountain]);
+    map.fitTo([position, nearest.location]);
     hasFitted = true;
-    tapped = null; // follow the map framing instead of a stale tapped fountain
+    tapped = null; // follow the map framing instead of a stale tapped location
   }
   update();
 }
@@ -184,8 +183,8 @@ function closeIntro(): void {
 
 settings.onChange(() => {
   setActiveLanguage(settings.getLanguage());
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", themeColor(settings.effectiveTheme()));
-  map.setDark(settings.effectiveTheme() === "dark");
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", themeColor(settings.getTheme()));
+  map.setDark(settings.getTheme() === "dark");
   map.setInfoLabel(t().introOpen);
   if (!introElement.classList.contains("hidden")) drawIntro();
   update();
@@ -208,8 +207,8 @@ document.addEventListener("keydown", (event) => {
 async function boot(): Promise<void> {
   fatalElement.classList.add("hidden");
   try {
-    const snapshot = await loadSnapshot(`${import.meta.env.BASE_URL}data/fountains.json`);
-    fountains = snapshot.fountains;
+    const snapshot = await loadSnapshot(`${import.meta.env.BASE_URL}data/locations.json`);
+    locations = snapshot.locations;
     lastCheckedAt = snapshot.lastCheckedAt;
   } catch (error) {
     console.error(error);
@@ -217,14 +216,14 @@ async function boot(): Promise<void> {
     else fatalPending = true;
     return;
   }
-  map.setFountains(fountains);
+  map.setLocations(locations);
   if (!introElement.classList.contains("hidden")) drawIntro();
   update();
 }
 
-map.onFountainTap((fountain) => {
-  // Tapping the nearest fountain returns to "follow nearest" mode.
-  tapped = nearest?.fountain.id === fountain.id ? null : fountain;
+map.onLocationTap((location) => {
+  // Tapping the nearest location returns to "follow nearest" mode.
+  tapped = nearest?.location.id === location.id ? null : location;
   update();
 });
 

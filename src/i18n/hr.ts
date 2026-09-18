@@ -1,8 +1,8 @@
 import type { Strings } from "./en";
 
 export const hr: Strings = {
-  nearestFountain: "Najbliži zdenac",
-  selectedFountain: "Zdenac",
+  nearestLocation: "Najbliži zdenac",
+  selectedLocation: "Zdenac",
   directions: "Upute",
   retry: "Pokušaj ponovno",
   locating: "Tražim tvoju lokaciju…",
@@ -15,8 +15,9 @@ export const hr: Strings = {
   walk: (minutes) => `~${minutes} min hoda`,
   introLanguage: "Jezik",
   introTitle: "Zdenci s pitkom vodom u Zagrebu.",
-  introLocationBody: "Preglednik će zatražiti lokaciju kako bi pronašao najbliži zdenac. Lokacija se koristi samo lokalno, nikad se ne dijeli dalje.",
+  introLocationBody:
+    "Preglednik će zatražiti lokaciju kako bi pronašao najbliži zdenac. Lokacija se koristi samo na tvom uređaju i nikamo se ne šalje.",
   introLastUpdated: (date) => `Ažurirano: ${date}`,
-  introContinue: "Prikaži mapu",
+  introContinue: "Nađi najbliži zdenac",
   introOpen: "Prikaži uvodni ekran",
 };

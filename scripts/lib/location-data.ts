@@ -1,4 +1,4 @@
-import type { Fountain, Snapshot } from "../../src/data/fountains";
+import type { Location, Snapshot } from "../../src/data/locations";
 
 export const ZAGREB_BBOX = { minLat: 45.6, maxLat: 46.0, minLon: 15.7, maxLon: 16.3 } as const;
 
@@ -44,7 +44,7 @@ export interface ZdenciCollection {
 
 export interface Exclusion {
   id: string;
-  location: string;
+  name: string;
   reason: string;
 }
 
@@ -80,14 +80,14 @@ export function selectGeoJsonResource(packageShow: unknown): CkanResource {
 }
 
 export function normalizeFeatures(input: unknown): {
-  fountains: Fountain[];
+  locations: Location[];
   excluded: Exclusion[];
   unrecognizedStatuses: string[];
 } {
   if (!isRecord(input) || !Array.isArray(input.features)) {
     throw new DataValidationError("Expected a GeoJSON FeatureCollection with a features array");
   }
-  const fountains: Fountain[] = [];
+  const locations: Location[] = [];
   const excluded: Exclusion[] = [];
   const seenIds = new Set<string>();
   const unrecognizedStatuses = new Set<string>();
@@ -98,8 +98,8 @@ export function normalizeFeatures(input: unknown): {
     if (!id) throw new DataValidationError(`Feature at index ${index} is missing globalid`);
     if (seenIds.has(id)) throw new DataValidationError(`Feature ${id} has a duplicate globalid`);
     seenIds.add(id);
-    const location = clean(props.lokacija);
-    if (!location) throw new DataValidationError(`Feature ${id} is missing lokacija`);
+    const name = clean(props.lokacija);
+    if (!name) throw new DataValidationError(`Feature ${id} is missing lokacija`);
 
     const coordinates = feature.geometry?.type === "Point" ? feature.geometry.coordinates : undefined;
     if (!Array.isArray(coordinates) || typeof coordinates[0] !== "number" || typeof coordinates[1] !== "number") {
@@ -112,7 +112,7 @@ export function normalizeFeatures(input: unknown): {
 
     const status = clean(props.status_odrz);
     if (status === STATUS_NOT_WORKING) {
-      excluded.push({ id, location, reason: `not working (${STATUS_NOT_WORKING})` });
+      excluded.push({ id, name, reason: `not working (${STATUS_NOT_WORKING})` });
       return;
     }
     if (status !== undefined && status !== STATUS_WORKING && status !== STATUS_NEEDS_SURVEY) {
@@ -120,11 +120,11 @@ export function normalizeFeatures(input: unknown): {
     }
     const hint = clean(props.napomena_teren);
     const type = clean(props.tip_zdenca);
-    fountains.push({
+    locations.push({
       id,
       lat: round6(lat),
       lon: round6(lon),
-      location,
+      name,
       ...(hint ? { hint } : {}),
       status: status === STATUS_WORKING ? "working" : "unverified",
       cemetery: (clean(props.odrzava_ki) ?? "").includes(CEMETERY_MAINTAINER),
@@ -132,27 +132,27 @@ export function normalizeFeatures(input: unknown): {
     });
   });
 
-  fountains.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
-  return { fountains, excluded, unrecognizedStatuses: [...unrecognizedStatuses].sort() };
+  locations.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  return { locations, excluded, unrecognizedStatuses: [...unrecognizedStatuses].sort() };
 }
 
 export function assertCountPlausible(nextCount: number, previousCount: number | null): void {
   if (nextCount === 0) {
-    throw new DataValidationError("Source returned no usable fountains");
+    throw new DataValidationError("Source returned no usable locations");
   }
   if (previousCount !== null && nextCount < previousCount * MIN_COUNT_RATIO) {
     throw new DataValidationError(
-      `Only ${nextCount} fountains, less than half of the previous ${previousCount}; refusing to overwrite`,
+      `Only ${nextCount} locations, less than half of the previous ${previousCount}; refusing to overwrite`,
     );
   }
 }
 
-export function sameFountains(a: readonly Fountain[], b: readonly Fountain[]): boolean {
+export function sameLocations(a: readonly Location[], b: readonly Location[]): boolean {
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
 export function buildSnapshot(
-  fountains: Fountain[],
+  locations: Location[],
   sourceModified: string | null | undefined,
   now: Date,
   generatedAt?: string,
@@ -162,7 +162,7 @@ export function buildSnapshot(
     generatedAt: generatedAt ?? checkedAt,
     lastCheckedAt: checkedAt,
     sourceModified: sourceModified ?? "",
-    count: fountains.length,
-    fountains,
+    count: locations.length,
+    locations,
   };
 }

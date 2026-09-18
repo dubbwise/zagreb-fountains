@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_CENTER } from "../src/config";
-import type { Fountain } from "../src/data/fountains";
+import type { Location } from "../src/data/locations";
 import { findNearest, formatDistance, haversineMeters, isNearZagreb, walkingMinutes } from "../src/geo/distance";
 
 const METERS_PER_DEGREE_LAT = (6_371_008.8 * Math.PI) / 180;
@@ -10,8 +10,8 @@ function north(meters: number) {
   return { lat: DEFAULT_CENTER.lat + meters / METERS_PER_DEGREE_LAT, lon: DEFAULT_CENTER.lon };
 }
 
-function fountain(id: string, metersNorth: number, status: Fountain["status"] = "working"): Fountain {
-  return { id, ...north(metersNorth), location: `Fountain ${id}`, status, cemetery: false };
+function location(id: string, metersNorth: number, status: Location["status"] = "working"): Location {
+  return { id, ...north(metersNorth), name: `Location ${id}`, status, cemetery: false };
 }
 
 function expectWithinOnePercent(actual: number, expected: number): void {
@@ -37,38 +37,38 @@ describe("findNearest", () => {
     expect(findNearest(DEFAULT_CENTER, [])).toBeNull();
   });
 
-  it("returns the closest working fountain with its distance", () => {
-    const result = findNearest(DEFAULT_CENTER, [fountain("far", 900), fountain("near", 300), fountain("mid", 600)]);
-    expect(result?.fountain.id).toBe("near");
+  it("returns the closest working location with its distance", () => {
+    const result = findNearest(DEFAULT_CENTER, [location("far", 900), location("near", 300), location("mid", 600)]);
+    expect(result?.location.id).toBe("near");
     expect(result?.distanceM).toBeCloseTo(300, 3);
   });
 
   it("breaks exact ties by lowest id", () => {
-    expect(findNearest(DEFAULT_CENTER, [fountain("b", 300), fountain("a", 300)])?.fountain.id).toBe("a");
+    expect(findNearest(DEFAULT_CENTER, [location("b", 300), location("a", 300)])?.location.id).toBe("a");
   });
 
-  it("keeps a working fountain when an unverified one is at most 150 m closer", () => {
-    const result = findNearest(DEFAULT_CENTER, [fountain("w", 300), fountain("u", 200, "unverified")]);
-    expect(result?.fountain.id).toBe("w");
+  it("keeps a working location when an unverified one is at most 150 m closer", () => {
+    const result = findNearest(DEFAULT_CENTER, [location("w", 300), location("u", 200, "unverified")]);
+    expect(result?.location.id).toBe("w");
   });
 
-  it("picks an unverified fountain when it is more than 150 m closer", () => {
-    const result = findNearest(DEFAULT_CENTER, [fountain("w", 400), fountain("u", 200, "unverified")]);
-    expect(result?.fountain.id).toBe("u");
+  it("picks an unverified location when it is more than 150 m closer", () => {
+    const result = findNearest(DEFAULT_CENTER, [location("w", 400), location("u", 200, "unverified")]);
+    expect(result?.location.id).toBe("u");
   });
 
-  it("keeps a working fountain when an unverified one is 149 m closer (inside threshold)", () => {
-    const result = findNearest(DEFAULT_CENTER, [fountain("w", 349), fountain("u", 200, "unverified")]);
-    expect(result?.fountain.id).toBe("w");
+  it("keeps a working location when an unverified one is 149 m closer (inside threshold)", () => {
+    const result = findNearest(DEFAULT_CENTER, [location("w", 349), location("u", 200, "unverified")]);
+    expect(result?.location.id).toBe("w");
   });
 
-  it("picks an unverified fountain when it is 151 m closer (outside threshold)", () => {
-    const result = findNearest(DEFAULT_CENTER, [fountain("w", 351), fountain("u", 200, "unverified")]);
-    expect(result?.fountain.id).toBe("u");
+  it("picks an unverified location when it is 151 m closer (outside threshold)", () => {
+    const result = findNearest(DEFAULT_CENTER, [location("w", 351), location("u", 200, "unverified")]);
+    expect(result?.location.id).toBe("u");
   });
 
-  it("falls back to an unverified fountain when none are working", () => {
-    expect(findNearest(DEFAULT_CENTER, [fountain("u", 500, "unverified")])?.fountain.id).toBe("u");
+  it("falls back to an unverified location when none are working", () => {
+    expect(findNearest(DEFAULT_CENTER, [location("u", 500, "unverified")])?.location.id).toBe("u");
   });
 });
 

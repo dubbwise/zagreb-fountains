@@ -5,7 +5,7 @@ import {
   WALK_DETOUR_FACTOR,
   WALK_SPEED_KMH,
 } from "../config";
-import type { Fountain } from "../data/fountains";
+import type { Location } from "../data/locations";
 
 export interface LatLon {
   lat: number;
@@ -13,7 +13,7 @@ export interface LatLon {
 }
 
 export interface NearestResult {
-  fountain: Fountain;
+  location: Location;
   distanceM: number;
 }
 
@@ -30,19 +30,19 @@ export function haversineMeters(a: LatLon, b: LatLon): number {
 function isCloser(candidate: NearestResult, best: NearestResult | null): boolean {
   if (best === null) return true;
   if (candidate.distanceM !== best.distanceM) return candidate.distanceM < best.distanceM;
-  return candidate.fountain.id < best.fountain.id;
+  return candidate.location.id < best.location.id;
 }
 
 /**
- * Nearest working fountain, unless an unverified one is more than
+ * Nearest working location, unless an unverified one is more than
  * UNVERIFIED_PREFERENCE_M closer. Exact distance ties go to the lowest id.
  */
-export function findNearest(from: LatLon, fountains: readonly Fountain[]): NearestResult | null {
+export function findNearest(from: LatLon, locations: readonly Location[]): NearestResult | null {
   let working: NearestResult | null = null;
   let unverified: NearestResult | null = null;
-  for (const fountain of fountains) {
-    const candidate = { fountain, distanceM: haversineMeters(from, fountain) };
-    if (fountain.status === "working") {
+  for (const location of locations) {
+    const candidate = { location, distanceM: haversineMeters(from, location) };
+    if (location.status === "working") {
       if (isCloser(candidate, working)) working = candidate;
     } else if (isCloser(candidate, unverified)) {
       unverified = candidate;

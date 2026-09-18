@@ -14,10 +14,11 @@
       try {
         storedTheme = localStorage.getItem("zf.theme");
       } catch (error) {
-        /* storage blocked: fall through to the system preference below */
+        /* storage blocked: fall through to the light default below */
       }
-      var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      var dark = storedTheme === "dark" || (storedTheme !== "light" && prefersDark);
+      // Light unless explicitly stored as dark. The OS preference is not
+      // consulted — mirrors getTheme() in src/settings.ts, keep the two in step.
+      var dark = storedTheme === "dark";
       document.documentElement.classList.toggle("dark", dark);
       var themeMeta = document.querySelector('meta[name="theme-color"]');
       if (themeMeta) themeMeta.setAttribute("content", dark ? "#292929" : "#3376b8");

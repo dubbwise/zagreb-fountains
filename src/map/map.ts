@@ -10,7 +10,7 @@ import {
   TILE_MAX_ZOOM,
   TILE_URL,
 } from "../config";
-import type { Fountain } from "../data/fountains";
+import type { Location } from "../data/locations";
 import type { LatLon } from "../geo/distance";
 import { ICON_HOME, ICON_MINUS, ICON_PLUS } from "../ui/icons";
 
@@ -18,12 +18,12 @@ export interface UserPosition extends LatLon {
   accuracyM: number;
 }
 
-export interface FountainMap {
-  setFountains(fountains: readonly Fountain[]): void;
+export interface LocationMap {
+  setLocations(locations: readonly Location[]): void;
   setUserPosition(position: UserPosition): void;
   highlight(id: string | null): void;
   fitTo(points: readonly LatLon[]): void;
-  onFountainTap(callback: (fountain: Fountain) => void): void;
+  onLocationTap(callback: (location: Location) => void): void;
   setDark(dark: boolean): void;
   setInfoLabel(label: string): void;
   onInfoTap(callback: () => void): void;
@@ -41,9 +41,9 @@ export interface FountainMap {
   refreshSize(): void;
 }
 
-const FOUNTAIN_RADIUS = 9;
+const LOCATION_RADIUS = 9;
 const HIGHLIGHT_RADIUS = 13;
-// Palette green: it stays clear of the blue fountain fills and the gold
+// Palette green: it stays clear of the blue location fills and the gold
 // "you are here" dot, and reads on both basemaps.
 const HIGHLIGHT_STYLE: L.PathOptions = { color: "#4b9759", weight: 4 };
 
@@ -55,20 +55,20 @@ const USER_ICON = L.divIcon({
   iconAnchor: [8, 8],
 });
 
-function fountainStyle(fountain: Fountain, dark: boolean): L.PathOptions {
-  // Palette sky/blue for confirmed fountains, palette greys for unconfirmed:
+function locationStyle(location: Location, dark: boolean): L.PathOptions {
+  // Palette sky/blue for confirmed locations, palette greys for unconfirmed:
   // status reads as saturation, so it survives being seen at a glance outdoors.
   const working = dark ? "#5dbeec" : "#3376b8";
   const unverified = dark ? "#8a8b8f" : "#aaabaf";
   return {
     color: "#ffffff",
     weight: 2,
-    fillColor: fountain.status === "working" ? working : unverified,
+    fillColor: location.status === "working" ? working : unverified,
     fillOpacity: 1,
   };
 }
 
-export function createFountainMap(container: HTMLElement, options: { dark: boolean; infoLabel: string }): FountainMap {
+export function createLocationMap(container: HTMLElement, options: { dark: boolean; infoLabel: string }): LocationMap {
   const map = L.map(container, { attributionControl: false, zoomControl: false }).setView(
     [DEFAULT_CENTER.lat, DEFAULT_CENTER.lon],
     DEFAULT_ZOOM,
@@ -122,9 +122,9 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
   // Leaflet's "+" and "−" text. The titles still supply the accessible names.
   L.control.zoom({ position: "topright", zoomInText: ICON_PLUS, zoomOutText: ICON_MINUS }).addTo(map);
 
-  const markers = new Map<string, { marker: L.CircleMarker; fountain: Fountain }>();
+  const markers = new Map<string, { marker: L.CircleMarker; location: Location }>();
   let highlightedId: string | null = null;
-  let onTap: (fountain: Fountain) => void = () => {};
+  let onTap: (location: Location) => void = () => {};
   let userMarker: L.Marker | null = null;
   let accuracyCircle: L.Circle | null = null;
 
@@ -138,9 +138,9 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
       add.addTo(map);
       add.bringToBack();
     }
-    for (const { marker, fountain } of markers.values()) {
-      if (fountain.id === highlightedId) continue;
-      marker.setStyle(fountainStyle(fountain, dark));
+    for (const { marker, location } of markers.values()) {
+      if (location.id === highlightedId) continue;
+      marker.setStyle(locationStyle(location, dark));
     }
   }
 
@@ -149,23 +149,23 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
   function highlight(id: string | null): void {
     const dark = useDarkTiles();
     const previous = highlightedId === null ? undefined : markers.get(highlightedId);
-    previous?.marker.setRadius(FOUNTAIN_RADIUS).setStyle(fountainStyle(previous.fountain, dark));
+    previous?.marker.setRadius(LOCATION_RADIUS).setStyle(locationStyle(previous.location, dark));
     highlightedId = id;
     const next = id === null ? undefined : markers.get(id);
     next?.marker.setRadius(HIGHLIGHT_RADIUS).setStyle(HIGHLIGHT_STYLE).bringToFront();
   }
 
-  function setFountains(fountains: readonly Fountain[]): void {
+  function setLocations(locations: readonly Location[]): void {
     const dark = useDarkTiles();
     for (const { marker } of markers.values()) marker.remove();
     markers.clear();
-    for (const fountain of fountains) {
-      const marker = L.circleMarker([fountain.lat, fountain.lon], {
-        ...fountainStyle(fountain, dark),
-        radius: FOUNTAIN_RADIUS,
+    for (const location of locations) {
+      const marker = L.circleMarker([location.lat, location.lon], {
+        ...locationStyle(location, dark),
+        radius: LOCATION_RADIUS,
       }).addTo(map);
-      marker.on("click", () => onTap(fountain));
-      markers.set(fountain.id, { marker, fountain });
+      marker.on("click", () => onTap(location));
+      markers.set(location.id, { marker, location });
     }
     const current = highlightedId;
     highlightedId = null;
@@ -180,7 +180,7 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
       } else {
         accuracyCircle = L.circle(latLng, {
           radius: position.accuracyM,
-          // Gold, matching the user dot: on this palette blue means "fountain",
+          // Gold, matching the user dot: on this palette blue means "location",
           // so the accuracy ring belongs to the same family as the position it
           // describes rather than to the markers it sits among.
           color: "#d9ad60",
@@ -197,7 +197,7 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
       userMarker.setLatLng(latLng);
     } else {
       // A marker rather than a circle: it lives in the marker pane, which sits
-      // above the fountain circles, and it carries the pulsing CSS dot.
+      // above the location circles, and it carries the pulsing CSS dot.
       userMarker = L.marker(latLng, { icon: USER_ICON, interactive: false, keyboard: false }).addTo(map);
     }
   }
@@ -210,11 +210,11 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
   }
 
   return {
-    setFountains,
+    setLocations,
     setUserPosition,
     highlight,
     fitTo,
-    onFountainTap(callback) {
+    onLocationTap(callback) {
       onTap = callback;
     },
     setDark(next) {

@@ -1,27 +1,27 @@
 import { describe, expect, it } from "vitest";
-import type { Fountain } from "../src/data/fountains";
+import type { Location } from "../src/data/locations";
 import { setActiveLanguage } from "../src/i18n";
 // Compared against the i18n tables, never literal copy: rewording is not a
 // breaking change. See AGENTS.md.
 import { en } from "../src/i18n/en";
 import { hr } from "../src/i18n/hr";
-import { cardHtml, type FountainCardState } from "../src/ui/nearestCard";
+import { cardHtml, type LocationCardState } from "../src/ui/nearestCard";
 
-const BRITANSKI_TRG: Fountain = {
+const BRITANSKI_TRG: Location = {
   id: "8596b290-ea0d-4caa-8890-047804249320",
   lat: 45.812749,
   lon: 15.964876,
-  location: "Britanski trg",
+  name: "Britanski trg",
   hint: "sjeverno od javnog WC-a",
   status: "working",
   cemetery: false,
   type: "Viktorija zdenac",
 };
 
-function fountainState(overrides: Partial<FountainCardState> = {}): FountainCardState {
+function locationState(overrides: Partial<LocationCardState> = {}): LocationCardState {
   return {
-    kind: "fountain",
-    fountain: BRITANSKI_TRG,
+    kind: "location",
+    location: BRITANSKI_TRG,
     distanceM: 244,
     approx: false,
     isNearest: true,
@@ -45,9 +45,9 @@ describe("cardHtml", () => {
     expect(cardHtml({ kind: "outside" })).toContain(en.outsideZagreb);
   });
 
-  it("renders the nearest fountain with distance, walking time and directions", () => {
-    const html = cardHtml(fountainState());
-    expect(html).toContain(en.nearestFountain);
+  it("renders the nearest location with distance, walking time and directions", () => {
+    const html = cardHtml(locationState());
+    expect(html).toContain(en.nearestLocation);
     expect(html).toContain("Britanski trg");
     expect(html).toContain("sjeverno od javnog WC-a");
     expect(html).toContain(`240 m · ${en.walk(4)}`);
@@ -58,29 +58,29 @@ describe("cardHtml", () => {
     expect(html).not.toContain(en.cemetery);
   });
 
-  it("labels a tapped fountain that is not the nearest", () => {
-    const html = cardHtml(fountainState({ isNearest: false }));
-    expect(html).toContain(`>${en.selectedFountain}<`);
-    expect(html).not.toContain(en.nearestFountain);
+  it("labels a tapped location that is not the nearest", () => {
+    const html = cardHtml(locationState({ isNearest: false }));
+    expect(html).toContain(`>${en.selectedLocation}<`);
+    expect(html).not.toContain(en.nearestLocation);
   });
 
   it("prefixes approx. when accuracy is low", () => {
-    expect(cardHtml(fountainState({ approx: true }))).toContain(`${en.approx} 240 m · ${en.walk(4)}`);
+    expect(cardHtml(locationState({ approx: true }))).toContain(`${en.approx} 240 m · ${en.walk(4)}`);
   });
 
   it("omits the distance line when distance is unknown", () => {
     // The distance itself is data, so its absence is the thing worth asserting.
-    expect(cardHtml(fountainState({ distanceM: null }))).not.toContain("240 m");
+    expect(cardHtml(locationState({ distanceM: null }))).not.toContain("240 m");
   });
 
-  it("shows badges for unverified and cemetery fountains", () => {
-    const html = cardHtml(fountainState({ fountain: { ...BRITANSKI_TRG, status: "unverified", cemetery: true } }));
+  it("shows badges for unverified and cemetery locations", () => {
+    const html = cardHtml(locationState({ location: { ...BRITANSKI_TRG, status: "unverified", cemetery: true } }));
     expect(html).toContain(en.unverified);
     expect(html).toContain(en.cemetery);
   });
 
   it("escapes HTML coming from the data", () => {
-    const html = cardHtml(fountainState({ fountain: { ...BRITANSKI_TRG, location: "<img src=x onerror=alert(1)>" } }));
+    const html = cardHtml(locationState({ location: { ...BRITANSKI_TRG, name: "<img src=x onerror=alert(1)>" } }));
     expect(html).toContain("&lt;img src=x onerror=alert(1)&gt;");
     expect(html).not.toContain("<img");
   });
@@ -88,8 +88,8 @@ describe("cardHtml", () => {
   it("renders in Croatian when that language is active", () => {
     setActiveLanguage("hr");
     try {
-      const html = cardHtml(fountainState({ fountain: { ...BRITANSKI_TRG, status: "unverified" } }));
-      expect(html).toContain(hr.nearestFountain);
+      const html = cardHtml(locationState({ location: { ...BRITANSKI_TRG, status: "unverified" } }));
+      expect(html).toContain(hr.nearestLocation);
       expect(html).toContain(`240 m · ${hr.walk(4)}`);
       expect(html).toContain(hr.unverified);
       expect(html).toContain(hr.directions);

@@ -1,4 +1,4 @@
-name: Refresh fountain data
+name: Refresh location data
 
 on:
   schedule:
@@ -34,15 +34,15 @@ jobs:
       - name: Commit snapshot if changed
         id: commit
         run: |
-          if git diff --quiet -- public/data/fountains.json; then
+          if git diff --quiet -- public/data/locations.json; then
             echo "No snapshot changes."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/fountains.json
-          git commit -m "chore(data): refresh fountains from data.zagreb.hr"
+          git add public/data/locations.json
+          git commit -m "chore(data): refresh locations from data.zagreb.hr"
           git push
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
