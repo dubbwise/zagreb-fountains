@@ -6,7 +6,7 @@ describe("introHtml", () => {
   it("explains the app, the location use and the credits", () => {
     setActiveLanguage("en");
     const html = introHtml({ theme: "system", language: "en" });
-    expect(html).toContain("Zagreb Fountains");
+    expect(html).toContain("Find the nearest public water point in the City of Zagreb");
     expect(html).toContain("Why your location?");
     expect(html).toContain("It is never sent anywhere.");
     expect(html).toContain(
@@ -18,7 +18,7 @@ describe("introHtml", () => {
     expect(html).toContain("Grad Zagreb");
     expect(html).toContain("https://data.zagreb.hr/dataset/geoportal_javni_zdenci");
     expect(html).toContain("mailto:zg@paperbeatsrock.co");
-    expect(html).toContain("Find water");
+    expect(html).toContain("Find nearest water point");
   });
 
   it("marks the active theme and language", () => {
@@ -34,9 +34,9 @@ describe("introHtml", () => {
     setActiveLanguage("hr");
     try {
       const html = introHtml({ theme: "system", language: "hr" });
-      expect(html).toContain("Zagrebački zdenci");
+      expect(html).toContain("Pronađi najbliži javni zdenac s pitkom vodom u Zagrebu");
       expect(html).toContain("Zašto lokacija?");
-      expect(html).toContain("Pronađi vodu");
+      expect(html).toContain("Pronađi najbliži zdenac");
       expect(html).toContain("Sustav");
       expect(html).toContain(
         '<a class="underline" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',

@@ -1,6 +1,7 @@
 import { CARTO_ATTRIBUTIONS_URL, OSM_COPYRIGHT_URL } from "../config";
 import { t, type Strings } from "../i18n";
 import type { Language, Theme } from "../settings";
+import { FLAG_EN, FLAG_HR } from "./flags";
 import { escapeHtml } from "./nearestCard";
 
 const FEEDBACK_EMAIL = "zg@paperbeatsrock.co";
@@ -14,8 +15,13 @@ export interface IntroState {
   language: Language;
 }
 
-function choice(attribute: string, value: string, label: string, active: boolean): string {
-  return `<button type="button" ${attribute}="${value}" aria-pressed="${active ? "true" : "false"}" class="${CHOICE_CLASS}">${escapeHtml(label)}</button>`;
+/**
+ * `icon` is trusted markup (a flag from ./flags), so it is not escaped; the
+ * label always is. The icon is decorative — the label carries the button's
+ * accessible name.
+ */
+function choice(attribute: string, value: string, label: string, active: boolean, icon = ""): string {
+  return `<button type="button" ${attribute}="${value}" aria-pressed="${active ? "true" : "false"}" class="${CHOICE_CLASS}">${icon}${escapeHtml(label)}</button>`;
 }
 
 /**
@@ -43,16 +49,19 @@ export function introHtml({ theme, language }: IntroState): string {
     choice("data-theme", "dark", strings.introThemeDark, theme === "dark"),
   ].join("");
   const languageChoices = [
-    choice("data-language", "en", "English", language === "en"),
-    choice("data-language", "hr", "Hrvatski", language === "hr"),
+    choice("data-language", "en", "English", language === "en", FLAG_EN),
+    choice("data-language", "hr", "Hrvatski", language === "hr", FLAG_HR),
   ].join("");
 
   // No background here: #intro already paints the surface behind this panel.
   return `<div class="flex min-h-full flex-col p-8">
-  <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5 bg-surface p-12 rounded-xl ring-12 ring-white/10">
-    <header>
+  <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5 bg-surface p-12 rounded-lg ring-12 ring-white/10">
+    <section>
+      <div class="flex gap-2" role="group" aria-label="${escapeHtml(strings.introLanguageLabel)}">${languageChoices}</div>
+    </section>
+
+    <header class="mt-4">
       <h1 id="intro-title" class="text-2xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
-      <p class="mt-1 text-body">${escapeHtml(strings.introLede)}</p>
     </header>
 
     <section>
@@ -63,11 +72,6 @@ export function introHtml({ theme, language }: IntroState): string {
     <section>
       <h2 id="intro-theme-heading" class="mb-2 label-caps text-sm text-body-subtle">${escapeHtml(strings.introThemeLabel)}</h2>
       <div class="flex gap-2" role="group" aria-labelledby="intro-theme-heading">${themeChoices}</div>
-    </section>
-
-    <section>
-      <h2 id="intro-language-heading" class="mb-2 label-caps text-sm text-body-subtle">${escapeHtml(strings.introLanguageLabel)}</h2>
-      <div class="flex gap-2" role="group" aria-labelledby="intro-language-heading">${languageChoices}</div>
     </section>
 
     <section class="text-sm text-body-subtle">

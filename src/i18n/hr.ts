@@ -13,8 +13,7 @@ export const hr: Strings = {
   loadError: "Učitavanje podataka nije uspjelo.",
   approx: "otprilike",
   walk: (minutes) => `~${minutes} min hoda`,
-  introTitle: "Zagrebački zdenci",
-  introLede: "Pronađi najbliži javni zdenac s pitkom vodom u Zagrebu, iz otvorenih podataka Grada Zagreba.",
+  introTitle: "Pronađi najbliži javni zdenac s pitkom vodom u Zagrebu",
   introLocationHeading: "Zašto lokacija?",
   introLocationBody:
     "Koristi se u tvom pregledniku kako bi se izračunalo koji je zdenac najbliži. Nikamo se ne šalje.",
@@ -29,6 +28,6 @@ export const hr: Strings = {
   introCreditsDarkBasemap: "tamna karta",
   introCreditsData: "Podaci: Grad Zagreb",
   introFeedback: "Povratne informacije",
-  introContinue: "Pronađi vodu",
+  introContinue: "Pronađi najbliži zdenac",
   introOpen: "O ovoj karti",
 };

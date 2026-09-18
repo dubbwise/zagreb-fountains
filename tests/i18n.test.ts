@@ -33,7 +33,7 @@ describe("detectLanguage", () => {
 describe("t", () => {
   it("returns the active table and switches", () => {
     setActiveLanguage("en");
-    expect(t().nearestFountain).toBe("Nearest fountain");
+    expect(t().nearestFountain).toBe("Nearest water point");
     expect(t().walk(4)).toBe("~4 min walk");
     setActiveLanguage("hr");
     expect(t().nearestFountain).toBe("Najbliži zdenac");

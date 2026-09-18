@@ -6,6 +6,50 @@
    generated utilities reference these variables rather than bake in a colour,
    so `bg-surface` alone follows the theme and needs no `dark:` twin at the use
    site. To restyle the app, change a value here — not the markup. */
+/* Exat, from the trial files in public/Exat TEST/.
+
+   Those files are gitignored, so they exist on this machine and nowhere else.
+   The URL is written root-absolute so it is never treated as a bundled asset
+   that must exist at build time; Vite rewrites it against `base` into
+   ../Exat%20TEST/…, which resolves correctly from dist/assets/ both locally
+   and under the GitHub Pages sub-path. Because the files are not in the repo,
+   a CI build emits the same reference to something that isn't there, and the
+   browser falls back to the system stack — a fallback, not a build failure.
+
+   Exat ships no Semibold. The five font-semibold uses resolve to Bold (700),
+   which is the browser's nearest-weight match.
+
+   When licensed files arrive: convert to WOFF2 (these OTFs are ~250KB each),
+   put them in src/fonts/, and switch these to relative url() so Vite
+   fingerprints them and the base path is handled automatically. */
+@font-face {
+  font-family: "Exat";
+  src: url("/Exat%20TEST/Exat-Regular-TEST.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Exat";
+  src: url("/Exat%20TEST/Exat-Medium-TEST.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Exat";
+  src: url("/Exat%20TEST/Exat-Bold-TEST.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Exat", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
 /* Palette (sampled from the supplied swatches):
      blue   #3376b8   indigo #3f448f   sky   #5dbeec   green #4b9759
      mint   #84c086   gold   #d9ad60   sand  #ead4a5   white #ffffff
@@ -82,19 +126,22 @@
 
 /** The card over the map, and any raised container like it. */
 @utility panel {
-  @apply mx-auto max-w-md rounded-2xl bg-surface-raised p-4 shadow-lg ring-1 ring-edge;
+  @apply mx-auto max-w-md rounded-lg bg-surface-raised p-4 shadow-lg ring-1 ring-edge;
 }
 
 /** Full-width primary action: "Find water", "Directions", "Retry". */
 @utility btn-primary {
-  @apply block w-full rounded-xl bg-accent px-4 py-3 text-center font-semibold text-white active:bg-accent-active;
+  @apply block w-full rounded-md bg-accent px-4 py-3 text-center font-semibold text-white active:bg-accent-active;
 }
 
 /** One segment of the theme / language pickers. Pressed state comes from
     aria-pressed, so the markup carries the state and the styling follows it. */
 @utility btn-choice {
-  @apply flex-1 rounded-xl border border-hairline px-3 py-2 text-sm font-medium;
+  @apply flex-1 rounded-md border border-hairline px-3 py-2 text-sm font-medium;
   @apply aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-white;
+  /* inline-flex so a leading flag icon sits on the text's centre line rather
+     than its baseline; text-only segments centre exactly as before. */
+  @apply inline-flex items-center justify-center gap-2;
 }
 
 /** Small uppercase section heading. Size and colour stay at the use site. */

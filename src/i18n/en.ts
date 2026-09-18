@@ -12,7 +12,6 @@ export interface Strings {
   approx: string;
   walk: (minutes: number) => string;
   introTitle: string;
-  introLede: string;
   introLocationHeading: string;
   introLocationBody: string;
   introThemeLabel: string;
@@ -31,22 +30,21 @@ export interface Strings {
 }
 
 export const en: Strings = {
-  nearestFountain: "Nearest fountain",
-  selectedFountain: "Fountain",
+  nearestFountain: "Nearest water point",
+  selectedFountain: "Water point",
   directions: "Directions",
   retry: "Retry",
   locating: "Finding your location…",
-  enableLocation: "Enable location to find the nearest fountain",
-  outsideZagreb: "No fountains mapped near you. Showing Zagreb.",
+  enableLocation: "Enable location to find the nearest water point",
+  outsideZagreb: "No water points mapped near you. Showing Zagreb.",
   unverified: "Status not confirmed",
   cemetery: "Cemetery — follows cemetery opening hours",
-  loadError: "Couldn't load fountain data.",
+  loadError: "Couldn't load water point data.",
   approx: "approx.",
   walk: (minutes) => `~${minutes} min walk`,
-  introTitle: "Zagreb Fountains",
-  introLede: "Find the nearest public drinking fountain in Zagreb, from the City of Zagreb's open data.",
+  introTitle: "Find the nearest public water point in the City of Zagreb",
   introLocationHeading: "Why your location?",
-  introLocationBody: "It is used in your browser to work out which fountain is closest. It is never sent anywhere.",
+  introLocationBody: "It is used in your browser to work out which water point is closest. It is never sent anywhere.",
   introThemeLabel: "Theme",
   introThemeSystem: "System",
   introThemeLight: "Light",
@@ -58,6 +56,6 @@ export const en: Strings = {
   introCreditsDarkBasemap: "dark basemap",
   introCreditsData: "Data: Grad Zagreb",
   introFeedback: "Feedback",
-  introContinue: "Find water",
+  introContinue: "Find nearest water point",
   introOpen: "About this map",
 };

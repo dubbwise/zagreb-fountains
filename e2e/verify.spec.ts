@@ -22,7 +22,7 @@ async function openApp(page: Page, options: { skipIntro?: boolean } = {}): Promi
   await page.goto("/");
   await expect(page.locator("#intro")).toBeVisible();
   if (options.skipIntro === false) return;
-  await page.getByRole("button", { name: /Find water|Pronađi vodu/ }).click();
+  await page.getByRole("button", { name: /Find nearest water point|Pronađi najbliži zdenac/ }).click();
   await expect(page.locator("#intro")).toBeHidden();
   await expect(page.locator("path.leaflet-interactive")).not.toHaveCount(0);
 }
@@ -158,7 +158,7 @@ test.describe("at Ban Jelačić Square", () => {
   test("highlights the nearest fountain with directions", async ({ page }) => {
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText("Nearest fountain");
+    await expect(card).toContainText("Nearest water point");
     await expect(card).toContainText(WALK_LINE);
     await expect(card.getByRole("link", { name: "Directions" })).toHaveAttribute(
       "href",
@@ -175,7 +175,7 @@ test.describe("in Maksimir Park", () => {
   test("highlights the nearest fountain", async ({ page }) => {
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText("Nearest fountain");
+    await expect(card).toContainText("Nearest water point");
     await expect(card).toContainText(WALK_LINE);
     await page.screenshot({ path: `${SCREENSHOTS}/2-maksimir.png` });
   });
@@ -186,7 +186,7 @@ test.describe("in Split (outside Zagreb)", () => {
 
   test("explains there are no fountains nearby", async ({ page }) => {
     await openApp(page);
-    await expect(page.locator("#card")).toContainText("No fountains mapped near you. Showing Zagreb.");
+    await expect(page.locator("#card")).toContainText("No water points mapped near you. Showing Zagreb.");
     await page.screenshot({ path: `${SCREENSHOTS}/3-split.png` });
   });
 });
@@ -197,7 +197,7 @@ test.describe("with location permission denied", () => {
   test("offers to enable location and retry", async ({ page }) => {
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText("Enable location to find the nearest fountain", { timeout: 20_000 });
+    await expect(card).toContainText("Enable location to find the nearest water point", { timeout: 20_000 });
     const retryButton = card.getByRole("button", { name: "Retry" });
     await expect(retryButton).toBeVisible();
     await page.screenshot({ path: `${SCREENSHOTS}/4-denied.png` });
@@ -205,7 +205,7 @@ test.describe("with location permission denied", () => {
     // Clicking Retry restarts the watch without crashing: the card falls back
     // to the same "enable location" state instead of erroring out.
     await retryButton.click();
-    await expect(card).toContainText("Enable location to find the nearest fountain", { timeout: 20_000 });
+    await expect(card).toContainText("Enable location to find the nearest water point", { timeout: 20_000 });
   });
 });
 
@@ -240,7 +240,7 @@ test.describe("with the system set to dark", () => {
   test("renders a dark card over the dark basemap", async ({ page }) => {
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText("Nearest fountain");
+    await expect(card).toContainText("Nearest water point");
 
     // Assert the surface is dark rather than matching an exact colour string:
     // Tailwind 4 emits oklch(), so the computed value is palette-version specific.
@@ -271,7 +271,7 @@ test.describe("with the system set to dark", () => {
     // close it again before the screenshot below.
     await page.getByRole("button", { name: /About this map|O ovoj karti/ }).click();
     await expect(page.locator("#intro")).toContainText("CARTO");
-    await page.getByRole("button", { name: "Find water" }).click();
+    await page.getByRole("button", { name: "Find nearest water point" }).click();
     await expect(page.locator("#intro")).toBeHidden();
 
     await expectFullTileCoverage(page);
@@ -294,12 +294,12 @@ test.describe("the intro screen", () => {
     expect(await page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls)).toBe(0);
     await page.screenshot({ path: `${SCREENSHOTS}/6-intro-light.png` });
 
-    await page.getByRole("button", { name: "Find water" }).click();
+    await page.getByRole("button", { name: "Find nearest water point" }).click();
     await expect(intro).toBeHidden();
     await expect
       .poll(() => page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls))
       .toBeGreaterThan(0);
-    await expect(page.locator("#card")).toContainText("Nearest fountain");
+    await expect(page.locator("#card")).toContainText("Nearest water point");
   });
 
   test("reopens from the map without asking for location again", async ({ page }) => {
@@ -309,7 +309,7 @@ test.describe("the intro screen", () => {
     );
     await page.getByRole("button", { name: /About this map|O ovoj karti/ }).click();
     await expect(page.locator("#intro")).toBeVisible();
-    await page.getByRole("button", { name: "Find water" }).click();
+    await page.getByRole("button", { name: "Find nearest water point" }).click();
     await expect(page.locator("#intro")).toBeHidden();
     expect(await page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls)).toBe(
       callsAfterContinue,
@@ -333,7 +333,7 @@ test.describe("theme override", () => {
     await expect(page.getByRole("button", { name: "Dark" })).toBeFocused();
     await page.screenshot({ path: `${SCREENSHOTS}/7-intro-dark.png` });
 
-    await page.getByRole("button", { name: "Find water" }).click();
+    await page.getByRole("button", { name: "Find nearest water point" }).click();
     await expect(page.locator(".leaflet-tile").first()).toHaveAttribute("src", /cartocdn\.com\/dark_all/);
   });
 });
@@ -345,7 +345,7 @@ test.describe("language", () => {
     await openApp(page, { skipIntro: false });
     await page.getByRole("button", { name: "Hrvatski" }).click();
     await expect(page.locator("#intro")).toContainText("Zašto lokacija?");
-    await page.getByRole("button", { name: "Pronađi vodu" }).click();
+    await page.getByRole("button", { name: "Pronađi najbliži zdenac" }).click();
 
     const card = page.locator("#card");
     await expect(card).toContainText("Najbliži zdenac");
@@ -354,7 +354,7 @@ test.describe("language", () => {
     await page.screenshot({ path: `${SCREENSHOTS}/8-croatian.png` });
 
     await page.reload();
-    await expect(page.locator("#intro")).toContainText("Pronađi vodu");
+    await expect(page.locator("#intro")).toContainText("Pronađi najbliži zdenac");
     await expect(page.locator("html")).toHaveAttribute("lang", "hr");
   });
 });

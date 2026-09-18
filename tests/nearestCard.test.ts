@@ -33,17 +33,17 @@ describe("cardHtml", () => {
 
   it("offers a retry button when location fails", () => {
     const html = cardHtml({ kind: "locationError" });
-    expect(html).toContain("Enable location to find the nearest fountain");
+    expect(html).toContain("Enable location to find the nearest water point");
     expect(html).toContain('data-action="retry"');
   });
 
   it("explains when the user is outside Zagreb", () => {
-    expect(cardHtml({ kind: "outside" })).toContain("No fountains mapped near you. Showing Zagreb.");
+    expect(cardHtml({ kind: "outside" })).toContain("No water points mapped near you. Showing Zagreb.");
   });
 
   it("renders the nearest fountain with distance, walking time and directions", () => {
     const html = cardHtml(fountainState());
-    expect(html).toContain("Nearest fountain");
+    expect(html).toContain("Nearest water point");
     expect(html).toContain("Britanski trg");
     expect(html).toContain("sjeverno od javnog WC-a");
     expect(html).toContain("240 m · ~4 min walk");
@@ -56,8 +56,8 @@ describe("cardHtml", () => {
 
   it("labels a tapped fountain that is not the nearest", () => {
     const html = cardHtml(fountainState({ isNearest: false }));
-    expect(html).toContain(">Fountain<");
-    expect(html).not.toContain("Nearest fountain");
+    expect(html).toContain(">Water point<");
+    expect(html).not.toContain("Nearest water point");
   });
 
   it("prefixes approx. when accuracy is low", () => {
