@@ -161,8 +161,8 @@
   color: var(--badge-ink);
 }
 
-/* Intro title: the photo fills the glyphs via background-clip. Image URL is set
-   inline with BASE_URL so it resolves under Vite's relative `base`. */
+/* Intro title: the coat of arms fills the glyphs via background-clip. Image URL
+   is set inline with BASE_URL so it resolves under Vite's relative `base`. */
 .intro-title-mask {
   color: transparent;
   background-size: cover;

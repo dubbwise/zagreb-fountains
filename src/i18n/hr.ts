@@ -15,8 +15,8 @@ export const hr: Strings = {
   walk: (minutes) => `~${minutes} min hoda`,
   introLanguage: "Jezik",
   introTitle: "Zdenci s pitkom vodom u Zagrebu.",
-  introLocationBody: "Omogući lokaciju kako bi se izračunalo koji je zdenac najbliži. Lokacija se ne šalje nikamo.",
-  introLastUpdated: (date) => `Provjera: ${date}`,
-  introContinue: "Pronađi najbliži zdenac",
+  introLocationBody: "Preglednik će zatražiti lokaciju kako bi pronašao najbliži zdenac. Lokacija se koristi samo lokalno, nikad se ne dijeli dalje.",
+  introLastUpdated: (date) => `Ažurirano: ${date}`,
+  introContinue: "Prikaži mapu",
   introOpen: "Prikaži uvodni ekran",
 };

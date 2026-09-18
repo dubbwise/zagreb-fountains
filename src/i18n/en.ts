@@ -37,6 +37,6 @@ export const en: Strings = {
   introLocationBody:
     "Browser will ask for location to find the nearest water point. Location is local use only, never sent anywhere.",
   introLastUpdated: (date) => `Updated: ${date}`,
-  introContinue: "Find nearest point",
+  introContinue: "Open map",
   introOpen: "Show intro screen",
 };

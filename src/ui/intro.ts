@@ -17,7 +17,8 @@ const DATASET_LINK = `<a class="underline underline-offset-2" href="${DATASET_UR
 const FEEDBACK_LINK = `<a class="underline underline-offset-2" href="mailto:${FEEDBACK_EMAIL}" target="_blank" rel="noopener">${FEEDBACK_EMAIL}</a>`;
 
 const CHOICE_CLASS = "btn-choice";
-const INTRO_TITLE_IMAGE = `${import.meta.env.BASE_URL}istockphoto-496241260-612x612.jpg`;
+const INTRO_TITLE_IMAGE = `${import.meta.env.BASE_URL}Coat_of_arms_of_Zagreb.svg`;
+const FAVICON = `${import.meta.env.BASE_URL}favicon.svg`;
 
 export interface IntroState {
   theme: Theme;
@@ -66,26 +67,28 @@ export function introHtml({ theme, language, lastCheckedAt }: IntroState): strin
       : "";
 
   return `<div class="flex min-h-full flex-col md:p-8">
-  <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5 bg-surface p-6 md:p-12 md:ring-2 ring-edge">
+  <div class="mx-auto flex w-full max-w-md flex-1 flex-col bg-surface p-6 md:p-12 md:ring-2 ring-edge">
     
     <header>
       <div class="flex items-center justify-between gap-2">
-        <div class="flex gap-2" role="group" aria-label="${escapeHtml(strings.introLanguage)}">${languageChoices}</div>
-        <div class="flex gap-2" role="group">${themeChoices}</div>
+        <div class="flex items-center gap-2">
+          <img src="${FAVICON}" alt="" width="32" height="32" class="size-12 bg-accent color-white p-1 rounded-xl" />
+          <span class="text-lg font-medium">Francek</span>
+        </div>
+        <div class="flex gap-2 hidden" role="group">${themeChoices}</div>
+        <div class="flex gap-2 ml-auto" role="group" aria-label="${escapeHtml(strings.introLanguage)}">${languageChoices}</div>
       </div>
     </header>
 
-    <section class="mt-[6vh]">
-      <h1 id="intro-title" class="intro-title-mask text-6xl md:text-7xl font-extrabold leading-[0.9] tracking-tight pb-4" style="background-image: url('${INTRO_TITLE_IMAGE}')">${escapeHtml(strings.introTitle)}</h1>
+    <section class="mt-[8vh] mb-auto">
+      <h1 id="intro-title" class="intro-title-mask bg-accent text-[3.25rem] md:text-7xl font-extrabold leading-[0.9] tracking-tight pb-4">${escapeHtml(strings.introTitle)}</h1>
     </section>
-    <section class="mb-auto">
-      <p class="mt-1 text-sm text-body-subtle leading-snug text-center">${escapeHtml(strings.introLocationBody)}</p>
+    <section class="flex flex-col gap-3 mb-[8vh]">
+      <button type="button" data-action="continue" class="btn-primary">${escapeHtml(strings.introContinue)}</button>
+      <p class="text-xs text-body-subtle leading-snug">${escapeHtml(strings.introLocationBody)}</p>
     </section>
 
-    <button type="button" data-action="continue" class="btn-primary my-4">${escapeHtml(strings.introContinue)}</button>
-    
-    
-    <footer class="text-xs text-body-subtle leading-none flex flex-wrap gap-2 justify-center">
+    <footer class="text-xs text-body-subtle leading-none flex flex-wrap gap-2">
       ${LEAFLET_LINK}
       ${OSM_LINK}
       ${CARTO_LINK}

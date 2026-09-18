@@ -21,7 +21,7 @@ describe("introHtml", () => {
     expect(html).toContain(en.introTitle);
     expect(html).toContain('id="intro-title"');
     expect(html).toContain("intro-title-mask");
-    expect(html).toContain("istockphoto-496241260-612x612.jpg");
+    expect(html).toContain("Coat_of_arms_of_Zagreb.svg");
     expect(html).toContain(en.introLocationBody);
     expect(html).toContain(en.introContinue);
 
