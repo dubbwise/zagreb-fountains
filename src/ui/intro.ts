@@ -76,12 +76,12 @@ export function introHtml({ theme, language, lastCheckedAt }: IntroState): strin
       : "";
 
   return `<div class="flex min-h-full flex-col md:p-8">
-  <div class="mx-auto flex w-full max-w-md flex-1 flex-col bg-surface p-6 md:p-12 md:ring-2 ring-edge">
+  <div class="mx-auto flex w-full max-w-md flex-1 flex-col bg-surface p-6 md:p-12 md:ring-2 ring-border">
     
     <header>
       <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-2">
-          <img src="${FAVICON}" alt="" width="32" height="32" class="size-12 bg-accent color-white p-1 rounded-xl" />
+          <img src="${FAVICON}" alt="" width="32" height="32" class="size-12 bg-primary color-white p-1 rounded-xl" />
           <span class="text-lg font-medium">Francek</span>
         </div>
         <div class="flex gap-2 ml-auto" role="group" aria-label="${escapeHtml(strings.introLanguage)}">${languageChoices}</div>
@@ -89,8 +89,8 @@ export function introHtml({ theme, language, lastCheckedAt }: IntroState): strin
     </header>
 
     <section class="my-[6vh] space-y-6">
-      <h1 id="intro-title" class="text-accent text-[3.85rem] md:text-7xl font-extrabold leading-[0.9] tracking-tight pb-4">${escapeHtml(strings.introTitle)}</h1>
-      <p class="text-base text-body-subtle leading-snug">${escapeHtml(strings.introLocationBody)}</p>
+      <h1 id="intro-title" class="text-primary text-[3.85rem] md:text-7xl font-extrabold leading-[0.9] tracking-tight pb-4">${escapeHtml(strings.introTitle)}</h1>
+      <p class="text-base text-body leading-snug">${escapeHtml(strings.introLocationBody)}</p>
       <button type="button" data-action="continue" class="btn-primary">${escapeHtml(strings.introContinue)}</button>
     </section>
 

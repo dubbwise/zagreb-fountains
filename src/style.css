@@ -47,64 +47,45 @@
 }
 
 @theme {
-  --font-sans: "Exat", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Exat", ui-sans-serif, system-ui, -apple-system, Roboto, sans-serif;
 }
 
-/* Palette (sampled from the supplied swatches):
-     blue   #3376b8   indigo #3f448f   sky   #5dbeec   green #4b9759
-     mint   #84c086   gold   #d9ad60   sand  #ead4a5   white #ffffff
-     grey   #aaabaf   dgrey  #4c4c4c   black #292929
-
-   The palette has no light grey between white and #aaabaf, and no blue dark
-   enough to carry small text, so a few values below are mixes of two palette
-   members rather than swatches themselves — each is marked. Every
-   text-on-background pair in both themes was measured at 4.5:1 or better. */
 :root {
-  /* Neutrals */
-  --surface: #f3f3f4; /* page + overlays — white mixed 14% toward grey */
-  --surface-raised: #ffffff; /* the card floating over the map */
-  --body-strong: #292929; /* palette black: headings, emphasised text */
-  --body: #4c4c4c; /* palette dark grey: supporting prose */
-  --body-subtle: #68686a; /* dgrey mixed 30% toward grey — 5.01:1 on surface */
-  --hairline: #dbdcdd; /* white mixed 42% toward grey: choice borders */
-  --edge: rgb(41 41 41 / 8%); /* the card's 1px ring */
-  /* Ring around the "you are here" dot. It carries the dot's visibility, so it
-     inverts per theme: a white ring measures 1.0-1.15 against pale OSM tiles,
-     which is no ring at all. */
-  --user-ring: #292929;
-
-  /* Brand */
-  --accent: #3376b8; /* palette blue: primary buttons, pressed choices */
-  --accent-active: #316599; /* blue mixed 22% toward black — held down */
-  --accent-ink: #326ba4; /* blue darkened 14%: raw blue is only 4.28:1 as text */
+  /* Color primitives */
+  --blue: oklch(49% 0.147 252.1);
+  --indigo: oklch(42.7% 0.13 276.2);
+  --sky-blue: oklch(75.6% 0.137 225.2);
+  --green: oklch(60.3% 0.147 151.7);
+  --light-green: oklch(74.5% 0.124 148.7);
+  --amber: oklch(77.4% 0.124 77.9);
+  --sand: oklch(87.8% 0.074 82.7);
+  --white: oklch(100% 0 0);
+  --light-grey: oklch(68% 0.006 274.9);
+  --dark-grey: oklch(48% 0 0);
+  --near-black: oklch(28.1% 0 0);
 
   /* Semantic */
-  --badge-surface: #ead4a5; /* palette sand */
-  --badge-ink: #6c5b3e; /* gold mixed 62% toward black */
+  --surface: oklch(96.4% 0.001 286.4);
+  --surface-raised: var(--white);
+  --body-strong: var(--near-black);
+  --body: var(--dark-grey);
+  --body-subtle: var(--light-grey);
+  --border: oklch(89.4% 0.002 247.8);
+  --mylocation: oklch(63.7% 0.237 25.331);
+
+  /* Brand */
+  --primary: var(--blue);
+  --primary-active: var(--indigo);
+  --primary-light: var(--sky-blue);
 }
 
 .dark {
-  /* Neutrals — the palette's own dark end, which sits lighter than the
-     near-black this replaced, keeping the earlier "not pure black" fix. */
-  --surface: #292929; /* palette black */
-  --surface-raised: #343434; /* black mixed 30% toward dark grey */
-  --body-strong: #f6f7f7; /* white mixed 10% toward grey */
-  --body: #d0d1d3; /* white mixed 55% toward grey */
-  --body-subtle: #aaabaf; /* palette grey — 5.43:1 on the card */
-  --hairline: #4c4c4c; /* palette dark grey */
-  --edge: rgb(255 255 255 / 10%);
-  --user-ring: #f6f7f7; /* white ring works here: the basemap is dark */
-
-  /* Brand — accent stays the palette blue in both themes on purpose: it is
-     the only blue here that carries white text at 4.5:1. The palette's sky
-     takes over as accent *text*, where it reads 5.95:1 on the card. */
-  --accent: #3376b8;
-  --accent-active: #316599;
-  --accent-ink: #5dbeec; /* palette sky */
-
-  /* Semantic */
-  --badge-surface: rgb(217 173 96 / 18%); /* palette gold, held back */
-  --badge-ink: #ead4a5; /* palette sand */
+  --surface: var(--near-black);
+  --surface-raised: oklch(32.5% 0 0);
+  --body-strong: oklch(97.6% 0 0);
+  --body: oklch(86% 0.003 264.5);
+  --body-subtle: var(--light-grey);
+  --border: var(--dark-grey);
 }
 
 @theme inline {
@@ -113,58 +94,42 @@
   --color-body-strong: var(--body-strong);
   --color-body: var(--body);
   --color-body-subtle: var(--body-subtle);
-  --color-accent: var(--accent);
-  --color-accent-active: var(--accent-active);
-  --color-accent-ink: var(--accent-ink);
-  --color-hairline: var(--hairline);
-  --color-edge: var(--edge);
+  --color-primary: var(--primary);
+  --color-primary-active: var(--primary-active);
+  --color-primary-light: var(--primary-light);
+  --color-border: var(--border);
 }
 
-/* Component utilities. These exist because the same string was previously
-   repeated across intro.ts, nearestCard.ts and main.ts; layout that is unique
-   to one place still belongs inline at that place. */
+/* Component utilities */
 
-/** The card over the map, and any raised container like it. */
 @utility panel {
-  @apply mx-auto max-w-md rounded-lg bg-surface-raised p-4 shadow-lg ring-1 ring-edge;
+  @apply mx-auto max-w-md rounded-lg bg-surface-raised p-4 shadow-lg ring-1 ring-border;
 }
 
-/** Full-width primary action: "Find water", "Directions", "Retry". */
 @utility btn-primary {
-  @apply block w-full rounded-md bg-accent px-4 py-3 text-center text-xl font-normal text-white active:bg-accent-active;
+  @apply block w-full rounded-md bg-primary px-4 py-3 text-center text-xl font-normal text-white active:bg-primary-active;
 }
 
-/** One segment of the theme / language pickers. Pressed state comes from
-    aria-pressed, so the markup carries the state and the styling follows it. */
 @utility btn-choice {
-  @apply flex-1 rounded-md border border-hairline px-3 py-2 text-sm font-medium;
-  @apply aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-white;
+  @apply flex-1 rounded-md border border-border px-3 py-2 text-sm font-medium;
+  @apply aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-white;
 }
 
-/** Icon-only toggle, used for the language flags. Lower visual weight than
-    btn-choice: no border, smaller padding, and a surface highlight only when
-    pressed. */
 @utility btn-choice-subtle {
   @apply rounded-md p-2 transition-all;
   @apply opacity-60 hover:opacity-80 aria-pressed:opacity-100 aria-pressed:bg-surface-raised;
 }
 
-/** Small uppercase section heading. Size and colour stay at the use site. */
 @utility label-caps {
   @apply font-semibold uppercase tracking-wide;
 }
 
-/** Status pill on the location card ("not confirmed", "cemetery"). */
 @utility badge {
   @apply rounded-full px-2.5 py-1 text-xs font-medium;
-  background: var(--badge-surface);
-  color: var(--badge-ink);
+  background: var(--sand);
+  color: var(--dark-grey);
 }
 
-/* "You are here" marker: a solid dot with a white ring, plus a halo that pulses
-   so it never reads as just another location circle. Two spans rather than a
-   pseudo-element, so paint order puts the halo behind the dot without relying
-   on z-index inside Leaflet's transformed marker pane. */
 .user-dot {
   position: relative;
 }
@@ -173,7 +138,7 @@
   position: absolute;
   inset: -6px;
   border-radius: 9999px;
-  background: rgb(217 173 96 / 45%);
+  background: color-mix(in oklch, var(--mylocation) 45%, transparent);
   animation: user-dot-pulse 2s ease-out infinite;
 }
 
@@ -181,10 +146,28 @@
   position: absolute;
   inset: 0;
   box-sizing: border-box;
-  border: 3px solid var(--user-ring);
+  border: 3px solid var(--mylocation);
   border-radius: 9999px;
-  background: #d9ad60;
-  box-shadow: 0 1px 4px rgb(41 41 41 / 45%);
+  background: var(--mylocation);
+}
+
+.dark {
+  .user-dot__halo {
+    position: absolute;
+    inset: -6px;
+    border-radius: 9999px;
+    background: color-mix(in oklch, var(--mylocation) 45%, transparent);
+    animation: user-dot-pulse 2s ease-out infinite;
+  }
+
+  .user-dot__core {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    border: 3px solid var(--mylocation);
+    border-radius: 9999px;
+    background: var(--mylocation);
+  }
 }
 
 @keyframes user-dot-pulse {
@@ -206,13 +189,6 @@
   }
 }
 
-/* Leaflet ships light-only chrome: without this the attribution bar and zoom
-   buttons stay white on the dark basemap, and the container flashes light grey
-   while tiles load. leaflet.css is bundled after this file, so the theme comes
-   from the `.dark` class on <html> rather than a media query. */
-/* Leaflet centres its "+"/"−" glyphs with line-height, which does nothing for
-   an inline SVG. The zoom buttons now carry icons, so they need real centring;
-   the extra class beats leaflet.css, which is bundled after this file. */
 .leaflet-container .leaflet-bar a {
   display: flex;
   align-items: center;
@@ -228,11 +204,6 @@
 }
 
 .dark {
-  /* leaflet.css is bundled after this file, so these selectors are deliberately
-     one step more specific than Leaflet's own — otherwise source order wins and
-     the chrome stays white on the dark basemap. */
-  /* Shown while tiles load, so it wants to sit close to the lifted basemap
-     rather than flash darker than the surfaces around it. */
   .leaflet-container.leaflet-container {
     background: #333333;
   }
@@ -240,8 +211,8 @@
   .leaflet-container .leaflet-bar a,
   .leaflet-container .leaflet-bar a:hover {
     background: #3d3d3d;
-    color: #f6f7f7;
-    border-bottom-color: #4c4c4c;
+    color: var(--body-strong);
+    border-bottom-color: var(--dark-grey);
   }
 
   .leaflet-container .leaflet-bar a.leaflet-disabled {
@@ -249,23 +220,6 @@
     color: #8a8a8a;
   }
 
-  /* CARTO's dark_all renders close to black: measured median luminance of the
-     rendered map was 12/255, with the background sitting near 4/255.
-
-     brightness() alone cannot fix that, because it multiplies: at 1.25 a
-     background pixel moves from (14,17,22) to (18,21,28), which is invisible.
-     The contrast() term is what does the work here — pulling values toward
-     mid-grey lifts the blacks far more than it dims the labels. Measured on a
-     sample background/label pair, this pairing roughly doubles background
-     luminance (20.7 -> 38.5) while leaving label text at 236/255, keeping
-     label-to-background contrast at 4.85 — above the 4.5 AA floor. Going
-     further (brightness 1.4 / contrast 0.8) drops it to 4.24, so this is the
-     brightest setting that keeps place names comfortably legible.
-
-     Applied to the tile images only, so the home and zoom chrome above keep
-     their own colours. leaflet.css sets `filter: inherit` on .leaflet-tile and
-     is bundled after this file, so this selector carries an extra class to win
-     on specificity rather than source order. */
   .leaflet-container .leaflet-tile {
     filter: brightness(1.35) contrast(0.85);
   }

@@ -3,7 +3,9 @@ export type Language = "en" | "hr";
 
 const THEME_KEY = "zf.theme";
 const LANGUAGE_KEY = "zf.lang";
-const THEME_COLOR = { light: "#3376b8", dark: "#292929" } as const;
+// Palette blue and palette black. Hex rather than oklch: this string goes into
+// <meta name="theme-color">, which browsers parse outside the CSS pipeline.
+const THEME_COLOR = { light: "#0161b0", dark: "#292929" } as const;
 
 /** Light unless the visitor has chosen otherwise; the OS preference is not consulted. */
 const DEFAULT_THEME: Theme = "light";

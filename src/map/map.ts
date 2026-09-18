@@ -45,23 +45,25 @@ const LOCATION_RADIUS = 9;
 const HIGHLIGHT_RADIUS = 13;
 // Palette green: it stays clear of the blue location fills and the gold
 // "you are here" dot, and reads on both basemaps.
-const HIGHLIGHT_STYLE: L.PathOptions = { color: "#4b9759", weight: 4 };
+const HIGHLIGHT_STYLE: L.PathOptions = { color: "var(--mylocation)", weight: 5 };
 
-/** Styled in style.css: a white-ringed dot with a pulsing halo. */
+/** Styled in style.css: a white-ringed dot with a pulsing halo.
+ *  Diameter matches the selected location circle (HIGHLIGHT_RADIUS * 2). */
+const USER_SIZE = HIGHLIGHT_RADIUS * 2;
 const USER_ICON = L.divIcon({
   className: "user-dot",
   html: '<span class="user-dot__halo"></span><span class="user-dot__core"></span>',
-  iconSize: [16, 16],
-  iconAnchor: [8, 8],
+  iconSize: [USER_SIZE, USER_SIZE],
+  iconAnchor: [USER_SIZE / 2, USER_SIZE / 2],
 });
 
 function locationStyle(location: Location, dark: boolean): L.PathOptions {
   // Palette sky/blue for confirmed locations, palette greys for unconfirmed:
   // status reads as saturation, so it survives being seen at a glance outdoors.
-  const working = dark ? "#5dbeec" : "#3376b8";
-  const unverified = dark ? "#8a8b8f" : "#aaabaf";
+  const working = dark ? "var(--primary)" : "var(--primary)";
+  const unverified = dark ? "var(--light-grey)" : "var(--light-grey)";
   return {
-    color: "#ffffff",
+    color: "var(--white)",
     weight: 2,
     fillColor: location.status === "working" ? working : unverified,
     fillOpacity: 1,
@@ -180,10 +182,10 @@ export function createLocationMap(container: HTMLElement, options: { dark: boole
       } else {
         accuracyCircle = L.circle(latLng, {
           radius: position.accuracyM,
-          // Gold, matching the user dot: on this palette blue means "location",
-          // so the accuracy ring belongs to the same family as the position it
-          // describes rather than to the markers it sits among.
-          color: "#d9ad60",
+          // Same family as the user dot: on this palette blue means "location",
+          // so the accuracy ring belongs with the position it describes rather
+          // than the markers it sits among.
+          color: "var(--mylocation)",
           weight: 1,
           fillOpacity: 0.1,
           interactive: false,

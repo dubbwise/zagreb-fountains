@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="Find the nearest public drinking fountain in Zagreb." />
-    <meta name="theme-color" content="#3376b8" />
+    <meta name="theme-color" content="#0161b0" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>Zagreb Fountains</title>
     <script>
@@ -21,7 +21,7 @@
       var dark = storedTheme === "dark";
       document.documentElement.classList.toggle("dark", dark);
       var themeMeta = document.querySelector('meta[name="theme-color"]');
-      if (themeMeta) themeMeta.setAttribute("content", dark ? "#292929" : "#3376b8");
+      if (themeMeta) themeMeta.setAttribute("content", dark ? "#292929" : "#0161b0");
       var storedLanguage = null;
       try {
         storedLanguage = localStorage.getItem("zf.lang");

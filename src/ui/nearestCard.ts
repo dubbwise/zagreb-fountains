@@ -13,8 +13,6 @@ export type LocationCardState = {
 
 export type CardState = { kind: "locating" } | { kind: "locationError" } | { kind: "outside" } | LocationCardState;
 
-const BUTTON_CLASS = "btn-primary mt-3";
-
 export function escapeHtml(value: string): string {
   return value
     .replaceAll("&", "&amp;")
@@ -31,7 +29,7 @@ const badge = (text: string): string => `<span class="badge">${escapeHtml(text)}
 function locationHtml({ location, distanceM, approx, isNearest, directionsUrl }: LocationCardState): string {
   const label = isNearest ? t().nearestLocation : t().selectedLocation;
   const parts = [
-    `<p class="label-caps text-xs text-accent-ink">${escapeHtml(label)}</p>`,
+    `<p class="label-caps text-xs text-primary-light">${escapeHtml(label)}</p>`,
     `<h2 class="mt-1 text-lg font-semibold leading-snug">${escapeHtml(location.name)}</h2>`,
   ];
   if (location.hint) {
@@ -49,7 +47,7 @@ function locationHtml({ location, distanceM, approx, isNearest, directionsUrl }:
     parts.push(`<div class="mt-2 flex flex-wrap gap-2">${badges.join("")}</div>`);
   }
   parts.push(
-    `<a href="${escapeHtml(directionsUrl)}" target="_blank" rel="noopener" class="${BUTTON_CLASS}">${escapeHtml(t().directions)}</a>`,
+    `<a href="${escapeHtml(directionsUrl)}" target="_blank" rel="noopener" class="btn-primary mt-3">${escapeHtml(t().directions)}</a>`,
   );
   return parts.join("");
 }
@@ -60,7 +58,7 @@ export function cardHtml(state: CardState): string {
       return panel(message(t().locating));
     case "locationError":
       return panel(
-        `${message(t().enableLocation)}<button type="button" data-action="retry" class="${BUTTON_CLASS}">${escapeHtml(t().retry)}</button>`,
+        `${message(t().enableLocation)}<button type="button" data-action="retry" class="btn-primary mt-3">${escapeHtml(t().retry)}</button>`,
       );
     case "outside":
       return panel(message(t().outsideZagreb));
