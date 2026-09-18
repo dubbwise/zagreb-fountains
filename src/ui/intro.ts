@@ -76,7 +76,7 @@ export function introHtml({ theme, language, lastCheckedAt }: IntroState): strin
     </header>
 
     <section class="mt-4">
-      <h1 id="intro-title" class="intro-title-mask text-6xl md:text-7xl font-semibold" style="background-image: url('${INTRO_TITLE_IMAGE}')">${escapeHtml(strings.introTitle)}</h1>
+      <h1 id="intro-title" class="intro-title-mask text-6xl md:text-7xl font-extrabold" style="background-image: url('${INTRO_TITLE_IMAGE}')">${escapeHtml(strings.introTitle)}</h1>
     </section>
 
     <button type="button" data-action="continue" class="btn-primary mt-4">${escapeHtml(strings.introContinue)}</button>

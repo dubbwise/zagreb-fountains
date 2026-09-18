@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import type { Fountain } from "../src/data/fountains";
 import { setActiveLanguage } from "../src/i18n";
+// Compared against the i18n tables, never literal copy: rewording is not a
+// breaking change. See AGENTS.md.
+import { en } from "../src/i18n/en";
+import { hr } from "../src/i18n/hr";
 import { cardHtml, type FountainCardState } from "../src/ui/nearestCard";
 
 const BRITANSKI_TRG: Fountain = {
@@ -28,50 +32,51 @@ function fountainState(overrides: Partial<FountainCardState> = {}): FountainCard
 
 describe("cardHtml", () => {
   it("shows a locating message", () => {
-    expect(cardHtml({ kind: "locating" })).toContain("Finding your location");
+    expect(cardHtml({ kind: "locating" })).toContain(en.locating);
   });
 
   it("offers a retry button when location fails", () => {
     const html = cardHtml({ kind: "locationError" });
-    expect(html).toContain("Enable location to find the nearest water point");
+    expect(html).toContain(en.enableLocation);
     expect(html).toContain('data-action="retry"');
   });
 
   it("explains when the user is outside Zagreb", () => {
-    expect(cardHtml({ kind: "outside" })).toContain("No water points mapped near you. Showing Zagreb.");
+    expect(cardHtml({ kind: "outside" })).toContain(en.outsideZagreb);
   });
 
   it("renders the nearest fountain with distance, walking time and directions", () => {
     const html = cardHtml(fountainState());
-    expect(html).toContain("Nearest water point");
+    expect(html).toContain(en.nearestFountain);
     expect(html).toContain("Britanski trg");
     expect(html).toContain("sjeverno od javnog WC-a");
-    expect(html).toContain("240 m · ~4 min walk");
+    expect(html).toContain(`240 m · ${en.walk(4)}`);
     expect(html).toContain(
       'href="https://www.google.com/maps/dir/?api=1&amp;destination=45.812749,15.964876&amp;travelmode=walking"',
     );
-    expect(html).not.toContain("Status not confirmed");
-    expect(html).not.toContain("Cemetery");
+    expect(html).not.toContain(en.unverified);
+    expect(html).not.toContain(en.cemetery);
   });
 
   it("labels a tapped fountain that is not the nearest", () => {
     const html = cardHtml(fountainState({ isNearest: false }));
-    expect(html).toContain(">Water point<");
-    expect(html).not.toContain("Nearest water point");
+    expect(html).toContain(`>${en.selectedFountain}<`);
+    expect(html).not.toContain(en.nearestFountain);
   });
 
   it("prefixes approx. when accuracy is low", () => {
-    expect(cardHtml(fountainState({ approx: true }))).toContain("approx. 240 m · ~4 min walk");
+    expect(cardHtml(fountainState({ approx: true }))).toContain(`${en.approx} 240 m · ${en.walk(4)}`);
   });
 
   it("omits the distance line when distance is unknown", () => {
-    expect(cardHtml(fountainState({ distanceM: null }))).not.toContain("min walk");
+    // The distance itself is data, so its absence is the thing worth asserting.
+    expect(cardHtml(fountainState({ distanceM: null }))).not.toContain("240 m");
   });
 
   it("shows badges for unverified and cemetery fountains", () => {
     const html = cardHtml(fountainState({ fountain: { ...BRITANSKI_TRG, status: "unverified", cemetery: true } }));
-    expect(html).toContain("Status not confirmed");
-    expect(html).toContain("Cemetery — follows cemetery opening hours");
+    expect(html).toContain(en.unverified);
+    expect(html).toContain(en.cemetery);
   });
 
   it("escapes HTML coming from the data", () => {
@@ -84,10 +89,10 @@ describe("cardHtml", () => {
     setActiveLanguage("hr");
     try {
       const html = cardHtml(fountainState({ fountain: { ...BRITANSKI_TRG, status: "unverified" } }));
-      expect(html).toContain("Najbliži zdenac");
-      expect(html).toContain("240 m · ~4 min hoda");
-      expect(html).toContain("Status nije potvrđen");
-      expect(html).toContain("Upute");
+      expect(html).toContain(hr.nearestFountain);
+      expect(html).toContain(`240 m · ${hr.walk(4)}`);
+      expect(html).toContain(hr.unverified);
+      expect(html).toContain(hr.directions);
     } finally {
       setActiveLanguage("en");
     }

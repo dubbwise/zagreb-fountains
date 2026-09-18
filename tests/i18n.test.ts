@@ -32,12 +32,11 @@ describe("detectLanguage", () => {
 
 describe("t", () => {
   it("returns the active table and switches", () => {
+    // Identity against the table, so rewording never breaks this.
     setActiveLanguage("en");
-    expect(t().nearestFountain).toBe("Nearest water point");
-    expect(t().walk(4)).toBe("~4 min walk");
+    expect(t()).toBe(en);
     setActiveLanguage("hr");
-    expect(t().nearestFountain).toBe("Najbliži zdenac");
-    expect(t().walk(4)).toBe("~4 min hoda");
+    expect(t()).toBe(hr);
     setActiveLanguage("en");
   });
 });

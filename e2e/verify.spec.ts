@@ -1,4 +1,8 @@
 import { expect, test, type Page } from "@playwright/test";
+// Assert against the i18n tables rather than literal copy: wording is not a
+// breaking change and must not fail the suite. See AGENTS.md.
+import { en } from "../src/i18n/en";
+import { hr } from "../src/i18n/hr";
 
 const SCREENSHOTS = "e2e/screenshots";
 const WALK_LINE = /(\d+ m|\d+\.\d km) · ~\d+ min (walk|hoda)/;
@@ -22,7 +26,7 @@ async function openApp(page: Page, options: { skipIntro?: boolean } = {}): Promi
   await page.goto("/");
   await expect(page.locator("#intro")).toBeVisible();
   if (options.skipIntro === false) return;
-  await page.getByRole("button", { name: "Find nearest water point" }).click();
+  await page.getByRole("button", { name: en.introContinue }).click();
   await expect(page.locator("#intro")).toBeHidden();
   await expect(page.locator("path.leaflet-interactive")).not.toHaveCount(0);
 }
@@ -158,9 +162,9 @@ test.describe("at Ban Jelačić Square", () => {
   test("highlights the nearest fountain with directions", async ({ page }) => {
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText("Nearest water point");
+    await expect(card).toContainText(en.nearestFountain);
     await expect(card).toContainText(WALK_LINE);
-    await expect(card.getByRole("link", { name: "Directions" })).toHaveAttribute(
+    await expect(card.getByRole("link", { name: en.directions })).toHaveAttribute(
       "href",
       /^https:\/\/www\.google\.com\/maps\/dir\/\?api=1&destination=45\.\d{6},15\.\d{6}&travelmode=walking$/,
     );
@@ -175,7 +179,7 @@ test.describe("in Maksimir Park", () => {
   test("highlights the nearest fountain", async ({ page }) => {
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText("Nearest water point");
+    await expect(card).toContainText(en.nearestFountain);
     await expect(card).toContainText(WALK_LINE);
     await page.screenshot({ path: `${SCREENSHOTS}/2-maksimir.png` });
   });
@@ -186,7 +190,7 @@ test.describe("in Split (outside Zagreb)", () => {
 
   test("explains there are no fountains nearby", async ({ page }) => {
     await openApp(page);
-    await expect(page.locator("#card")).toContainText("No water points mapped near you. Showing Zagreb.");
+    await expect(page.locator("#card")).toContainText(en.outsideZagreb);
     await page.screenshot({ path: `${SCREENSHOTS}/3-split.png` });
   });
 });
@@ -197,15 +201,15 @@ test.describe("with location permission denied", () => {
   test("offers to enable location and retry", async ({ page }) => {
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText("Enable location to find the nearest water point", { timeout: 20_000 });
-    const retryButton = card.getByRole("button", { name: "Retry" });
+    await expect(card).toContainText(en.enableLocation, { timeout: 20_000 });
+    const retryButton = card.getByRole("button", { name: en.retry });
     await expect(retryButton).toBeVisible();
     await page.screenshot({ path: `${SCREENSHOTS}/4-denied.png` });
 
     // Clicking Retry restarts the watch without crashing: the card falls back
     // to the same "enable location" state instead of erroring out.
     await retryButton.click();
-    await expect(card).toContainText("Enable location to find the nearest water point", { timeout: 20_000 });
+    await expect(card).toContainText(en.enableLocation, { timeout: 20_000 });
   });
 });
 
@@ -215,7 +219,7 @@ test.describe("clears approx. when GPS accuracy improves", () => {
   test("drops the approx. prefix once a precise fix arrives", async ({ page, context }) => {
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText("approx.");
+    await expect(card).toContainText(en.approx);
 
     // Chromium may not deliver a fresh watchPosition fix on an accuracy-only
     // change with no movement, so nudge latitude by ~5 m alongside it. That's
@@ -224,7 +228,7 @@ test.describe("clears approx. when GPS accuracy improves", () => {
     // rather than a full nearest recompute.
     await context.setGeolocation({ latitude: 45.81315, longitude: 15.9772, accuracy: 15 });
 
-    await expect(card).not.toContainText("approx.", { timeout: 15_000 });
+    await expect(card).not.toContainText(en.approx, { timeout: 15_000 });
   });
 });
 
@@ -240,7 +244,7 @@ test.describe("with the system set to dark", () => {
   test("renders a dark card over the dark basemap", async ({ page }) => {
     await openApp(page);
     const card = page.locator("#card");
-    await expect(card).toContainText("Nearest water point");
+    await expect(card).toContainText(en.nearestFountain);
 
     // Assert the surface is dark rather than matching an exact colour string:
     // Tailwind 4 emits oklch(), so the computed value is palette-version specific.
@@ -269,9 +273,9 @@ test.describe("with the system set to dark", () => {
     // control, whose intro carries the full credits (global constraints).
     // Re-open it here to confirm CARTO's credit is still reachable, then
     // close it again before the screenshot below.
-    await page.getByRole("button", { name: "Show intro screen" }).click();
+    await page.getByRole("button", { name: en.introOpen }).click();
     await expect(page.locator("#intro")).toContainText("CARTO");
-    await page.getByRole("button", { name: "Find nearest water point" }).click();
+    await page.getByRole("button", { name: en.introContinue }).click();
     await expect(page.locator("#intro")).toBeHidden();
 
     await expectFullTileCoverage(page);
@@ -285,31 +289,30 @@ test.describe("the intro screen", () => {
   test("explains the app and holds the location prompt until you continue", async ({ page }) => {
     await openApp(page, { skipIntro: false });
     const intro = page.locator("#intro");
-    // The separate "Why your location?" heading is gone; the explanation now
-    // lives in introLocationBody alone.
-    await expect(intro).toContainText("It is never sent anywhere.");
+    await expect(intro).toContainText(en.introLocationBody);
+    // Attribution is a licence obligation, so these stay asserted.
     await expect(intro).toContainText(/OpenStreetMap/);
-    await expect(intro.getByRole("link", { name: "zg@paperbeatsrock.co" })).toHaveAttribute(
+    await expect(intro.getByRole("link", { name: "OpenStreetMap" })).toHaveAttribute(
       "href",
-      "mailto:zg@paperbeatsrock.co",
+      "https://www.openstreetmap.org/",
     );
     expect(await page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls)).toBe(0);
     await page.screenshot({ path: `${SCREENSHOTS}/6-intro-light.png` });
 
-    await page.getByRole("button", { name: "Find nearest water point" }).click();
+    await page.getByRole("button", { name: en.introContinue }).click();
     await expect(intro).toBeHidden();
     await expect
       .poll(() => page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls))
       .toBeGreaterThan(0);
-    await expect(page.locator("#card")).toContainText("Nearest water point");
+    await expect(page.locator("#card")).toContainText(en.nearestFountain);
   });
 
   test("reopens from the map without asking for location again", async ({ page }) => {
     await openApp(page);
     const callsAfterContinue = await page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls);
-    await page.getByRole("button", { name: "Show intro screen" }).click();
+    await page.getByRole("button", { name: en.introOpen }).click();
     await expect(page.locator("#intro")).toBeVisible();
-    await page.getByRole("button", { name: "Find nearest water point" }).click();
+    await page.getByRole("button", { name: en.introContinue }).click();
     await expect(page.locator("#intro")).toBeHidden();
     expect(await page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls)).toBe(
       callsAfterContinue,
@@ -326,14 +329,14 @@ test.describe("theme override", () => {
 
   test("Dark wins over a light system setting", async ({ page }) => {
     await openApp(page, { skipIntro: false });
-    await page.getByRole("button", { name: "Dark" }).click();
+    await page.locator('[data-theme="dark"]').click();
     await expect(page.locator("html")).toHaveClass(/dark/);
     // renderIntro re-renders the panel on every settings change, so focus must
     // be restored to the control the user just used rather than jumping to Continue.
-    await expect(page.getByRole("button", { name: "Dark" })).toBeFocused();
+    await expect(page.locator('[data-theme="dark"]')).toBeFocused();
     await page.screenshot({ path: `${SCREENSHOTS}/7-intro-dark.png` });
 
-    await page.getByRole("button", { name: "Find nearest water point" }).click();
+    await page.getByRole("button", { name: en.introContinue }).click();
     await expect(page.locator(".leaflet-tile").first()).toHaveAttribute("src", /cartocdn\.com\/dark_all/);
   });
 });
@@ -343,18 +346,18 @@ test.describe("language", () => {
 
   test("Hrvatski translates the card and survives a reload", async ({ page }) => {
     await openApp(page, { skipIntro: false });
-    await page.getByRole("button", { name: "Hrvatski" }).click();
-    await expect(page.locator("#intro")).toContainText("Lokacija se ne šalje nikamo.");
-    await page.getByRole("button", { name: "Pronađi najbliži zdenac" }).click();
+    await page.locator('[data-language="hr"]').click();
+    await expect(page.locator("#intro")).toContainText(hr.introLocationBody);
+    await page.getByRole("button", { name: hr.introContinue }).click();
 
     const card = page.locator("#card");
-    await expect(card).toContainText("Najbliži zdenac");
+    await expect(card).toContainText(hr.nearestFountain);
     await expect(card).toContainText(/\d+ m · ~\d+ min hoda/);
     await expectFullTileCoverage(page);
     await page.screenshot({ path: `${SCREENSHOTS}/8-croatian.png` });
 
     await page.reload();
-    await expect(page.locator("#intro")).toContainText("Pronađi najbliži zdenac");
+    await expect(page.locator("#intro")).toContainText(hr.introContinue);
     await expect(page.locator("html")).toHaveAttribute("lang", "hr");
   });
 });
