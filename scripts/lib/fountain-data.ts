@@ -79,9 +79,11 @@ export function selectGeoJsonResource(packageShow: unknown): CkanResource {
   return resource;
 }
 
-export function normalizeFeatures(
-  input: unknown,
-): { fountains: Fountain[]; excluded: Exclusion[]; unrecognizedStatuses: string[] } {
+export function normalizeFeatures(input: unknown): {
+  fountains: Fountain[];
+  excluded: Exclusion[];
+  unrecognizedStatuses: string[];
+} {
   if (!isRecord(input) || !Array.isArray(input.features)) {
     throw new DataValidationError("Expected a GeoJSON FeatureCollection with a features array");
   }
@@ -149,11 +151,7 @@ export function sameFountains(a: readonly Fountain[], b: readonly Fountain[]): b
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
-export function buildSnapshot(
-  fountains: Fountain[],
-  sourceModified: string | null | undefined,
-  now: Date,
-): Snapshot {
+export function buildSnapshot(fountains: Fountain[], sourceModified: string | null | undefined, now: Date): Snapshot {
   return {
     generatedAt: now.toISOString(),
     sourceModified: sourceModified ?? "",

@@ -106,7 +106,7 @@ function handleLocation(event: LocationEvent): void {
     // Still too close to recompute the nearest fountain, but a coarse first
     // fix followed by a precise one at the same spot should still drop
     // (or add) the "approx." prefix on the card.
-    if ((position.accuracyM > LOW_ACCURACY_M) !== renderedApprox) update();
+    if (position.accuracyM > LOW_ACCURACY_M !== renderedApprox) update();
     return;
   }
 
@@ -128,7 +128,7 @@ function startLocation(): void {
 }
 
 function showFatal(): void {
-  fatalElement.innerHTML = `<div class="flex h-full flex-col items-center justify-center gap-4 bg-surface/50 p-6 text-center">
+  fatalElement.innerHTML = `<div class="flex h-full flex-col items-center justify-center gap-4 bg-surface p-6 text-center">
     <p class="text-lg font-medium">${escapeHtml(t().loadError)}</p>
     <button type="button" class="rounded-md bg-accent px-6 py-3 font-semibold text-white active:bg-accent-active">${escapeHtml(t().retry)}</button>
   </div>`;

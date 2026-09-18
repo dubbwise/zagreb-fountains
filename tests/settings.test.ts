@@ -1,7 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { createSettings, themeColor, type SettingsDeps } from "../src/settings";
 
-function fakeDeps(overrides: { stored?: Record<string, string>; prefersDark?: boolean; throwing?: boolean; writesThrow?: boolean } = {}) {
+function fakeDeps(
+  overrides: { stored?: Record<string, string>; prefersDark?: boolean; throwing?: boolean; writesThrow?: boolean } = {},
+) {
   const stored = new Map(Object.entries(overrides.stored ?? {}));
   const mediaListeners: Array<() => void> = [];
   const root = { classList: { toggle: vi.fn() }, lang: "" };

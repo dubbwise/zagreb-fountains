@@ -1,0 +1,13 @@
+dist/
+node_modules/
+
+# Specs and plans are dated records of decisions, not living documents.
+# Reformatting them churns history for no benefit.
+docs/
+
+e2e/screenshots/
+e2e/.results/
+playwright-report/
+public/data/fountains.json
+public/Exat TEST/
+package-lock.json

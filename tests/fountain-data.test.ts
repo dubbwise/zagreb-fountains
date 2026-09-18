@@ -122,7 +122,13 @@ describe("normalizeFeatures", () => {
 
   it("rejects non-point geometry", () => {
     const collection = zdenci();
-    collection.features[0]!.geometry = { type: "LineString", coordinates: [[15.9, 45.8], [15.91, 45.81]] };
+    collection.features[0]!.geometry = {
+      type: "LineString",
+      coordinates: [
+        [15.9, 45.8],
+        [15.91, 45.81],
+      ],
+    };
     expect(() => normalizeFeatures(collection)).toThrow(/Point geometry/);
   });
 

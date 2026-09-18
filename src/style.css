@@ -131,7 +131,7 @@
 
 /** Full-width primary action: "Find water", "Directions", "Retry". */
 @utility btn-primary {
-  @apply block w-full rounded-md bg-accent px-4 py-3 text-center font-semibold text-white active:bg-accent-active;
+  @apply block w-full rounded-md bg-accent px-4 py-3 text-center text-xl font-semibold text-white active:bg-accent-active;
 }
 
 /** One segment of the theme / language pickers. Pressed state comes from
@@ -142,6 +142,19 @@
   /* inline-flex so a leading flag icon sits on the text's centre line rather
      than its baseline; text-only segments centre exactly as before. */
   @apply inline-flex items-center justify-center gap-2;
+}
+
+/** Icon-only toggle, used for the language flags. Lower visual weight than
+    btn-choice: no border, smaller padding, and a surface highlight only when
+    pressed. */
+@utility btn-choice-subtle {
+  @apply rounded-md p-2 transition-all;
+  @apply opacity-60 hover:opacity-80;
+  /* The pressed state was bg-surface-raised, which is white on a #f3f3f4
+     surface — roughly 1.1:1, so "which one is selected" was carried almost
+     entirely by opacity. The accent fill reads at a glance in both themes and
+     matches how btn-choice marks the same state. */
+  @apply aria-pressed:opacity-100 aria-pressed:bg-accent aria-pressed:text-white;
 }
 
 /** Small uppercase section heading. Size and colour stay at the use site. */

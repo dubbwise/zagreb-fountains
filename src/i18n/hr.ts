@@ -15,8 +15,7 @@ export const hr: Strings = {
   walk: (minutes) => `~${minutes} min hoda`,
   introTitle: "Pronađi najbliži javni zdenac s pitkom vodom u Zagrebu",
   introLocationHeading: "Zašto lokacija?",
-  introLocationBody:
-    "Koristi se u tvom pregledniku kako bi se izračunalo koji je zdenac najbliži. Nikamo se ne šalje.",
+  introLocationBody: "Koristi se u tvom pregledniku kako bi se izračunalo koji je zdenac najbliži. Nikamo se ne šalje.",
   introThemeLabel: "Tema",
   introThemeSystem: "Sustav",
   introThemeLight: "Svijetla",

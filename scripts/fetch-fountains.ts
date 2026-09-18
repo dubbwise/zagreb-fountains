@@ -45,7 +45,7 @@ async function main(): Promise<void> {
   }
 
   const previous = await readPreviousSnapshot();
-  const previousCount = previous ? previous.fountains?.length ?? previous.count : null;
+  const previousCount = previous ? (previous.fountains?.length ?? previous.count) : null;
   assertCountPlausible(fountains.length, previousCount);
   if (previous && sameFountains(previous.fountains, fountains)) {
     console.log("No changes to fountains; snapshot left untouched.");

@@ -3,8 +3,7 @@ import { GEOLOCATION_TIMEOUT_MS } from "../config";
 export type LocationErrorReason = "denied" | "unavailable" | "timeout";
 
 export type LocationEvent =
-  | { type: "position"; lat: number; lon: number; accuracyM: number }
-  | { type: "error"; reason: LocationErrorReason };
+  { type: "position"; lat: number; lon: number; accuracyM: number } | { type: "error"; reason: LocationErrorReason };
 
 const PERMISSION_DENIED = 1;
 const TIMEOUT = 3;

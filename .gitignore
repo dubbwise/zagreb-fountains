@@ -10,3 +10,6 @@ playwright-report/
 
 # Trial font files - local preview only, never committed or deployed
 public/Exat TEST/
+
+# Local Claude Code session state
+.claude/

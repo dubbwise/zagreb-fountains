@@ -24,11 +24,9 @@ export function escapeHtml(value: string): string {
     .replaceAll("'", "&#39;");
 }
 
-const panel = (inner: string): string =>
-  `<div class="panel">${inner}</div>`;
+const panel = (inner: string): string => `<div class="panel">${inner}</div>`;
 const message = (text: string): string => `<p class="text-body">${escapeHtml(text)}</p>`;
-const badge = (text: string): string =>
-  `<span class="badge">${escapeHtml(text)}</span>`;
+const badge = (text: string): string => `<span class="badge">${escapeHtml(text)}</span>`;
 
 function fountainHtml({ fountain, distanceM, approx, isNearest, directionsUrl }: FountainCardState): string {
   const label = isNearest ? t().nearestFountain : t().selectedFountain;

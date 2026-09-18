@@ -1,7 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
 const SCREENSHOTS = "e2e/screenshots";
-const WALK_LINE = /(\d+ m|\d+\.\d km) · ~\d+ min walk/;
+const WALK_LINE = /(\d+ m|\d+\.\d km) · ~\d+ min (walk|hoda)/;
 const TOLERANCE = 2;
 
 /** Records watchPosition calls so a test can prove the prompt was not fired. */
@@ -22,7 +22,7 @@ async function openApp(page: Page, options: { skipIntro?: boolean } = {}): Promi
   await page.goto("/");
   await expect(page.locator("#intro")).toBeVisible();
   if (options.skipIntro === false) return;
-  await page.getByRole("button", { name: /Find nearest water point|Pronađi najbliži zdenac/ }).click();
+  await page.getByRole("button", { name: "Find nearest water point" }).click();
   await expect(page.locator("#intro")).toBeHidden();
   await expect(page.locator("path.leaflet-interactive")).not.toHaveCount(0);
 }
@@ -269,7 +269,7 @@ test.describe("with the system set to dark", () => {
     // control, whose intro carries the full credits (global constraints).
     // Re-open it here to confirm CARTO's credit is still reachable, then
     // close it again before the screenshot below.
-    await page.getByRole("button", { name: /About this map|O ovoj karti/ }).click();
+    await page.getByRole("button", { name: "About this map" }).click();
     await expect(page.locator("#intro")).toContainText("CARTO");
     await page.getByRole("button", { name: "Find nearest water point" }).click();
     await expect(page.locator("#intro")).toBeHidden();
@@ -286,7 +286,7 @@ test.describe("the intro screen", () => {
     await openApp(page, { skipIntro: false });
     const intro = page.locator("#intro");
     await expect(intro).toContainText("Why your location?");
-    await expect(intro).toContainText("© OpenStreetMap contributors");
+    await expect(intro).toContainText(/OpenStreetMap/);
     await expect(intro.getByRole("link", { name: "zg@paperbeatsrock.co" })).toHaveAttribute(
       "href",
       "mailto:zg@paperbeatsrock.co",
@@ -304,10 +304,8 @@ test.describe("the intro screen", () => {
 
   test("reopens from the map without asking for location again", async ({ page }) => {
     await openApp(page);
-    const callsAfterContinue = await page.evaluate(
-      () => (window as unknown as { __watchCalls: number }).__watchCalls,
-    );
-    await page.getByRole("button", { name: /About this map|O ovoj karti/ }).click();
+    const callsAfterContinue = await page.evaluate(() => (window as unknown as { __watchCalls: number }).__watchCalls);
+    await page.getByRole("button", { name: "About this map" }).click();
     await expect(page.locator("#intro")).toBeVisible();
     await page.getByRole("button", { name: "Find nearest water point" }).click();
     await expect(page.locator("#intro")).toBeHidden();

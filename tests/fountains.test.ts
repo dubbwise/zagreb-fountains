@@ -26,9 +26,7 @@ describe("loadFountains", () => {
     };
     const fetchFn = fakeFetch(new Response(JSON.stringify(snapshot), { status: 200 }));
 
-    await expect(loadFountains("data/fountains.json", fetchFn as unknown as typeof fetch)).resolves.toEqual([
-      fountain,
-    ]);
+    await expect(loadFountains("data/fountains.json", fetchFn as unknown as typeof fetch)).resolves.toEqual([fountain]);
     expect(fetchFn).toHaveBeenCalledWith("data/fountains.json");
   });
 
