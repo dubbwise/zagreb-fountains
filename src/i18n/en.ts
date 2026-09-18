@@ -11,20 +11,10 @@ export interface Strings {
   loadError: string;
   approx: string;
   walk: (minutes: number) => string;
+  introLanguage: string;
   introTitle: string;
-  introLocationHeading: string;
   introLocationBody: string;
-  introThemeLabel: string;
-  introThemeSystem: string;
-  introThemeLight: string;
-  introThemeDark: string;
-  introLanguageLabel: string;
-  introCreditsHeading: string;
-  introCreditsMapPrefix: string;
-  introCreditsContributors: string;
-  introCreditsDarkBasemap: string;
-  introCreditsData: string;
-  introFeedback: string;
+  introLastUpdated: (date: string) => string;
   introContinue: string;
   introOpen: string;
 }
@@ -42,20 +32,10 @@ export const en: Strings = {
   loadError: "Couldn't load water point data.",
   approx: "approx.",
   walk: (minutes) => `~${minutes} min walk`,
-  introTitle: "Find the nearest public water point in Zagreb",
-  introLocationHeading: "Why your location?",
-  introLocationBody: "It is used in your browser to work out which water point is closest. It is never sent anywhere.",
-  introThemeLabel: "Theme",
-  introThemeSystem: "System",
-  introThemeLight: "Light",
-  introThemeDark: "Dark",
-  introLanguageLabel: "Language",
-  introCreditsHeading: "Credits",
-  introCreditsMapPrefix: "Map:",
-  introCreditsContributors: "contributors",
-  introCreditsDarkBasemap: "dark basemap",
-  introCreditsData: "Data: Grad Zagreb",
-  introFeedback: "Feedback",
+  introLanguage: "Language",
+  introTitle: "Find public water points in Zagreb",
+  introLocationBody: "Allow location in your browser to work out which water point is closest. It is never sent anywhere.",
+  introLastUpdated: (date) => `Last updated: ${date}`,
   introContinue: "Find nearest water point",
-  introOpen: "About this map",
+  introOpen: "Show intro screen",
 };

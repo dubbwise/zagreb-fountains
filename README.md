@@ -46,8 +46,9 @@ A home button ("About this map" / "O ovoj karti") on the map reopens the intro l
 - `npm run typecheck` — `tsc --noEmit`.
 - `npm run test` — run the Vitest unit suite.
 - `npm run fetch-data` — download the latest fountain data from `data.zagreb.hr`, validate it, and rewrite
-  `public/data/fountains.json`. It only rewrites the file when the fountains actually changed, and refuses
-  (exits non-zero, writes nothing) if validation fails — see "Safety guard" in the spec.
+  `public/data/fountains.json`. Always bumps `lastCheckedAt`; keeps `generatedAt` and the fountain list when
+  nothing else changed. Refuses (exits non-zero, writes nothing) if validation fails — see "Safety guard" in
+  the spec.
 - `npm run verify` — Playwright end-to-end checks against a production build served on port 4173. First
   time, install the browser with `npx playwright install chromium`. Screenshots land in
   `e2e/screenshots/`. Not run in CI.
@@ -72,8 +73,9 @@ Pages.
 ## Data refresh
 
 `.github/workflows/refresh-data.yml` runs every Monday at 04:00 UTC, and on manual dispatch. It fetches the
-latest data, validates and builds it, and commits `public/data/fountains.json` only if the fountains
-changed. That commit triggers a deploy.
+latest data, validates and builds it, and always rewrites `public/data/fountains.json` so `lastCheckedAt`
+reflects the check. Fountain rows and `generatedAt` only change when the list itself changed. The commit
+triggers a deploy so the intro footer stays current.
 
 **Warning:** GitHub disables scheduled workflows after 60 days with no repository activity. If the weekly
 refresh silently stops, re-enable it from the Actions tab, or run it manually (`workflow_dispatch`) from

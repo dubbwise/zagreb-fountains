@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { loadFountains, type Fountain, type Snapshot } from "../src/data/fountains";
+import { loadFountains, loadSnapshot, type Fountain, type Snapshot } from "../src/data/fountains";
 
 const fountain: Fountain = {
   id: "8596b290-ea0d-4caa-8890-047804249320",
@@ -20,6 +20,7 @@ describe("loadFountains", () => {
   it("returns the fountains from a snapshot", async () => {
     const snapshot: Snapshot = {
       generatedAt: "2026-09-15T04:00:00.000Z",
+      lastCheckedAt: "2026-09-22T04:00:00.000Z",
       sourceModified: "2026-09-14T11:08:23.379555",
       count: 1,
       fountains: [fountain],
@@ -38,5 +39,34 @@ describe("loadFountains", () => {
   it("throws when the payload has no fountains array", async () => {
     const fetchFn = fakeFetch(new Response("{}", { status: 200 }));
     await expect(loadFountains("x", fetchFn as unknown as typeof fetch)).rejects.toThrow("malformed");
+  });
+
+  it("throws when lastCheckedAt is missing", async () => {
+    const fetchFn = fakeFetch(
+      new Response(
+        JSON.stringify({
+          generatedAt: "2026-09-15T04:00:00.000Z",
+          sourceModified: "",
+          count: 1,
+          fountains: [fountain],
+        }),
+        { status: 200 },
+      ),
+    );
+    await expect(loadFountains("x", fetchFn as unknown as typeof fetch)).rejects.toThrow("malformed");
+  });
+});
+
+describe("loadSnapshot", () => {
+  it("returns the full snapshot including lastCheckedAt", async () => {
+    const snapshot: Snapshot = {
+      generatedAt: "2026-09-15T04:00:00.000Z",
+      lastCheckedAt: "2026-09-22T04:00:00.000Z",
+      sourceModified: "2026-09-14T11:08:23.379555",
+      count: 1,
+      fountains: [fountain],
+    };
+    const fetchFn = fakeFetch(new Response(JSON.stringify(snapshot), { status: 200 }));
+    await expect(loadSnapshot("data/fountains.json", fetchFn as unknown as typeof fetch)).resolves.toEqual(snapshot);
   });
 });

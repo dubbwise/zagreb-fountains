@@ -161,6 +161,24 @@
   color: var(--badge-ink);
 }
 
+/* Intro title: the photo fills the glyphs via background-clip. Image URL is set
+   inline with BASE_URL so it resolves under Vite's relative `base`. */
+.intro-title-mask {
+  color: transparent;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .intro-title-mask {
+    color: var(--body-strong);
+    background-image: none !important;
+  }
+}
+
 /* "You are here" marker: a solid dot with a white ring, plus a halo that pulses
    so it never reads as just another fountain circle. Two spans rather than a
    pseudo-element, so paint order puts the halo behind the dot without relying

@@ -151,9 +151,16 @@ export function sameFountains(a: readonly Fountain[], b: readonly Fountain[]): b
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
-export function buildSnapshot(fountains: Fountain[], sourceModified: string | null | undefined, now: Date): Snapshot {
+export function buildSnapshot(
+  fountains: Fountain[],
+  sourceModified: string | null | undefined,
+  now: Date,
+  generatedAt?: string,
+): Snapshot {
+  const checkedAt = now.toISOString();
   return {
-    generatedAt: now.toISOString(),
+    generatedAt: generatedAt ?? checkedAt,
+    lastCheckedAt: checkedAt,
     sourceModified: sourceModified ?? "",
     count: fountains.length,
     fountains,

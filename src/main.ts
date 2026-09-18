@@ -1,6 +1,6 @@
 import "./style.css";
 import { LOW_ACCURACY_M, RECOMPUTE_DISTANCE_M } from "./config";
-import { loadFountains, type Fountain } from "./data/fountains";
+import { loadSnapshot, type Fountain } from "./data/fountains";
 import { detectLanguage, setActiveLanguage, t } from "./i18n";
 import { findNearest, haversineMeters, isNearZagreb, type LatLon, type NearestResult } from "./geo/distance";
 import { watchLocation, type LocationEvent } from "./geo/location";
@@ -43,6 +43,7 @@ let introOpener: Element | null = null;
 let fatalPending = false;
 
 let fountains: Fountain[] = [];
+let lastCheckedAt: string | null = null;
 let position: UserPosition | null = null;
 let locationFailed = false;
 let computedAt: LatLon | null = null;
@@ -139,7 +140,7 @@ function showFatal(): void {
 function drawIntro(): void {
   renderIntro(
     introElement,
-    { theme: settings.getTheme(), language: settings.getLanguage() },
+    { theme: settings.getTheme(), language: settings.getLanguage(), lastCheckedAt },
     {
       onTheme: (theme) => settings.setTheme(theme),
       onLanguage: (language) => settings.setLanguage(language),
@@ -207,7 +208,9 @@ document.addEventListener("keydown", (event) => {
 async function boot(): Promise<void> {
   fatalElement.classList.add("hidden");
   try {
-    fountains = await loadFountains(`${import.meta.env.BASE_URL}data/fountains.json`);
+    const snapshot = await loadSnapshot(`${import.meta.env.BASE_URL}data/fountains.json`);
+    fountains = snapshot.fountains;
+    lastCheckedAt = snapshot.lastCheckedAt;
   } catch (error) {
     console.error(error);
     if (introElement.classList.contains("hidden")) showFatal();
@@ -215,6 +218,7 @@ async function boot(): Promise<void> {
     return;
   }
   map.setFountains(fountains);
+  if (!introElement.classList.contains("hidden")) drawIntro();
   update();
 }
 

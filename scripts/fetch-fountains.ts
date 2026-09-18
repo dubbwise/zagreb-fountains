@@ -47,15 +47,22 @@ async function main(): Promise<void> {
   const previous = await readPreviousSnapshot();
   const previousCount = previous ? (previous.fountains?.length ?? previous.count) : null;
   assertCountPlausible(fountains.length, previousCount);
-  if (previous && sameFountains(previous.fountains, fountains)) {
-    console.log("No changes to fountains; snapshot left untouched.");
-    return;
-  }
+
+  const now = new Date();
+  const sourceModified = typeof resource.last_modified === "string" ? resource.last_modified : null;
+  const fountainsUnchanged = Boolean(previous && sameFountains(previous.fountains, fountains));
+  const snapshot = buildSnapshot(
+    fountains,
+    sourceModified,
+    now,
+    fountainsUnchanged ? previous!.generatedAt : undefined,
+  );
 
   await mkdir(dirname(OUTPUT_PATH), { recursive: true });
-  const sourceModified = typeof resource.last_modified === "string" ? resource.last_modified : null;
-  const snapshot = buildSnapshot(fountains, sourceModified, new Date());
   await writeFile(OUTPUT_PATH, `${JSON.stringify(snapshot, null, 2)}\n`);
+  if (fountainsUnchanged) {
+    console.log("No changes to fountains; bumped lastCheckedAt.");
+  }
   console.log(`Wrote ${OUTPUT_PATH}`);
 }
 

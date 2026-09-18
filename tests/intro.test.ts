@@ -5,19 +5,24 @@ import { introHtml } from "../src/ui/intro";
 describe("introHtml", () => {
   it("explains the app, the location use and the credits", () => {
     setActiveLanguage("en");
-    const html = introHtml({ theme: "system", language: "en" });
+    const html = introHtml({
+      theme: "system",
+      language: "en",
+      lastCheckedAt: "2026-09-15T15:40:55.478Z",
+    });
     expect(html).toContain("Find the nearest public water point in Zagreb");
-    expect(html).toContain("Why your location?");
+    expect(html).toContain('id="intro-title"');
+    expect(html).toContain("intro-title-mask");
+    expect(html).toContain("istockphoto-496241260-612x612.jpg");
     expect(html).toContain("It is never sent anywhere.");
+    expect(html).toContain("Last updated:");
     expect(html).toContain(
-      '<a class="underline" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
+      '<a class="underline underline-offset-2" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a>',
     );
     expect(html).toContain(
-      '<a class="underline" href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+      '<a class="underline underline-offset-2" href="https://carto.com/" target="_blank" rel="noopener">CARTO</a>',
     );
-    expect(html).toContain("Grad Zagreb");
     expect(html).toContain("https://data.zagreb.hr/dataset/geoportal_javni_zdenci");
-    expect(html).toContain("mailto:zg@paperbeatsrock.co");
     expect(html).toContain("Find nearest water point");
   });
 
@@ -33,19 +38,28 @@ describe("introHtml", () => {
   it("renders Croatian when that language is active", () => {
     setActiveLanguage("hr");
     try {
-      const html = introHtml({ theme: "system", language: "hr" });
+      const html = introHtml({
+        theme: "system",
+        language: "hr",
+        lastCheckedAt: "2026-09-15T15:40:55.478Z",
+      });
       expect(html).toContain("Pronađi najbliži zdenac s pitkom vodom u Zagrebu");
-      expect(html).toContain("Zašto lokacija?");
       expect(html).toContain("Pronađi najbliži zdenac");
-      expect(html).toContain("Sustav");
+      expect(html).toContain("Zadnja provjera:");
       expect(html).toContain(
-        '<a class="underline" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
+        '<a class="underline underline-offset-2" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a>',
       );
       expect(html).toContain(
-        '<a class="underline" href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+        '<a class="underline underline-offset-2" href="https://carto.com/" target="_blank" rel="noopener">CARTO</a>',
       );
     } finally {
       setActiveLanguage("en");
     }
+  });
+
+  it("omits the last-updated line until a timestamp is available", () => {
+    setActiveLanguage("en");
+    const html = introHtml({ theme: "system", language: "en" });
+    expect(html).not.toContain("Last updated:");
   });
 });

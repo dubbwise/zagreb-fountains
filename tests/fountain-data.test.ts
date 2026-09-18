@@ -189,6 +189,19 @@ describe("buildSnapshot", () => {
   it("wraps fountains with metadata", () => {
     expect(buildSnapshot(EXPECTED, "2026-09-14T11:08:23.379555", new Date("2026-09-15T04:00:00Z"))).toEqual({
       generatedAt: "2026-09-15T04:00:00.000Z",
+      lastCheckedAt: "2026-09-15T04:00:00.000Z",
+      sourceModified: "2026-09-14T11:08:23.379555",
+      count: 5,
+      fountains: EXPECTED,
+    });
+  });
+
+  it("keeps a previous generatedAt while bumping lastCheckedAt", () => {
+    expect(
+      buildSnapshot(EXPECTED, "2026-09-14T11:08:23.379555", new Date("2026-09-22T04:00:00Z"), "2026-09-15T04:00:00.000Z"),
+    ).toEqual({
+      generatedAt: "2026-09-15T04:00:00.000Z",
+      lastCheckedAt: "2026-09-22T04:00:00.000Z",
       sourceModified: "2026-09-14T11:08:23.379555",
       count: 5,
       fountains: EXPECTED,
