@@ -6,7 +6,7 @@ describe("introHtml", () => {
   it("explains the app, the location use and the credits", () => {
     setActiveLanguage("en");
     const html = introHtml({ theme: "system", language: "en" });
-    expect(html).toContain("Find the nearest public water point in the City of Zagreb");
+    expect(html).toContain("Find the nearest public water point in Zagreb");
     expect(html).toContain("Why your location?");
     expect(html).toContain("It is never sent anywhere.");
     expect(html).toContain(
@@ -34,7 +34,7 @@ describe("introHtml", () => {
     setActiveLanguage("hr");
     try {
       const html = introHtml({ theme: "system", language: "hr" });
-      expect(html).toContain("Pronađi najbliži javni zdenac s pitkom vodom u Zagrebu");
+      expect(html).toContain("Pronađi najbliži zdenac s pitkom vodom u Zagrebu");
       expect(html).toContain("Zašto lokacija?");
       expect(html).toContain("Pronađi najbliži zdenac");
       expect(html).toContain("Sustav");

@@ -24,7 +24,7 @@ CI and deploys read the same value from the `CARTO_API_KEY` repository secret
 
 The app shows an intro screen on every launch. It carries the site description, attribution, a feedback link, and controls to set **theme** and **language**. Visitors dismiss it with "Find water" / "Pronađi vodu" or by pressing Escape, which also starts the location prompt; nothing location-related happens while the intro is open.
 
-An ⓘ ("About this map" / "O ovoj karti") button on the map reopens the intro later; closing it from there does not re-prompt for location.
+A home button ("About this map" / "O ovoj karti") on the map reopens the intro later; closing it from there does not re-prompt for location.
 
 **Theme** choices are System, Light, or Dark. The setting is stored in `localStorage` under the key `zf.theme`; an absent key means System. When System is chosen, the app follows the device preference and reacts to changes live. Explicit Light or Dark overrides the device setting. The theme drives the card, page, browser theme colour, basemap (CARTO dark tiles for Dark mode, where a key is set), and Leaflet controls.
 
@@ -34,9 +34,9 @@ An ⓘ ("About this map" / "O ovoj karti") button on the map reopens the intro l
 
 **Typography** is the Exat family, declared as `--font-sans` in the same file. The trial files live in `public/Exat TEST/` and are gitignored, so they are never committed or deployed: the `@font-face` URLs are root-absolute rather than bundled asset imports, which means a build without them still succeeds and the browser falls back to the system stack. Three weights are declared (400/500/700); Exat has no Semibold, so `font-semibold` resolves to Bold. When licensed files are available, convert them to WOFF2, move them to `src/fonts/`, and switch to relative `url()` so Vite fingerprints them.
 
-**Icons** are inline SVG strings in `src/ui/icons.ts` (theme) and `src/ui/flags.ts` (language), not a runtime icon dependency. They are trusted markup written into `innerHTML` without escaping, so nothing from the i18n tables or the fountain data may ever be added to them.
+**Icons** are inline SVG strings in `src/ui/icons.ts` (theme controls, and the home/zoom glyphs on the map) and `src/ui/flags.ts` (language), not a runtime icon dependency. They are trusted markup written into `innerHTML` without escaping, so nothing from the i18n tables or the fountain data may ever be added to them.
 
-**Attribution** lives on the intro screen rather than in a bar on the map. The credits section lists Leaflet, OpenStreetMap contributors, CARTO for the dark basemap, and the City of Zagreb as the data source, with a link to the dataset. The ⓘ control stays visible on the map at all times so those credits are always one tap away, which is what OpenStreetMap's and CARTO's terms require.
+**Attribution** lives on the intro screen rather than in a bar on the map. The credits section lists Leaflet, OpenStreetMap contributors, CARTO for the dark basemap, and the City of Zagreb as the data source, with a link to the dataset. The home control stays visible on the map at all times so those credits are always one tap away, which is what OpenStreetMap's and CARTO's terms require.
 
 ## Scripts
 

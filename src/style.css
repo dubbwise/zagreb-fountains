@@ -210,6 +210,15 @@
    buttons stay white on the dark basemap, and the container flashes light grey
    while tiles load. leaflet.css is bundled after this file, so the theme comes
    from the `.dark` class on <html> rather than a media query. */
+/* Leaflet centres its "+"/"−" glyphs with line-height, which does nothing for
+   an inline SVG. The zoom buttons now carry icons, so they need real centring;
+   the extra class beats leaflet.css, which is bundled after this file. */
+.leaflet-container .leaflet-bar a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .leaflet-bar-info {
   display: flex;
   align-items: center;
@@ -253,7 +262,7 @@
      further (brightness 1.4 / contrast 0.8) drops it to 4.24, so this is the
      brightest setting that keeps place names comfortably legible.
 
-     Applied to the tile images only, so the ⓘ and zoom chrome above keep
+     Applied to the tile images only, so the home and zoom chrome above keep
      their own colours. leaflet.css sets `filter: inherit` on .leaflet-tile and
      is bundled after this file, so this selector carries an extra class to win
      on specificity rather than source order. */

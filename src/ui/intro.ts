@@ -64,8 +64,8 @@ export function introHtml({ theme, language }: IntroState): string {
   ].join("");
 
   // No background here: #intro already paints the surface behind this panel.
-  return `<div class="flex min-h-full flex-col p-8">
-  <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5 bg-surface p-6 md:p-12 rounded-lg ring-12 ring-edge">
+  return `<div class="flex min-h-full flex-col md:p-8">
+  <div class="mx-auto flex w-full max-w-md flex-1 flex-col gap-5 bg-surface p-6 md:p-12 rounded-lg ring-1 md:ring-12 ring-edge">
     <section>
       <div class="flex items-center justify-between gap-2">
         <div class="flex gap-2" role="group" aria-label="${escapeHtml(strings.introLanguageLabel)}">${languageChoices}</div>
@@ -74,18 +74,18 @@ export function introHtml({ theme, language }: IntroState): string {
     </section>
 
     <header class="mt-4">
-      <h1 id="intro-title" class="text-3xl md:text-5xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
+      <h1 id="intro-title" class="text-5xl font-semibold">${escapeHtml(strings.introTitle)}</h1>
     </header>
 
     <button type="button" data-action="continue" class="btn-primary mt-4">${escapeHtml(strings.introContinue)}</button>
     
-    <section class="mt-auto">
-    <h2 class="label-caps text-sm text-accent-ink">${escapeHtml(strings.introLocationHeading)}</h2>
-    <p class="mt-1 text-body">${escapeHtml(strings.introLocationBody)}</p>
+    <section class="mb-auto">
+      <h2 class="label-caps text-sm text-accent-ink hidden">${escapeHtml(strings.introLocationHeading)}</h2>
+      <p class="mt-1 text-body">${escapeHtml(strings.introLocationBody)}</p>
     </section>
     
 
-    <section class="text-sm text-body-subtle">
+    <section class="text-xs text-body-subtle">
       <h2 class="label-caps text-sm text-body-subtle">${escapeHtml(strings.introCreditsHeading)}</h2>
       <p class="mt-1">${creditsMapHtml(strings)}</p>
       <p class="mt-1">${escapeHtml(strings.introCreditsData)} (<a class="${LINK_CLASS}" href="${DATASET_URL}" target="_blank" rel="noopener">data.zagreb.hr</a>)</p>

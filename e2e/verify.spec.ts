@@ -265,7 +265,7 @@ test.describe("with the system set to dark", () => {
       "src",
       /cartocdn\.com\/dark_all\/.+\.png\?key=.+/,
     );
-    // The attribution bar no longer exists: Task 5 replaced it with the ⓘ
+    // The attribution bar no longer exists: Task 5 replaced it with the home
     // control, whose intro carries the full credits (global constraints).
     // Re-open it here to confirm CARTO's credit is still reachable, then
     // close it again before the screenshot below.

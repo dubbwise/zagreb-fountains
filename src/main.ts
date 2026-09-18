@@ -149,7 +149,7 @@ function drawIntro(): void {
 }
 
 /**
- * `rememberOpener` is only set when this is called from the ⓘ control: on
+ * `rememberOpener` is only set when this is called from the map's home control: on
  * first load there is no opener, so focus is left where renderIntro puts it.
  */
 function openIntro(rememberOpener = false): void {

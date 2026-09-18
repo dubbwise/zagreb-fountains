@@ -12,6 +12,7 @@ import {
 } from "../config";
 import type { Fountain } from "../data/fountains";
 import type { LatLon } from "../geo/distance";
+import { ICON_HOME, ICON_MINUS, ICON_PLUS } from "../ui/icons";
 
 export interface UserPosition extends LatLon {
   accuracyM: number;
@@ -92,11 +93,12 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
       // zoom buttons, which share the same leaflet-bar and role="button".
       const link = L.DomUtil.create("a", "leaflet-bar-info", container);
       link.href = "#";
-      link.textContent = "ⓘ";
+      // Trusted constant from ../ui/icons, the same set the intro uses. The
+      // icon is decorative: aria-label below carries the accessible name.
+      link.innerHTML = ICON_HOME;
       link.setAttribute("role", "button");
       link.setAttribute("aria-label", options.infoLabel);
       link.setAttribute("title", options.infoLabel);
-      link.style.fontSize = "18px";
       L.DomEvent.on(link, "click", (event) => {
         L.DomEvent.preventDefault(event);
         L.DomEvent.stopPropagation(event);
@@ -116,7 +118,9 @@ export function createFountainMap(container: HTMLElement, options: { dark: boole
     },
   });
   new InfoControl({ position: "topright" }).addTo(map);
-  L.control.zoom({ position: "topright" }).addTo(map);
+  // zoomInText/zoomOutText take raw HTML, so the same icon set replaces
+  // Leaflet's "+" and "−" text. The titles still supply the accessible names.
+  L.control.zoom({ position: "topright", zoomInText: ICON_PLUS, zoomOutText: ICON_MINUS }).addTo(map);
 
   const markers = new Map<string, { marker: L.CircleMarker; fountain: Fountain }>();
   let highlightedId: string | null = null;

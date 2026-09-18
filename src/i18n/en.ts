@@ -42,7 +42,7 @@ export const en: Strings = {
   loadError: "Couldn't load water point data.",
   approx: "approx.",
   walk: (minutes) => `~${minutes} min walk`,
-  introTitle: "Find the nearest public water point in the City of Zagreb",
+  introTitle: "Find the nearest public water point in Zagreb",
   introLocationHeading: "Why your location?",
   introLocationBody: "It is used in your browser to work out which water point is closest. It is never sent anywhere.",
   introThemeLabel: "Theme",
