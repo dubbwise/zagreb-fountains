@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-65.5 12 308 308" role="img" aria-label="Drinking fountain">
+  <!--
+    The artwork is drawn in a 200x320 space, but a favicon slot is square, so
+    the viewBox is re-centred on the real bounds of the shapes (x 22-155,
+    y 24-308) with a little padding. Without that the fountain renders tiny
+    and letterboxed.
+
+    Favicons do not inherit page colour, so the two fills are CSS variables
+    swapped by prefers-color-scheme: the cream body is invisible on a white
+    tab strip, and the slate body would be invisible on a dark one. Inverting
+    the pair keeps the same two colours legible either way.
+  -->
+  <style>
+    :root {
+      --fountain-body: #3e5c6b;
+      --fountain-detail: #f5f0e6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fountain-body: #f5f0e6;
+        --fountain-detail: #3e5c6b;
+      }
+    }
+  </style>
+
+  <ellipse cx="100" cy="296" rx="50" ry="12" fill="var(--fountain-body)" />
+  <circle cx="66" cy="296" r="4" fill="var(--fountain-detail)" />
+  <circle cx="134" cy="296" r="4" fill="var(--fountain-detail)" />
+  <rect x="82" y="100" width="36" height="190" rx="6" fill="var(--fountain-body)" />
+  <rect x="66" y="72" width="68" height="14" rx="4" fill="var(--fountain-body)" />
+  <rect x="74" y="40" width="52" height="34" rx="8" fill="var(--fountain-body)" />
+  <rect x="86" y="24" width="28" height="16" rx="6" fill="var(--fountain-body)" />
+  <rect x="74" y="50" width="52" height="3" fill="var(--fountain-detail)" />
+  <rect x="74" y="60" width="52" height="3" fill="var(--fountain-detail)" />
+  <rect x="74" y="114" width="16" height="14" rx="3" fill="var(--fountain-body)" />
+  <path d="M90,121 L34,132" stroke="var(--fountain-body)" stroke-width="9" stroke-linecap="round" fill="none" />
+  <circle cx="30" cy="133" r="8" fill="var(--fountain-body)" />
+  <path
+    d="M118,170 L148,170 L148,190"
+    stroke="var(--fountain-body)"
+    stroke-width="10"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+  <rect x="141" y="186" width="14" height="8" rx="3" fill="var(--fountain-body)" />
+</svg>

@@ -33,10 +33,10 @@ export const en: Strings = {
   approx: "approx.",
   walk: (minutes) => `~${minutes} min walk`,
   introLanguage: "Language",
-  introTitle: "Find public water points in Zagreb",
+  introTitle: "Find public water points in Zagreb.",
   introLocationBody:
-    "Allow location in your browser to work out which water point is closest. It is never sent anywhere.",
-  introLastUpdated: (date) => `Last updated: ${date}`,
-  introContinue: "Find nearest water point",
+    "Browser will ask for location to find the nearest water point. Location is local use only, never sent anywhere.",
+  introLastUpdated: (date) => `Updated: ${date}`,
+  introContinue: "Find nearest point",
   introOpen: "Show intro screen",
 };

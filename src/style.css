@@ -131,7 +131,7 @@
 
 /** Full-width primary action: "Find water", "Directions", "Retry". */
 @utility btn-primary {
-  @apply block w-full rounded-md bg-accent px-4 py-3 text-center text-xl font-semibold text-white active:bg-accent-active;
+  @apply block w-full rounded-md bg-accent px-4 py-3 text-center text-xl font-normal text-white active:bg-accent-active;
 }
 
 /** One segment of the theme / language pickers. Pressed state comes from
