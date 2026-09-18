@@ -14,7 +14,7 @@ export const hr: Strings = {
   approx: "otprilike",
   walk: (minutes) => `~${minutes} min hoda`,
   introLanguage: "Jezik",
-  introTitle: "Zdenci s pitkom vodom u Zagrebu.",
+  introTitle: "Javni zdenci Grada Zagreba.",
   introLocationBody:
     "Preglednik će zatražiti lokaciju kako bi pronašao najbliži zdenac. Lokacija se koristi samo na tvom uređaju i nikamo se ne šalje.",
   introLastUpdated: (date) => `Ažurirano: ${date}`,

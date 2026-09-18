@@ -89,7 +89,7 @@ export function introHtml({ theme, language, lastCheckedAt }: IntroState): strin
     </header>
 
     <section class="my-[6vh] space-y-6">
-      <h1 id="intro-title" class="text-accent text-[3.25rem] md:text-7xl font-extrabold leading-[0.9] tracking-tight pb-4">${escapeHtml(strings.introTitle)}</h1>
+      <h1 id="intro-title" class="text-accent text-[3.85rem] md:text-7xl font-extrabold leading-[0.9] tracking-tight pb-4">${escapeHtml(strings.introTitle)}</h1>
       <p class="text-base text-body-subtle leading-snug">${escapeHtml(strings.introLocationBody)}</p>
       <button type="button" data-action="continue" class="btn-primary">${escapeHtml(strings.introContinue)}</button>
     </section>
